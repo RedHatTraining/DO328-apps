@@ -1,0 +1,38 @@
+ifndef::workshop[]
+* xref:index.adoc[Advanced Istio Tutorial]
+
+** xref:virtualization.adoc[Service Virtualization and Istio]
+*** xref:virtualization.adoc#deploypreferencev2[Deploy Preference V2]
+*** xref:virtualization.adoc#servicevirtualization[Adding Service Virtualization]
+*** xref:virtualization.adoc#cleanup[Clean Up]
+
+
+** xref:diferencia.adoc[Diferencia and Detecting Regressions]
+*** xref:diferencia.adoc#what-is-diferencia[What is Diferencia?]
+*** xref:diferencia.adoc#master-candidate[Setting Master Candidate]
+*** xref:diferencia.adoc#deploying-diferencia[Deploying Diferencia]
+*** xref:diferencia.adoc#shadowing-traffic[Shadowing Traffic]
+*** xref:diferencia.adoc#noise-detection[Noise Detection]
+*** xref:diferencia.adoc#cleanup[Clean up]
+
+** xref:promotion.adoc[Istio for Promoting Services]
+*** xref:promotion.adoc#what-is-promotion[What is Promotion?]
+*** xref:promotion.adoc#deploy-recommendation-v3[Deploy Recommendation V3]
+*** xref:promotion.adoc#feature-graduation][Feature Graduation]
+*** xref:promotion.adoc#cleanup[Clean Up]
+
+** xref:zero-downtime-database.adoc[Zero Downtime Migration with Database]
+*** Starting the Migration
+**** xref:zero-downtime-database.adoc#recommendationv4[Deploy Recommendation V4]
+**** xref:zero-downtime-database.adoc#recommendationv5[Deploy Recommendation V5]
+**** xref:zero-downtime-database.adoc#recommendationv6[Deploy Recommendation V6]
+**** xref:zero-downtime-database.adoc#recommendationv7[Deploy Recommendation V7]
+*** xref:zero-downtime-database.adoc#finalstep[Final Step]
+*** xref:zero-downtime-database.adoc#cleanup[Clean Up]
+
+** xref:cube.adoc[Dark Launch Automatic Test]
+*** xref:cube.adoc#preparation[Preparation]
+*** xref:cube.adoc#explanation[Explanation]
+*** xref:cube.adoc#code[Source Code]
+*** xref:cube.adoc#restore[Restore Environment]
+endif::workshop[]

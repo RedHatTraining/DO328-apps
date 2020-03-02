@@ -1,0 +1,136 @@
+= Egress
+include::_attributes.adoc[]
+
+Let's see an example of using egress route by deploying a recommendation:v3 version. Egress service entry allow you to apply rules to how internal services interact with external APIs/services.
+
+In this case, we are going to configure Istio to access http://worldclockapi.com/api/json/cet/now from internal service (recommendation:v3).
+
+[IMPORTANT]
+.Before Start
+====
+You should have NO virtualservice nor destinationrule (in `tutorial` namespace) `kubectl get virtualservice{namespace-suffix}` `kubectl get destinationrule{namespace-suffix}` 
+if so run:
+
+[source, bash]
+----
+./scripts/clean.sh
+----
+====
+
+IMPORTANT: We have a 3rd Deployment to manage the v3 version of recommendation. 
+
+NOTE: You will deploy docker images that were previously built for this tutorial. If you want to build recommendation V3 with Quarkus visit: xref:2build-microservices.adoc#createrecommendationv3[Create Recommendation V3]
+
+NOTE: You will deploy docker images that were previously built for this tutorial. If you want to build recommendation V3 with Spring Boot visit: xref:2build-microservices.adoc#createrecommendationspringbootv3[Create Recommendation V3 Spring Boot]
+
+If you *have not built* the images on your own then let's deploy the customer pod with its sidecar using the already built images for this tutorial:
+
+[source,bash, subs="+macros,+attributes"]
+----
+oc apply -f <(istioctl kube-inject -f link:{github-repo}/{recommendation-repo}/kubernetes/Deployment-v3.yml[{recommendation-repo}/kubernetes/Deployment-v3.yml]) -n tutorial
+oc get pods -w
+
+or
+
+kubectl apply -f <(istioctl kube-inject -f link:{github-repo}/{recommendation-repo}/kubernetes/Deployment-v3.yml[{recommendation-repo}/kubernetes/Deployment-v3.yml]) -n tutorial
+kubectl get pods -w -n
+----
+
+== Wait for v3 to be deployed
+
+Wait for those pods to show "2/2", the istio-proxy/envoy sidecar is part of that pod
+
+[source,bash,subs="+macros,+attributes"]
+----
+NAME                                  READY     STATUS    RESTARTS   AGE
+customer-3600192384-fpljb             2/2       Running   0          17m
+preference-243057078-8c5hz           2/2       Running   0          15m
+recommendation-v1-60483540-9snd9     2/2       Running   0          12m
+recommendation-v2-2815683430-vpx4p   2/2       Running   0          15s
+recommendation-v3-7b445dd469-j6rkg   2/2       Running   0          2m
+----
+
+[#istioegress]
+== Istio-ize Egress
+
+Configure Istio to allow only registered traffic:
+
+[source, bash,subs="+macros,+attributes"]
+----
+kubectl get configmap istio -n istio-system -o yaml | sed 's/mode: ALLOW_ANY/mode: REGISTRY_ONLY/g' | kubectl replace -n istio-system -f -
+----
+
+Be sure you do not have any previous destination rule nor virtual service installed.
+
+Let's redirect all traffic to reccomendation:v3.
+
+[source, bash,subs="+macros,+attributes"]
+----
+kubectl create -f link:{github-repo}/{istiofiles-dir}/destination-rule-recommendation-v1-v2-v3.yml[istiofiles/destination-rule-recommendation-v1-v2-v3.yml] -n tutorial
+kubectl create -f link:{github-repo}/{istiofiles-dir}/virtual-service-recommendation-v3.yml[istiofiles/virtual-service-recommendation-v3.yml]
+----
+
+Then access to the service:
+
+
+
+IMPORTANT: Since no Egress service entry has been registered to access an external site, the service will return a 500 error
+.
+[source, bash]
+----
+$ curl customer-tutorial.$(minishift ip).nip.io
+customer => Error: 503 - preference => Error: 500 - <html><head><title>Error</title></head><body>Internal Server Error</body></html>
+----
+
+Let's fix it by registering a service entry to allow access to `worldclockapi`.
+
+[source,bash,subs="+macros,+attributes"]
+----
+kubectl create -f link:{github-repo}/{istiofiles-dir}/service-entry-egress-worldclockapi.yml[istiofiles/service-entry-egress-worldclockapi.yml] -n tutorial
+
+kubectl get serviceentry
+
+curl customer-tutorial.$(minishift ip).nip.io
+customer => preference => recommendation v3 2019-03-28T00:24+01:00 from '57cd88c95d-jp546': 1
+----
+
+or shell into the pod by getting its name and then using that name with oc exec
+
+[source,bash,subs="+macros,+attributes"]
+----
+oc exec -it -n tutorial $(oc get pods -n tutorial -o jsonpath="{.items[*].metadata.name}" -l app=recommendation,version=v3) -c recommendation /bin/bash
+or
+
+kubectl exec -it -n tutorial $(oc get pods -n tutorial -o jsonpath="{.items[*].metadata.name}" -l app=recommendation,version=v3) -c recommendation /bin/bash
+
+curl http://worldclockapi.com/api/json/cet/now
+
+exit
+----
+
+
+[#cleanup]
+=== Clean up
+
+[source,bash,subs="+macros,+attributes"]
+----
+kubectl delete -f istiofiles/service-entry-egress-worldclockapi.yml -n tutorial
+kubectl delete -f istiofiles/destination-rule-recommendation-v1-v2-v3.yml -n tutorial
+kubectl delete -f istiofiles/virtual-service-recommendation-v3.yml
+----
+
+or you can run:
+
+[source, bash]
+----
+./scripts/clean.sh
+----
+
+Undeploy _recommendation:v3_:
+
+[source, bash]
+----
+oc delete all -n tutorial -l app=recommendation,version=v3
+or
+kubectl delete all -n tutorial -l app=recommendation,version=v3
+----

@@ -1,0 +1,299 @@
+= Deploy Microservices
+include::_attributes.adoc[]
+
+ifdef::workshop[]
+Create an environment variable for your user and log into OpenShift.
+
+[source,bash,subs="+macros,+attributes"]
+----
+export WORKSHOP_USER=<your-username-number>
+
+
+#Example:
+export WORKSHOP_USER=1
+
+oc login -u user$WORKSHOP_USER -p openshift {ocpurl}
+----
+endif::workshop[]
+
+[#deploycustomer]
+== Deploy customer
+
+Make sure you are logged in
+
+[source,bash,subs="+macros,+attributes"]
+----
+oc whoami
+or
+kubectl config current-context
+----
+
+and you have setup the project/namespace
+
+[source,bash,subs="+macros,+attributes"]
+----
+oc new-project tutorial{namespace-suffix}
+or
+kubectl create namespace tutorial{namespace-suffix}
+kubectl config set-context $(kubectl config current-context) --namespace=tutorial{namespace-suffix}
+----
+
+ifndef::workshop[]
+Give the tutorial project the required privileges.
+
+[source,bash,subs="+macros,+attributes"]
+----
+oc adm policy add-scc-to-user privileged -z default -n tutorial{namespace-suffix}
+----
+endif::workshop[]
+
+Then clone the git repository
+
+[source,bash,subs="+macros,+attributes"]
+----
+git clone https://github.com/redhat-developer-demos/istio-tutorial
+cd istio-tutorial
+----
+
+Start deploying the microservice projects, starting with customer
+
+Make sure `istioctl` is in your `PATH`:
+
+[source,bash,subs="+macros,+attributes"]
+----
+$ istioctl version
+client version: 1.3.0
+control plane version: 1.3.0
+----
+
+=== Deploy Customer 
+
+NOTE: You will deploy docker images that were previously built for this tutorial. If you want to build customer using Quarkus visit: xref:2build-microservices.adoc#buildcustomer[Build Customer]
+
+NOTE: You will deploy docker images that were previously built for this tutorial. If you want to build customer using Spring Boot visit: xref:2build-microservices.adoc#buildcustomerspringboot[Build Customer Spring Boot]
+
+If you *have not built* the images on your own then let's deploy the customer pod with its sidecar using the already built images for this tutorial:
+
+[source,bash,subs="+macros,+attributes"]
+----
+oc apply -f <(istioctl kube-inject -f link:{github-repo}/{customer-repo}/kubernetes/Deployment.yml[{customer-repo}/kubernetes/Deployment.yml]) -n tutorial{namespace-suffix}
+oc create -f link:{github-repo}/{customer-repo}/kubernetes/Service.yml[{customer-repo}/kubernetes/Service.yml] -n tutorial{namespace-suffix}
+
+or
+
+kubectl apply -f <(istioctl kube-inject -f link:{github-repo}/{customer-repo}/kubernetes/Deployment.yml[{customer-repo}/kubernetes/Deployment.yml]) -n tutorial{namespace-suffix}
+kubectl create -f link:{github-repo}/{customer-repo}/kubernetes/Service.yml[{customer-repo}/kubernetes/Service.yml] -n tutorial{namespace-suffix}
+----
+
+=== Expose customer
+
+Since the `customer` service is the one our users will interact with, let's add an OpenShift Route that exposes that endpoint.
+
+ifndef::workshop[]
+[source,bash,subs="+macros,+attributes"]
+----
+oc create -f link:{github-repo}/{customer-repo}/kubernetes/Gateway.yml[{customer-repo}/kubernetes/Gateway.yml] -n tutorial{namespace-suffix}
+or
+kubectl create -f link:{github-repo}/{customer-repo}/kubernetes/Gateway.yml[{customer-repo}/kubernetes/Gateway.yml] -n tutorial{namespace-suffix}
+
+oc get pods -w -n tutorial{namespace-suffix}
+or
+kubectl get pods -w -n tutorial{namespace-suffix}
+----
+endif::workshop[]
+
+ifdef::workshop[]
+[source,bash,subs="+macros,+attributes"]
+----
+envsubst < link:{github-repo}/{customer-repo}/kubernetes/Gateway.workshop.yml[{customer-repo}/kubernetes/Gateway.workshop.yml] | oc create -f - -n tutorial{namespace-suffix}
+or
+envsubst < link:{github-repo}/{customer-repo}/kubernetes/Gateway.workshop.yml[{customer-repo}/kubernetes/Gateway.workshop.yml] | kubectl create -f - -n tutorial{namespace-suffix}
+
+oc get pods -w -n tutorial{namespace-suffix}
+or
+kubectl get pods -w -n tutorial{namespace-suffix}
+----
+endif::workshop[]
+
+IMPORTANT: If your pod fails with `ImagePullBackOff`, it's possible that your current terminal isn't using the proper Docker Environment. See link:#setup-environment[Setup environment].
+
+Wait until the status is `Running` and there are `2/2` pods in the `Ready` column. To exit, press `Ctrl+C`
+
+Then test the customer endpoint
+
+[source,bash,subs="+macros,+attributes"]
+----
+curl istio-ingressgateway-istio-system.{appdomain}/{path}
+----
+
+You should see the following error because the services `preference` and `recommendation` are not yet deployed.
+
+----
+customer => UnknownHostException: preference
+----
+
+Also review the logs
+
+[source,bash,subs="+macros,+attributes"]
+----
+stern $(kubectl get pods|grep customer|awk '{ print $1 }'|head -1) -c customer
+or
+stern "customer-\w" -c customer
+----
+
+You should see a stacktrace containing this cause:
+
+[source,bash,subs="+macros,+attributes"]
+----
+customer-6fc99b7bfd-5st28 customer Caused by: java.net.UnknownHostException: preference
+----
+
+[#deploypreference]
+== Deploy Preference
+
+NOTE: You will deploy docker images that were previously built for this tutorial. If you want to build preference with Quarkus visit: xref:2build-microservices.adoc#buildpreference[Build Preference]
+
+NOTE: You will deploy docker images that were previously built for this tutorial. If you want to build preference with Spring Boot visit: xref:2build-microservices.adoc#buildpreferencespringboot[Build Preference Spring Boot]
+
+If you *have not built* the images on your own then let's deploy the customer pod with its sidecar using the already built images for this tutorial:
+
+[source,bash,subs="+macros,+attributes"]
+----
+oc apply -f <(istioctl kube-inject -f link:{github-repo}/{preference-repo}/kubernetes/Deployment.yml[{preference-repo}/kubernetes/Deployment.yml]) -n tutorial{namespace-suffix}
+oc create -f link:{github-repo}/{preference-repo}/kubernetes/Service.yml[{preference-repo}/kubernetes/Service.yml] -n tutorial{namespace-suffix}
+
+or
+
+kubectl apply -f <(istioctl kube-inject -f link:{github-repo}/{preference-repo}/kubernetes/Deployment.yml[{preference-repo}/kubernetes/Deployment.yml])  -n tutorial{namespace-suffix}
+kubectl create -f link:{github-repo}/{preference-repo}/kubernetes/Service.yml[{preference-repo}/kubernetes/Service.yml] -n tutorial{namespace-suffix}
+----
+
+=== Wait preference to be deployed
+
+[source, bash,subs="+macros,+attributes"]
+----
+oc get pods -w  -n tutorial{namespace-suffix}
+or
+kubectl get pods -w -n tutorial{namespace-suffix}
+----
+
+Wait until the status is `Running` and there are `2/2` pods in the `Ready` column. To exit, press `Ctrl+C`
+
+[source,bash,subs="+macros,+attributes"]
+----
+curl istio-ingressgateway-istio-system.{appdomain}/{path}
+----
+
+It will respond with an error since the service `recommendation` is not yet deployed.
+
+NOTE: We could make this a bit more resilient in a future iteration of this tutorial
+
+[source,bash,subs="+macros,+attributes"]
+----
+customer => Error: 503 - preference => UnknownHostException: recommendation
+----
+
+and check out the logs
+
+[source,bash,subs="+macros,+attributes"]
+----
+stern $(kubectl get pods|grep preference|awk '{ print $1 }'|head -1) -c preference
+or
+stern "preference-\w" -c preference
+----
+
+You should see a stacktrace containing this cause:
+
+[source,bash,subs="+macros,+attributes"]
+----
+preference-v1-898764bdb-hz7s6 preference Caused by: java.net.UnknownHostException: recommendation
+----
+
+[#deployrecommendation]
+== Deploy Recommendation
+
+NOTE: You will deploy docker images that were previously built for this tutorial. If you want to build recommendation with Quarkus visit: xref:2build-microservices.adoc#buildrecommendation[Build Recommendation]
+
+NOTE: You will deploy docker images that were previously built for this tutorial. If you want to build recommendation with Spring Boot visit: xref:2build-microservices.adoc#buildrecommendationspringboot[Build Recommendation Spring Boot]
+
+If you *have not built* the images on your own then let's deploy the customer pod with its sidecar using the already built images for this tutorial:
+
+[source,bash,subs="+macros,+attributes"]
+----
+oc apply -f <(istioctl kube-inject -f link:{github-repo}/{recommendation-repo}/kubernetes/Deployment.yml[{recommendation-repo}/kubernetes/Deployment.yml])  -n tutorial{namespace-suffix}
+oc create -f link:{github-repo}/{recommendation-repo}/kubernetes/Service.yml[{recommendation-repo}/kubernetes/Service.yml]  -n tutorial{namespace-suffix}
+oc get pods -w -n tutorial{namespace-suffix}
+
+or 
+
+kubectl apply -f <(istioctl kube-inject -f link:{github-repo}/{recommendation-repo}/kubernetes/Deployment.yml[{recommendation-repo}/kubernetes/Deployment.yml]) -n tutorial{namespace-suffix}
+kubectl create -f link:{github-repo}/{recommendation-repo}/kubernetes/Service.yml[{recommendation-repo}/kubernetes/Service.yml] -n tutorial{namespace-suffix}
+kubectl get pods -w -n tutorial{namespace-suffix}
+----
+
+=== Wait recommendation to be deployed
+
+Wait until the status is `Running` and there are `2/2` pods in the `Ready` column. To exit, press `Ctrl+C`
+
+[source,bash,subs="+macros,+attributes"]
+----
+curl istio-ingressgateway-istio-system.{appdomain}/{path}
+----
+
+it should now return
+
+[source,bash,subs="+macros,+attributes"]
+----
+customer => preference => recommendation v1 from '99634814-sf4cl': 1
+----
+
+and you can monitor the `recommendation` logs with
+
+[source,bash,subs="+macros,+attributes"]
+----
+stern $(kubectl get pods|grep recommendation-v1|awk '{ print $1 }'|head -1) -c recommendation
+or
+stern "recommendation-v1-\w" -c recommendation-v1
+----
+
+
+[#redeployingcode]
+== Updating Redeploying Code
+
+When you wish to change code (e.g. editing the .java files) and wish to "redeploy", simply:
+
+[source,bash]
+----
+cd {servicename}/java/{quarkus|springboot|vertx}
+
+vi src/main/java/com/redhat/developer/demos/{servicename}/{Servicename}{Controller|Verticle}.java
+----
+
+Make your changes, save it and then:
+
+[source,bash]
+----
+mvn clean package
+docker build -t example/{servicename}:v1 .
+
+oc get pods -o jsonpath='{.items[*].metadata.name}' -l app={servicename}
+oc get pods -o jsonpath='{.items[*].metadata.name}' -l app={servicename},version=v1
+oc delete pod -l app={servicename},version=v1 -n tutorial{namespace-suffix}
+
+or
+
+kubectl get pods -o jsonpath='{.items[*].metadata.name}' -l app={servicename}
+kubectl get pods -o jsonpath='{.items[*].metadata.name}' -l app={servicename},version=v1
+kubectl delete pod -l app={servicename},version=v1 -n tutorial{namespace-suffix}
+----
+
+Why the delete pod?
+
+Based on the Deployment configuration, Kubernetes/OpenShift will recreate the pod, based on the new docker image as it attempts to keep the desired replicas available
+
+[source,bash]
+----
+oc describe deployment {servicename}  -n tutorial{namespace-suffix}| grep Replicas
+or
+kubectl describe deployment {servicename} -n tutorial{namespace-suffix} | grep Replicas
+----

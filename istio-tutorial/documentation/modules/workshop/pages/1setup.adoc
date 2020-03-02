@@ -1,0 +1,36 @@
+= Setup
+include::ROOT:page$_attributes.adoc[]
+
+- This is a Workshop version available at http://bit.ly/istio-workshop-11
+
+- EtherPad URL: {etherpad}
+
+[#prerequisite]
+== Prerequisite CLI tools
+
+You will need in this tutorial:
+
+* Kubernetes
+** https://github.com/kubernetes/kubernetes/releases[Kubernetes Releases]
+** Mac OS: `brew install kubernetes-cli`
+
+* oc (Openshift client)
+** https://github.com/openshift/origin/releases[Openshift Releases]
+** Mac OS: `brew install openshift-cli`
+
+* istioctl 1.1.7
+** https://github.com/istio/istio/releases/tag/1.1.7[Download 1.1.7 release]
+
+* `curl`, `gunzip`, `tar`
+** Mac OS: built-in or part of your bash shell
+** Fedora: should also be installed already, but just in case... `dnf install curl gzip tar`
+
+* git
+** `dnf install git`
+
+* siege
+** MAC OS: `brew install siege`
+** Fedora: `dnf install siege`
+
+* envsubst
+** MAC OS: `brew install gettext;  brew link --force gettext`
