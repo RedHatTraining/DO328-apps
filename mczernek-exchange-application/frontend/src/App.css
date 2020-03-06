@@ -1,0 +1,21 @@
+.centered {
+    text-align: center;
+}
+
+.margin-separator {
+    margin-top: 20px;
+}
+
+.text-container {
+    text-align: center;
+    font-size: 3em;
+    max-width: 300px;
+    border-bottom-style: solid;
+    border-color: #2b9af3;
+    word-wrap: break-word;
+}
+
+.currency-text {
+    font-size: 0.6em;
+    vertical-align: top;
+}
