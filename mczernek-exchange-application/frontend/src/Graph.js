@@ -57,8 +57,8 @@ export default class ScatterLineChart extends React.Component {
             <div ref={this.containerRef}>
                 <div style={{ height: '275px' }}>
                     <Chart
-                        ariaDesc="Average number of pets"
-                        ariaTitle="Line chart example"
+                        ariaDesc="Exchange rate for given currency"
+                        ariaTitle="Exchange Rate Graph"
                         containerComponent={
                             <ChartVoronoiContainer
                                 labels={({ datum }) => datum.childName.includes('line-') ? `${datum.name}: ${datum.y}` : null}

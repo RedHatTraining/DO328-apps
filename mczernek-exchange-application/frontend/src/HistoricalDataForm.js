@@ -137,9 +137,6 @@ class CurrencyPicker extends Component {
                                 </FormSelect>
                             </FormGroup>
                         </FlexItem>
-                        <FlexItem>
-
-                        </FlexItem>
                     </Flex>
                     <span>
                         <Button isDisabled={this.state.loading || this.state.src === this.state.target} type="submit" variant="primary">Submit</Button>
