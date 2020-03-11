@@ -4,6 +4,7 @@ public class Currency {
     private String value;
     private String date;
     private String sign;
+    private String name;
 
     public String getValue() {
         return value;
@@ -27,6 +28,14 @@ public class Currency {
 
     public void setSign(String sign) {
         this.sign = sign;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
