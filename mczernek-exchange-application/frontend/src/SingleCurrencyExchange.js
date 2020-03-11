@@ -36,7 +36,7 @@ class CurrencyPicker extends Component {
             loading: true
         })
 
-        fetch('http://localhost:8080')
+        fetch('http://currency-exchange-app.apps.ocp-d43.dev.nextcle.com')
             .then(currencies => currencies.json())
             .then(currencies => this.setState({
                 currencies, src: currencies[0], target: currencies[1], loading: false
@@ -65,16 +65,21 @@ class CurrencyPicker extends Component {
         e.preventDefault();
         this.setState({ requestExchangeData: true })
 
-        fetch(`http://localhost:8080/${this.state.src}`, {
-            method: 'GET',
+        const payload = {
+            source: this.state.src,
+            target: this.state.target
+        }
+        fetch("http://exchange-exchange-app.apps.ocp-d43.dev.nextcle.com/exchangeRate/singleCurrency", {
+            method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
+            body: JSON.stringify(payload)
         })
-            .then(exchangeData => exchangeData.json())
-            .then(exchangeData => this.setState({ exchangeData }))
-            .catch(err => console.log(err))
+        .then(exchangeData => exchangeData.json().then(exchangeData => this.setState({exchangeData})))
+        .catch(err => console.log(err))
+
     };
 
     render() {
@@ -158,7 +163,7 @@ class CurrencyPicker extends Component {
                         <TextContent className="margin-separator">
                             <Text component={TextVariants.p} className="text-container">
                                 <span className="currency-text">
-                                    {exchangeData.targetSign}
+                                    {exchangeData.sign}
                                 </span>
                                 {exchangeData.value * this.state.inputValue}
                             </Text>

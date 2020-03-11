@@ -33,8 +33,9 @@ export default class ScatterLineChart extends React.Component {
         var maxYAxis = 0
 
         this.props.data.forEach(e => {
-            if(e.value > maxYAxis) {
-                maxYAxis = e.value 
+            var floatValue = parseFloat(e.value);
+            if(floatValue > maxYAxis) {
+                maxYAxis = floatValue 
             }
 
             const date = new Date(e.date)
@@ -42,7 +43,7 @@ export default class ScatterLineChart extends React.Component {
             conv.unshift({
                 name: this.props.target,
                 x: dateString,
-                y: e.value
+                y: floatValue
             })
         });
 
@@ -68,7 +69,7 @@ export default class ScatterLineChart extends React.Component {
                         legendData={series.map(s => s.legendItem)}
                         legendPosition="bottom-left"
                         height={275}
-                        maxDomain={{ y: maxYAxis + 1 }}
+                        maxDomain={{ y: maxYAxis + 0.2 }}
                         minDomain={{ y: 0 }}
                         padding={{
                             bottom: 75, // Adjusted to accommodate legend
@@ -76,7 +77,7 @@ export default class ScatterLineChart extends React.Component {
                             right: 50,
                             top: 50
                         }}
-                        themeColor={ChartThemeColor.orange}
+                        themeColor={ChartThemeColor.blue}
                         width={width}
                     >
                         <ChartAxis tickValues={[2, 3, 4]} />

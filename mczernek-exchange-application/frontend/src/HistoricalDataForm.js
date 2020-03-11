@@ -35,7 +35,7 @@ class CurrencyPicker extends Component {
             loading: true
         })
 
-        fetch('http://localhost:8080')
+        fetch('http://currency-exchange-app.apps.ocp-d43.dev.nextcle.com')
             .then(currencies => currencies.json())
             .then(currencies => this.setState({
                 currencies, src: currencies[0], target: currencies[1], loading: false
@@ -68,8 +68,7 @@ class CurrencyPicker extends Component {
             source: this.state.src,
             target: this.state.target
         }
-
-        fetch('http://localhost:8080', {
+        fetch('http://exchange-exchange-app.apps.ocp-d43.dev.nextcle.com/exchangeRate/historicalData', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -77,8 +76,11 @@ class CurrencyPicker extends Component {
             },
             body: JSON.stringify(payload)
         })
-            .then(exchangeData => exchangeData.json())
-            .then(exchangeData => this.setState({ exchangeData }))
+            .then(exchangeData => {
+                exchangeData.json().then( json => {
+                    this.setState({ exchangeData: json })
+                })
+            })
             .catch(err => console.log(err))
     };
 
