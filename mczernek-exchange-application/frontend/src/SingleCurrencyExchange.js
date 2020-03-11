@@ -36,7 +36,7 @@ class CurrencyPicker extends Component {
             loading: true
         })
 
-        fetch('http://currency-exchange-app.apps.ocp-d43.dev.nextcle.com')
+        fetch(`http://${process.env.REACT_APP_GW_ENDPOINT}/currencies`)
             .then(currencies => currencies.json())
             .then(currencies => this.setState({
                 currencies, src: currencies[0], target: currencies[1], loading: false
@@ -69,7 +69,7 @@ class CurrencyPicker extends Component {
             source: this.state.src,
             target: this.state.target
         }
-        fetch("http://exchange-exchange-app.apps.ocp-d43.dev.nextcle.com/exchangeRate/singleCurrency", {
+        fetch(`http://${process.env.REACT_APP_GW_ENDPOINT}/exchangeRate/singleCurrency`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
