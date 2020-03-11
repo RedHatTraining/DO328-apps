@@ -42,37 +42,8 @@ const postData = (req, res) => {
     res.json(dataWithDate).status(200);
 }
 
-/* MOCK for other microservice */
-const getData = (req, res) => {
-    const currencies = ["EUR", "USD"]
-    res.setHeader('Content-Type', 'application/json');
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.json(currencies).status(200);
-};
-
-
-/* MOCK for other microservice
- */
-const getCurrencyData = (req, resp) => {
-    const currency = req.params.currency;
-    var res = {value: ""}
-    if(currency === "EUR") {
-        res.value = 1.11
-        res.srcSign = "€"
-        res.targetSign = "$"
-    } else {
-        res.value = 0.9
-        res.srcSign = "$"
-        res.targetSign = "€"
-    }
-    resp.json(res).status(200);
-}
-
 
 app.post('/', postData);
-app.get('/', getData);
-app.get('/:currency', getCurrencyData)
-
 
 app.listen(_const.PORT, () => {
     console.log(
