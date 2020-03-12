@@ -10,33 +10,20 @@ import { Link} from "react-router-dom";
 
 
 class NavDefaultList extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            activeItem: 0
-        };
-        this.onSelect = result => {
-            this.setState({
-                activeItem: result.itemId
-            });
-        };
-    }
-
     render() {
-        const { activeItem } = this.state;
         return (
             <Nav onSelect={this.onSelect} theme="dark">
                 <NavList>
-                    <NavItem id="home" itemId={0} isActive={activeItem === 0}>
+                    <NavItem id="home" isActive={window.location.pathname === "/"}>
                         <Link to="/">Home</Link>
                     </NavItem>
-                    <NavItem id="historical_Data" itemId={1} isActive={activeItem === 1}>
+                    <NavItem id="historical_Data" isActive={window.location.pathname === "/history"}>
                         <Link to="/history" >Historical Data</Link>
                     </NavItem>
-                    <NavItem id="exchange" itemId={2} isActive={activeItem === 2}>
+                    <NavItem id="exchange" isActive={window.location.pathname === "/exchange"}>
                         <Link to="/exchange" >Exchange</Link>
                     </NavItem>
-                    {/* <NavItem id="status" itemId={3} isActive={activeItem === 3}>
+                    {/* <NavItem id="status">
                         <Link to="/status" >Application Status</Link>
                     </NavItem> */}
                 </NavList>
