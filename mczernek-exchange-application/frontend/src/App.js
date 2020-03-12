@@ -17,26 +17,20 @@ class App extends Component {
     return (
       <Router>
         <Switch>
-          <Route path="/" exact >
-            <Structure>
+          <Structure>
+            <Route path="/" exact >
               <WelcomePage />
-            </Structure>
-          </Route>
-          <Route path="/exchange" exact>
-            <Structure>
+            </Route>
+            <Route path="/exchange" exact>
               <SingleCurrencyExchange />
-            </Structure>
-          </Route>
-          <Route path="/history" exact>
-            <Structure>
+            </Route>
+            <Route path="/history" exact>
               <HistoricalDataForm />
-            </Structure>
-          </Route>
-          {/* <Route path="/status" exact>
-            <Structure>
+            </Route>
+            {/* <Route path="/status" exact>
               <Status />
-            </Structure>
           </Route> */}
+          </Structure>
         </Switch>
       </Router>
     )
