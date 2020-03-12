@@ -7,7 +7,7 @@ from markupsafe import escape
 app = Flask(__name__)
 CORS(app)
 
-SAMPLE_ELEMENTS = 3
+NUM_OF_NEWS = 3
 
 def sortByTimestamp(element):
   return element['timestamp']
@@ -24,7 +24,7 @@ def getNewsForTopic(topic):
             news = json.load(topicFile)
 
         # Picking only a few elements from the list of news
-        randomSelection = random.sample(news['data'], SAMPLE_ELEMENTS)
+        randomSelection = random.sample(news['data'], NUM_OF_NEWS)
 
         # Sorting the resulting list by the timestamp
         randomSelection.sort(key=sortByTimestamp)
