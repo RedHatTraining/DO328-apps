@@ -3,7 +3,6 @@ import Structure from './MainStructure'
 import HistoricalDataForm from './HistoricalDataForm'
 import WelcomePage from './Welcome'
 import SingleCurrencyExchange from './SingleCurrencyExchange'
-import Status from './Status'
 
 import {
   BrowserRouter as Router,
@@ -15,28 +14,19 @@ import {
 class App extends Component {
   render() {
     return (
-      <Router>
+      <Router basename="/frontend">
         <Switch>
-          <Route path="/" exact >
-            <Structure>
+          <Structure>
+            <Route path="/" exact >
               <WelcomePage />
-            </Structure>
-          </Route>
-          <Route path="/exchange" exact>
-            <Structure>
+            </Route>
+            <Route path="/exchange" exact>
               <SingleCurrencyExchange />
-            </Structure>
-          </Route>
-          <Route path="/history" exact>
-            <Structure>
+            </Route>
+            <Route path="/history" exact>
               <HistoricalDataForm />
-            </Structure>
-          </Route>
-          {/* <Route path="/status" exact>
-            <Structure>
-              <Status />
-            </Structure>
-          </Route> */}
+            </Route>
+          </Structure>
         </Switch>
       </Router>
     )
