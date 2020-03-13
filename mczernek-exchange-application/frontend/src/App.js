@@ -15,7 +15,7 @@ import {
 class App extends Component {
   render() {
     return (
-      <Router>
+      <Router basename="/frontend">
         <Switch>
           <Structure>
             <Route path="/" exact >

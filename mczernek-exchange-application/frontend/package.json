@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/frontend",
   "dependencies": {
     "@patternfly/react-charts": "^5.3.5",
     "@patternfly/react-core": "^3.140.11",
