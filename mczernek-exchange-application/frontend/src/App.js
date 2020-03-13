@@ -3,7 +3,6 @@ import Structure from './MainStructure'
 import HistoricalDataForm from './HistoricalDataForm'
 import WelcomePage from './Welcome'
 import SingleCurrencyExchange from './SingleCurrencyExchange'
-import Status from './Status'
 
 import {
   BrowserRouter as Router,
@@ -27,9 +26,6 @@ class App extends Component {
             <Route path="/history" exact>
               <HistoricalDataForm />
             </Route>
-            {/* <Route path="/status" exact>
-              <Status />
-          </Route> */}
           </Structure>
         </Switch>
       </Router>

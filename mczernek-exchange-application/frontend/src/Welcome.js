@@ -21,10 +21,13 @@ export default class WelcomePage extends Component {
                     <li>Exchange for seeing how much money is your amount worth in a different currency</li>
                 </ul>
                 <Text component="p">
-                    For detailed info about the structure of this application, see #github link here.
+                    For detailed info about the structure of this application, see the 
+                    <Text component="a" href="https://github.com/RedHatTraining/DO328-apps/" >
+                        DO328-apps
+                    </Text> repository.
                 </Text>
                 <Text component="p">
-                    To file issues or ask questions, see #github link here.
+                    You can ask questions or file issues at <Text component="a" src="https://github.com/RedHatTraining/DO328-apps/issues"> here</Text>.
                 </Text>
             </TextContent>
 
