@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: quay.io/mczernek/frontend:v2.1
+          image: quay.io/mczernek/frontend:v2.2
           ports:
             - containerPort: 3000
           env:

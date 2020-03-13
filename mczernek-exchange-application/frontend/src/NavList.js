@@ -14,13 +14,13 @@ class NavDefaultList extends React.Component {
         return (
             <Nav onSelect={this.onSelect} theme="dark">
                 <NavList>
-                    <NavItem id="home" isActive={window.location.pathname === "/"}>
+                    <NavItem id="home" isActive={window.location.pathname.endsWith("/")}>
                         <Link to="/">Home</Link>
                     </NavItem>
-                    <NavItem id="historical_Data" isActive={window.location.pathname === "/history"}>
+                    <NavItem id="historical_Data" isActive={window.location.pathname.endsWith("/history")}>
                         <Link to="/history" >Historical Data</Link>
                     </NavItem>
-                    <NavItem id="exchange" isActive={window.location.pathname === "/exchange"}>
+                    <NavItem id="exchange" isActive={window.location.pathname.endsWith("/exchange")}>
                         <Link to="/exchange" >Exchange</Link>
                     </NavItem>
                     {/* <NavItem id="status">
