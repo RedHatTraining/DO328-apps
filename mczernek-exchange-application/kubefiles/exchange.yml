@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: exchange
-          image: quay.io/mczernek/exchange:v1.4
+          image: quay.io/redhattraining/ossm-exchange:1.0
           ports:
             - containerPort: 8080
 ---
