@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: quay.io/mczernek/frontend:v2.2
+          image: quay.io/redhattraining/ossm-frontend:1.0
           ports:
             - containerPort: 3000
           env:
