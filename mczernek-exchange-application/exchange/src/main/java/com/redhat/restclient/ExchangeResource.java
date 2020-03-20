@@ -20,7 +20,18 @@ public class ExchangeResource {
     @Inject
     @RestClient
     ExchangeService historyService;
+
+    @Inject
+    @RestClient
+    NewsService newsService;
+
     ObjectMapper mapper = new ObjectMapper();
+
+    @GET
+    @Path("/news")
+    public List<News> getFinancialNews() {
+        return newsService.getFinancialNews();
+    }
 
     @POST
     @Path("/historicalData")
