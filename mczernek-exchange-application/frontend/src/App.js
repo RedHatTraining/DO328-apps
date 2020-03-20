@@ -3,6 +3,7 @@ import Structure from './MainStructure'
 import HistoricalDataForm from './HistoricalDataForm'
 import WelcomePage from './Welcome'
 import SingleCurrencyExchange from './SingleCurrencyExchange'
+import NewsBoard from './NewsBoard'
 
 import {
   BrowserRouter as Router,
@@ -25,6 +26,9 @@ class App extends Component {
             </Route>
             <Route path="/history" exact>
               <HistoricalDataForm />
+            </Route>
+            <Route path="/news" exact>
+              <NewsBoard />
             </Route>
           </Structure>
         </Switch>

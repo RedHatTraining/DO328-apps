@@ -23,6 +23,9 @@ class NavDefaultList extends React.Component {
                     <NavItem id="exchange" isActive={window.location.pathname.endsWith("/exchange")}>
                         <Link to="/exchange" >Exchange</Link>
                     </NavItem>
+                    <NavItem id="news" isActive={window.location.pathname.endsWith("/news")}>
+                        <Link to="/news" >News</Link>
+                    </NavItem>
                 </NavList>
             </Nav>
         );
