@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gossip
+  name: news
 spec:
   selector:
     matchLabels:
-      app: gossip
+      app: news
   replicas: 1
   template:
     metadata:
       labels:
-        app: gossip
+        app: news
     spec:
       containers:
-        - name: gossip
+        - name: news
           image: quay.io/redhattraining/ossm-python-flask-gossip:1.0
           ports:
             - containerPort: 5000
@@ -22,26 +22,25 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: gossip
-  name: gossip
+    app: news
+  name: news
 spec:
   ports:
   - port: 5000
     protocol: TCP
     targetPort: 5000
   selector:
-    app: gossip
+    app: news
 ---
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
   name: news
-  namespace: gossip
   labels:
-    app: gossip
+    app: news
 spec:
   to:
     kind: Service
-    name: gossip
+    name: news
   port:
     targetPort: 5000
