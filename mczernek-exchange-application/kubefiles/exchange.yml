@@ -3,9 +3,9 @@ kind: ConfigMap
 metadata:
   name: exchange-cm
 data:
-  # change GOSSIP_ENDPOINT to url of the public gossip route,
-  # e.g. http://news-gossip.apps-crc.testing
-  NEWS_ADDR: GOSSIP_ENDPOINT
+  # change NEWS_FEED_ENDPOINT to url of the public news route,
+  # e.g. http://feed-news.apps-crc.testing
+  NEWS_ADDR: NEWS_FEED_ENDPOINT
 ---
 apiVersion: apps/v1
 kind: Deployment
