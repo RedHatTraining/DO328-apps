@@ -1,3 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: exchange-cm
+data:
+  # change GOSSIP_ENDPOINT to url of the public gossip route,
+  # e.g. http://news-gossip.apps-crc.testing
+  NEWS_ADDR: GOSSIP_ENDPOINT
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -19,6 +28,12 @@ spec:
           image: quay.io/redhattraining/ossm-exchange:1.0
           ports:
             - containerPort: 8080
+          env:
+            - name: NEWS_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: exchange-cm
+                  key: NEWS_ADDR
 ---
 apiVersion: v1
 kind: Service
