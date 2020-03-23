@@ -12,7 +12,6 @@ import java.util.List;
 
 @Path("/news")
 @Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
 public class NewsResource {
 
     @Inject

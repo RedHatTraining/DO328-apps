@@ -15,6 +15,5 @@ public interface NewsService {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
     List<News> getFinancialNews();
 }
