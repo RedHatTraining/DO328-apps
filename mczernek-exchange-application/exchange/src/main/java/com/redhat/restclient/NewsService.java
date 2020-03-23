@@ -14,6 +14,6 @@ import java.util.List;
 public interface NewsService {
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)q
     List<News> getFinancialNews();
 }
