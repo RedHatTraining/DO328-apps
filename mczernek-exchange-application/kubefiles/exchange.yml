@@ -19,6 +19,9 @@ spec:
           image: quay.io/redhattraining/ossm-exchange:1.0
           ports:
             - containerPort: 8080
+          env:
+            - name: NEWS_ENDPOINT
+              value: "http://feed-news.apps-crc.testing"
 ---
 apiVersion: v1
 kind: Service
