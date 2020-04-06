@@ -7,15 +7,11 @@ The entry point is at `src/index.js` -> `src/app.js`.
 The frontend currently works with the `history` shim microservice. 
 For testing, start run `history` accessible on `localhost:8080` and then start `frontend` (on any port).
 
-## TODO
-
-* Remove hardcoded localhost calls
-* Containerize this application
-
 ## TODO Stretch Goals
 
 * Finish Status dashboard 
 * Refactor into nicer directory structure
+* Move to TypeScript
 
 # Documentation
 
