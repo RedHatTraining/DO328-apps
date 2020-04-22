@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js | pino-pretty"
+    "start": "node index.js"
   },
   "author": "Red Hat Training",
   "license": "ASL",
