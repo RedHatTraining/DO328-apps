@@ -1,6 +1,7 @@
 FROM ubi8/python-36
 
 ENV FLASK_APP="currencies.py"
+ENV JAEGER_AGENT_HOST="jaeger-agent.istio-system"
 
 COPY src /app
 COPY requirements.txt /app

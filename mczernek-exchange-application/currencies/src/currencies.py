@@ -1,8 +1,10 @@
+import logging
 import opentracing as ot
 from flask import Flask, jsonify, request, g
 from flask_cors import CORS
 from jaeger_client import Config
 
+logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
 
 config = Config(
     service_name='currencies',
