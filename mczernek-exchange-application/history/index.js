@@ -4,8 +4,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const _const = require('./lib/constants');
+const Jaeger = require('jaeger-client');
+const Opentracing = require('opentracing');
 
 const app = express();
+const tracer = createTracer();
 
 app.use(bodyParser.json());
 
@@ -13,7 +16,28 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
-  });
+});
+
+app.use(function(req, res, next) {
+    const context = tracer.extract(Opentracing.FORMAT_HTTP_HEADERS, req.headers);
+    const span = tracer.startSpan(`${req.method}:history`, { childOf: context });
+
+    span.setTag(Opentracing.Tags.HTTP_URL, req.url);
+    span.setTag(Opentracing.Tags.HTTP_METHOD, req.method);
+
+    function afterResponse() {
+        res.removeListener("finish", afterResponse);
+        res.removeListener("close", afterResponse);
+        span.setTag(Opentracing.Tags.HTTP_STATUS_CODE, res.statusCode);
+        span.finish();
+    }
+
+    res.on("finish", afterResponse);
+    res.on("close", afterResponse);
+
+    next();
+});
+
 
 
 const postData = (req, res) => {
@@ -52,3 +76,27 @@ app.listen(_const.PORT, () => {
     );
     console.log("  Press CTRL-C to stop\n");
 });
+
+
+function createTracer() {
+    const tracer = Jaeger.initTracer({
+        serviceName: "history",
+        sampler: {
+            type: "const",
+            param: 1,
+        },
+        reporter: {
+            logSpans: true,
+            collectorEndpoint: _const.TRACE_COLLECTOR_URL
+        }
+    }, {
+        logger: console
+    });
+
+    // Use B3 Propagation Specification to be able to read trace headers
+    const codec = new Jaeger.ZipkinB3TextMapCodec({ urlEncoding: true });
+    tracer.registerInjector(Opentracing.FORMAT_HTTP_HEADERS, codec);
+    tracer.registerExtractor(Opentracing.FORMAT_HTTP_HEADERS, codec);
+
+    return tracer;
+}
