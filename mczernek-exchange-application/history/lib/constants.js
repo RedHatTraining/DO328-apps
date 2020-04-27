@@ -22,11 +22,8 @@ const EUR_TO_USD = [
     {"value": 1.05},
 ];
 
-const TRACE_COLLECTOR_URL = process.env.TRACE_COLLECTOR_URL || "http://jaeger-collector.istio-system.svc:14268/api/traces";
-
 module.exports = {
     PORT,
     EUR_TO_USD,
-    USD_TO_EUR,
-    TRACE_COLLECTOR_URL
+    USD_TO_EUR
 };

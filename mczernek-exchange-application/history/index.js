@@ -1,6 +1,5 @@
 'use strict';
 
-//const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const _const = require('./lib/constants');
@@ -79,19 +78,10 @@ app.listen(_const.PORT, () => {
 
 
 function createTracer() {
-    const tracer = Jaeger.initTracer({
-        serviceName: "history",
-        sampler: {
-            type: "const",
-            param: 1,
-        },
-        reporter: {
-            logSpans: true,
-            collectorEndpoint: _const.TRACE_COLLECTOR_URL
-        }
-    }, {
-        logger: console
-    });
+    // Config object is empty as settings are passed as environment variables
+    const config = {};
+    const options = { logger: console };
+    const tracer = Jaeger.initTracerFromEnv(config, options);
 
     // Use B3 Propagation Specification to be able to read trace headers
     const codec = new Jaeger.ZipkinB3TextMapCodec({ urlEncoding: true });
