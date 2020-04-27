@@ -1,0 +1,15 @@
+{
+  "name": "product",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=6.4.0"
+  },
+  "description": "A product service for an online shop using Node.js",
+  "keywords": [],
+  "author": "Ravi Srinivasan",
+  "dependencies": {
+    "express": "^4.16"
+  },
+  "devDependencies": {},
+  "scripts": {}
+}
