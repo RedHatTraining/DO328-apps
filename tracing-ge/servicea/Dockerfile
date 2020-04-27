@@ -1,12 +1,11 @@
-FROM node:12-alpine
+FROM ubi8/nodejs-12
 
 # Install dependencies
-COPY package.json package-lock.json /app/
-WORKDIR /app
-RUN npm ci --production
+COPY package.json .
+RUN npm install
 
 # Copy app
-COPY . /app
+COPY . ./
 
 EXPOSE 8080
 

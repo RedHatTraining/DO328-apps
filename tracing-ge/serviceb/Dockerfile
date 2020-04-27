@@ -3,7 +3,7 @@
 #
 # Before building the docker image run:
 #
-# mvn package
+# mvn clean package
 #
 # Then, build the image with:
 #
@@ -14,15 +14,19 @@
 # docker run -i --rm -p 8080:8080 <your_tag>
 #
 ###
-FROM fabric8/java-alpine-openjdk8-jre:1.6.5
+FROM ubi8:8.1
+
 ENV JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
 ENV AB_ENABLED=jmx_exporter
 
 # Be prepared for running in OpenShift too
-RUN adduser -G root --no-create-home --disabled-password 1001 \
+RUN mkdir /deployments \
+  && adduser -G root --no-create-home -u 1001 quarkus \
   && chown -R 1001 /deployments \
   && chmod -R "g+rwX" /deployments \
   && chown -R 1001:root /deployments
+
+RUN yum -y install java-1.8.0-openjdk-devel
 
 COPY target/*-runner.jar /deployments/app.jar
 EXPOSE 8080 8778 9779
@@ -30,4 +34,4 @@ EXPOSE 8080 8778 9779
 # run with user 1001
 USER 1001
 
-ENTRYPOINT [ "/deployments/run-java.sh" ]
+CMD ["java","-jar","/deployments/app.jar"]
