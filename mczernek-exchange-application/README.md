@@ -22,7 +22,3 @@ oc process -o yaml -f kubefiles/exchange-app-template.yml \
     -p INGRESS_GW=exchange-exchange-app.apps.example.com \
     -p NEWS_ENDPOINT=news-gossip-app.apps.example.com | oc create -f -
 ```
-
-oc process -o yaml -f kubefiles/exchange-app-template.yml \
-    -p INGRESS_GW=istio-ingressgateway-istio-system.apps.ocp-jaime.do328.dev.nextcle.com \
-    -p NEWS_ENDPOINT=news-jaime-gossip.apps.ocp-jaime.do328.dev.nextcle.com | oc create -f -
