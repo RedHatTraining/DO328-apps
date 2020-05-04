@@ -4,15 +4,6 @@ This is the frontend microservice that displays data from our exchange applicati
 
 The entry point is at `src/index.js` -> `src/app.js`.
 
-The frontend currently works with the `history` shim microservice. 
-For testing, start run `history` accessible on `localhost:8080` and then start `frontend` (on any port).
-
-## TODO Stretch Goals
-
-* Finish Status dashboard 
-* Refactor into nicer directory structure
-* Move to TypeScript
-
 # Documentation
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
