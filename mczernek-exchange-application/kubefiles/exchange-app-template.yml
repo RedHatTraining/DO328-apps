@@ -32,8 +32,6 @@ objects:
       - match:
         - uri:
             prefix: /frontend
-        rewrite:
-          uri: /frontend
         route:
         - destination:
             host: frontend
