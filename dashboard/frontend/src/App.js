@@ -6,17 +6,17 @@ class Dashboard extends Component {
   render() {
     return (
       <Page>
-        <PageSection variant={PageSectionVariants.dark}>
+        <PageSection className="border-top-blue center" variant={PageSectionVariants.dark}>
           <TextContent>
-            <Text style={{textAlign: "center"}} component="h1">Exchange Application Dashboard</Text>
+            <Text component="h1">Exchange Application Dashboard</Text>
           </TextContent>
         </PageSection>
         <PageSection>
               <Bullseye>
-                <ComponentCard endpoint="backend/history" name="History Service"/>
-                <ComponentCard endpoint="backend/currencies" name="Currency Service"/>
-                <ComponentCard endpoint="backend/exchangeGW" name="Gateway Service"/>
-                <ComponentCard endpoint="backend/frontend" name="Frontend Service"/>
+                <ComponentCard endpoint="history" name="History Service"/>
+                <ComponentCard endpoint="currencies" name="Currency Service"/>
+                <ComponentCard endpoint="exchangeGW" name="Gateway Service"/>
+                <ComponentCard endpoint="frontend" name="Frontend Service"/>
               </Bullseye>
         </PageSection>
       </Page>

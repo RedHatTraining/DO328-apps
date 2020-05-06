@@ -9,7 +9,7 @@ services. The backend executes a request to the following services:
 - Frontend (currency exchange frontend)
 
 Requests are executed using full service FQDN, e.g. `http://${HISTORY_SERVICE}.${TARGET_PROJECT}.svc.cluster.local:${HISTORY_SERVICE_PORT}`.
-You can change the parameters in the `backend` pod.
+You can change the parameters using the template parameters.
 
 The dashboard frontend service communicates with the dashboard backend service (via ingress).
 Availability of the services is propagated into the frontend.
@@ -25,5 +25,6 @@ To deploy this application, execute:
 ```sh
 oc process -o yaml -f kubefiles/template.yml \
      -p INGRESS_GW=ingress-gateway.istio-system-app.apps.example.com \
+     -p TARGET_PROJECT=secure-mesh \
      | oc create -f
 ```

@@ -62,6 +62,7 @@ objects:
           containers:
             - name: frontend
               image: quay.io/redhattraining/ossm-dashboard-frontend:${FRONTEND_TAG}
+              imagePullPolicy: Always
               ports:
                 - containerPort: 3000
               env:
@@ -120,6 +121,7 @@ objects:
           containers:
             - name: history
               image: quay.io/redhattraining/ossm-dashboard-backend:${BACKEND_TAG}
+              imagePullPolicy: Always
               ports:
                 - containerPort: 8080
   - kind: Service
