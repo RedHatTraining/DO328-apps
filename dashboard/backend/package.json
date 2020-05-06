@@ -1,0 +1,12 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend for the Connectivity Checker frontend",
+  "main": "index.js",
+  "author": "Marek Czernek",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "request": "^2.88.2"
+  }
+}
