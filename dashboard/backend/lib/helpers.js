@@ -6,7 +6,7 @@ function handleResponse(clientResp, requestError, requestResp) {
         clientResp.json({state: "ERR", isAvailable: false}).status(400)
     } else {
         const respCode = requestResp.statusCode
-        let stateString = "NOK"
+        let stateString = "Down"
         let isAvailable = false
 
         console.log("No error; got response:", respCode)

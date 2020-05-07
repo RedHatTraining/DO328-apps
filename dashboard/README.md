@@ -8,10 +8,12 @@ services. The backend executes a request to the following services:
 - Exchange
 - Frontend (currency exchange frontend)
 
+![Image of the dashboard application](imgs/frontend.png)
+
 Requests are executed using full service FQDN, e.g. `http://${HISTORY_SERVICE}.${TARGET_PROJECT}.svc.cluster.local:${HISTORY_SERVICE_PORT}`.
 You can change the parameters using the template parameters.
 
-The dashboard frontend service communicates with the dashboard backend service (via ingress).
+The dashboard frontend service communicates with the dashboard backend service (via ingress, such as the `istio-ingressgateway` pod).
 Availability of the services is propagated into the frontend.
 
 ## Deployment

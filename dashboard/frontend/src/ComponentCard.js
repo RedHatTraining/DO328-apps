@@ -30,7 +30,10 @@ class ComponentCard extends Component {
         .then(serviceState => this.setState({
           serviceState
         }))
-        .catch(err => console.log(err));
+        .catch(err => {
+          console.log(err)
+          this.setState({serviceState: {"state": "Down", "isAvailable": false}})
+        });
   }
 
   render() {
