@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import { Page, PageSection, PageSectionVariants, Text, TextContent, Bullseye } from '@patternfly/react-core'
-import ComponentCard from './ComponentCard'
+import React, {Component} from "react";
+import { Page, PageSection, PageSectionVariants, Text, TextContent, Bullseye } from "@patternfly/react-core";
+import ComponentCard from "./ComponentCard";
 
 class Dashboard extends Component {
   render() {
@@ -12,12 +12,12 @@ class Dashboard extends Component {
           </TextContent>
         </PageSection>
         <PageSection>
-              <Bullseye>
-                <ComponentCard endpoint="history" name="History Service"/>
-                <ComponentCard endpoint="currencies" name="Currency Service"/>
-                <ComponentCard endpoint="exchangeGW" name="Gateway Service"/>
-                <ComponentCard endpoint="frontend" name="Frontend Service"/>
-              </Bullseye>
+          <Bullseye>
+            <ComponentCard endpoint="history" name="History Service"/>
+            <ComponentCard endpoint="currencies" name="Currency Service"/>
+            <ComponentCard endpoint="exchangeGW" name="Gateway Service"/>
+            <ComponentCard endpoint="frontend" name="Frontend Service"/>
+          </Bullseye>
         </PageSection>
       </Page>
     );
