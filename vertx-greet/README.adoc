@@ -54,8 +54,8 @@ To publish the application as a container image in quay.io, first build the jar:
 
 Next, build the image:
 
-    docker build -t quay.io/redhattraining/vertx-greet .
+    docker build -t quay.io/redhattraining/ossm-vertx-greet .
 
 Finally, push the image to quay:
 
-    docker push quay.io/redhattraining/vertx-greet
+    docker push quay.io/redhattraining/ossm-vertx-greet
