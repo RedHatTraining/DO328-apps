@@ -1,0 +1,13 @@
+click==7.1.1
+Flask==1.1.2
+Flask-Cors==3.0.8
+itsdangerous==1.1.0
+jaeger-client==4.3.0
+Jinja2==2.11.2
+MarkupSafe==1.1.1
+opentracing==2.3.0
+six==1.14.0
+threadloop==1.0.2
+thrift==0.13.0
+tornado==6.0.4
+Werkzeug==1.0.1
