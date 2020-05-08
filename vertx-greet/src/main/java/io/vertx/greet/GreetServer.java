@@ -32,7 +32,7 @@ public class GreetServer {
 
         router.get("/").handler(req -> {
             Instant now = Instant.now(); 
-            if (verifyRateLimit(now)) {
+            if (isRequestWithinRateLimits(now)) {
                 req.response().end(greeting + "\n");
             } else {
                 req.response().setStatusCode(503).end();
@@ -49,14 +49,14 @@ public class GreetServer {
         return router;
     }
 
-    private boolean verifyRateLimit(Instant now) {
+    private boolean isRequestWithinRateLimits(Instant instant) {
         if (maxRequestsPerSecond == 0) {
             return true;
         }
 
         long millis = (long) (1000 / maxRequestsPerSecond);
 
-        return lastRequestInstant.plusMillis(millis).isBefore(now);
+        return lastRequestInstant.plusMillis(millis).isBefore(instant);
     }
 
 }
