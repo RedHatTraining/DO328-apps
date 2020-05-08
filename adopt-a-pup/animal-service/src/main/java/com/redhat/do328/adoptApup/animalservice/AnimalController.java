@@ -23,13 +23,16 @@ public class AnimalController {
     @Autowired
     private AnimalService animalService;
 
-    @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public String createAnimal(@RequestBody Animal animal) throws URISyntaxException {
+    @RequestMapping(method = RequestMethod.POST, value = "/{shelter-id}/create")
+    public String createAnimal(@RequestBody Animal animal,
+                               @PathVariable(value = "shelter-id") String shelterId) throws URISyntaxException {
+        animal.setShelterId(shelterId);
         return animalService.createAnimal(animal);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/createBulk")
-    public List<String> createAnimalBulk(@RequestBody List<Animal> animals) throws Exception {
+    @RequestMapping(method = RequestMethod.POST, value = "/{shelter-id}/createBulk")
+    public List<String> createAnimalBulk(@RequestBody List<Animal> animals,
+                                         @PathVariable(value = "shelter-id") String shelterId) throws Exception {
         return animalService.createAnimalsBulk(animals);
     }
 

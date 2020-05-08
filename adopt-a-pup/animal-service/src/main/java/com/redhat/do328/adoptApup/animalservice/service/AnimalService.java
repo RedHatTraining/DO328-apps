@@ -14,7 +14,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
+import org.stringtemplate.v4.STGroupDir;
 import org.stringtemplate.v4.STGroupFile;
+import org.stringtemplate.v4.STRawGroupDir;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -28,7 +30,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class AnimalService {
-    private static final STGroup templateFile = new STGroupFile("templates/animalNotificationRequestTemplate.stg");
+    private static final STRawGroupDir templateFile = new STRawGroupDir("templates");
 
     @Value("${notification-service.url:localhost:8081")
     private String notificationServiceUrl;
@@ -39,8 +41,6 @@ public class AnimalService {
     @Autowired
     private AnimalNotificationSubscriptionRepository animalNotificationSubscriptionRepository;
 
-    private ST animalNotificationRequestTemplate;
-
     @Autowired
     private RestTemplate restTemplate;
 
@@ -50,7 +50,7 @@ public class AnimalService {
         animalRepository.save(animal);
         final List<AnimalNotificationRequestCriteria> animals = animalNotificationSubscriptionRepository.findAll();
 
-        final List<AnimalNotificationRequestCriteria> matchingNotificationCriterias = animals.stream().map(animalNotificationRequestCriteria -> {
+        final List<AnimalNotificationRequestCriteria> matchingNotificationCriteria = animals.stream().map(animalNotificationRequestCriteria -> {
             if ((animalNotificationRequestCriteria.getBreed() != null && !animal.getBreed().equals(animalNotificationRequestCriteria.getBreed()))
                     || animal.getWeight() < animalNotificationRequestCriteria.getMinWeight()
                     || animal.getWeight() > animalNotificationRequestCriteria.getMaxWeight()
@@ -60,13 +60,9 @@ public class AnimalService {
             return animalNotificationRequestCriteria;
         }).filter(Objects::nonNull)
                 .collect(Collectors.toList());
-
-        if (!CollectionUtils.isEmpty(matchingNotificationCriterias)) {
-            final Map<String, String> templatesToEmail = matchingNotificationCriterias.stream().collect(Collectors.toMap(AnimalNotificationRequestCriteria::getEmail, criteria -> {
-//                final STGroup stGroup = new STGroup();
-
+        if (!CollectionUtils.isEmpty(matchingNotificationCriteria)) {
+            final Map<String, String> templatesToEmail = matchingNotificationCriteria.stream().collect(Collectors.toMap(AnimalNotificationRequestCriteria::getEmail, criteria -> {
                 final ST template = templateFile.getInstanceOf("animalNotificationRequest");
-//                final ST template = templateFile.render("animalNotificationRequest");
                 template.add("username", criteria.getUsername());
                 template.add("breed", criteria.getBreed());
                 template.add("minWeight", criteria.getMinWeight());
