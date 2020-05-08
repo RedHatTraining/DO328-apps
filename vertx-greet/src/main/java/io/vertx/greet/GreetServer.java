@@ -55,7 +55,6 @@ public class GreetServer {
         }
 
         long millis = (long) (1000 / maxRequestsPerSecond);
-
         return lastRequestInstant.plusMillis(millis).isBefore(instant);
     }
 

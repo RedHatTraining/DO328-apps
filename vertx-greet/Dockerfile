@@ -1,6 +1,6 @@
 FROM openjdk:8-jre-alpine
 
-ENV VERTICLE_FILE maven-simplest-3.9.0-fat.jar
+ENV VERTICLE_FILE vertx-greet-3.9.0-fat.jar
 
 # Set the location of the verticles
 ENV VERTICLE_HOME /usr/verticles
