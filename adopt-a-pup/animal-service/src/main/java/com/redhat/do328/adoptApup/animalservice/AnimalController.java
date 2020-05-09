@@ -41,7 +41,7 @@ public class AnimalController {
         return animalService.findAnimalById(animalId);
     }
 
-    public void createNotificationSubscription(@RequestBody AnimalNotificationRequestCriteria criteria) {
+    public void createNotificationSubscription(@RequestBody AnimalNotificationRequestCriteria criteria) throws URISyntaxException {
         animalService.createNotificationSubscription(criteria);
     }
 }
