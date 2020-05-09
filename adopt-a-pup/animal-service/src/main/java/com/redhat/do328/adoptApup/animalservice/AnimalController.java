@@ -42,6 +42,6 @@ public class AnimalController {
     }
 
     public void createNotificationSubscription(@RequestBody AnimalNotificationRequestCriteria criteria) {
-
+        animalService.createNotificationSubscription(criteria);
     }
 }

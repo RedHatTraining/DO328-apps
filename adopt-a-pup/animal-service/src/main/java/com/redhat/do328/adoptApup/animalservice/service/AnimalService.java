@@ -21,6 +21,8 @@ import org.stringtemplate.v4.STRawGroupDir;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -48,9 +50,9 @@ public class AnimalService {
         final String animalID = UUID.randomUUID().toString();
         animal.setAnimalId(animalID);
         animalRepository.save(animal);
-        final List<AnimalNotificationRequestCriteria> animals = animalNotificationSubscriptionRepository.findAll();
+        final List<AnimalNotificationRequestCriteria> animalCriteria = animalNotificationSubscriptionRepository.findAll();
 
-        final List<AnimalNotificationRequestCriteria> matchingNotificationCriteria = animals.stream().map(animalNotificationRequestCriteria -> {
+        final List<AnimalNotificationRequestCriteria> matchingNotificationCriteria = animalCriteria.stream().map(animalNotificationRequestCriteria -> {
             if ((animalNotificationRequestCriteria.getBreed() != null && !animal.getBreed().equals(animalNotificationRequestCriteria.getBreed()))
                     || animal.getWeight() < animalNotificationRequestCriteria.getMinWeight()
                     || animal.getWeight() > animalNotificationRequestCriteria.getMaxWeight()
@@ -61,19 +63,15 @@ public class AnimalService {
         }).filter(Objects::nonNull)
                 .collect(Collectors.toList());
         if (!CollectionUtils.isEmpty(matchingNotificationCriteria)) {
-            final Map<String, String> templatesToEmail = matchingNotificationCriteria.stream().collect(Collectors.toMap(AnimalNotificationRequestCriteria::getEmail, criteria -> {
-                final ST template = templateFile.getInstanceOf("animalNotificationRequest");
-                template.add("username", criteria.getUsername());
-                template.add("breed", criteria.getBreed());
-                template.add("minWeight", criteria.getMinWeight());
-                template.add("maxWeight", criteria.getMaxWeight() > 0 ? criteria.getMaxWeight() : "N/A");
-                template.add("approximateSize", criteria.getApproximateSize() == null ? "N/A": criteria.getApproximateSize());
-                template.add("animalName", animal.getAnimalName());
-                template.add("websiteUrl", "https://google.com");
-                template.add("animalId", animalID);
-                return template.render();
-            }));
-            restTemplate.postForEntity(new URI(notificationServiceUrl), templatesToEmail, ResponseEntity.class);
+            final Map<String, String> templatesToEmail = matchingNotificationCriteria.stream()
+                    .collect(Collectors.toMap(AnimalNotificationRequestCriteria::getEmail, criteria -> renderTemplate(criteria, animal)));
+            final ResponseEntity<ResponseEntity> response = restTemplate.postForEntity(new URI(notificationServiceUrl), templatesToEmail, ResponseEntity.class);
+            if (HttpStatus.OK.equals(response.getStatusCode())) {
+                animalNotificationSubscriptionRepository.deleteAll(matchingNotificationCriteria);
+            } else {
+                // retry
+            }
+
         }
 
         return animalID;
@@ -93,5 +91,48 @@ public class AnimalService {
             animalIds.add(createAnimal(animal));
         }
         return animalIds;
+    }
+
+    public void createNotificationSubscription(AnimalNotificationRequestCriteria criteria) throws URISyntaxException {
+        animalNotificationSubscriptionRepository.save(criteria);
+
+        List<Animal> animals = animalRepository.findAll();
+        final List<Animal> matchingAnimals = matchCriteria(criteria, animals);
+        final Map<String, String> notificationRequest = new HashMap<>();
+        matchingAnimals.forEach(animal -> {
+            final String renderedTemplate = renderTemplate(criteria, animal);
+            notificationRequest.put(criteria.getEmail(), renderedTemplate);
+        });
+        final ResponseEntity<ResponseEntity> response = restTemplate.postForEntity(new URI(notificationServiceUrl), notificationRequest, ResponseEntity.class);
+        if (HttpStatus.OK.equals(response.getStatusCode())) {
+            animalNotificationSubscriptionRepository.delete(criteria);
+        } else {
+            // retry
+        }
+    }
+
+    private String renderTemplate(AnimalNotificationRequestCriteria criteria, Animal animal) {
+        final ST template = templateFile.getInstanceOf("animalNotificationRequest");
+        template.add("username", criteria.getUsername());
+        template.add("breed", criteria.getBreed());
+        template.add("minWeight", criteria.getMinWeight());
+        template.add("maxWeight", criteria.getMaxWeight() > 0 ? criteria.getMaxWeight() : "N/A");
+        template.add("approximateSize", criteria.getApproximateSize() == null ? "N/A": criteria.getApproximateSize());
+        template.add("animalName", animal.getAnimalName());
+        template.add("websiteUrl", "https://google.com");
+        template.add("animalId", animal.getAnimalId());
+        return template.render();
+    }
+
+    private List<Animal> matchCriteria(AnimalNotificationRequestCriteria criteria, List<Animal> animals) {
+        return animals.stream().map(animal -> {
+            if ((criteria.getBreed() != null && !animal.getBreed().equals(criteria.getBreed()))
+                    || animal.getWeight() < criteria.getMinWeight()
+                    || animal.getWeight() > criteria.getMaxWeight()
+                    || criteria.getApproximateSize() != null && criteria.getApproximateSize().equals(animal.getApproximateSize())) {
+                return null;
+            }
+            return animal;
+        }).filter(Objects::nonNull).collect(Collectors.toList());
     }
 }
