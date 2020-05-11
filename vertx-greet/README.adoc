@@ -1,0 +1,61 @@
+= Vert.x Greet service
+
+A simple Vert.x greeting service with the following features:
+
+* Configurable greeting message.
+* Request counter.
+* Basic rate limiting.
+
+
+In this example Vert.x is used embedded. I.e. we use the Vert.x APIs directly in our own classes rather than deploying
+the code in verticles.
+
+== How to run
+
+You can run or debug the example in your IDE by just right clicking the main class and run as.. or debug as...
+
+The pom.xml uses the Maven shade plugin to assemble the application and all it's dependencies into a single "fat" jar.
+
+To run with maven
+
+    mvn compile exec:java
+
+To build a "fat jar"
+
+    mvn package
+
+To run the fat jar:
+
+    java -jar target/maven-simplest-3.9.0-fat.jar
+
+(You can take that jar and run it anywhere there is a Java 8+ JDK. It contains all the dependencies it needs so you
+don't need to install Vert.x on the target machine).
+
+You can also run the fat jar with maven:
+
+    mvn package exec:exec@run-app
+
+Now point your browser at http://localhost:8080
+
+
+== Configuration
+
+The service uses two optional environment variables to control the greeting message and a very basic rate limiting feature:
+
+* GRETTING: defines the message returned when requesting the route `/`. If not specified, a default message is used. 
+* MAX_REQUESTS_PER_SECOND: Indicates the number of requests per second that the service is able to handle. When a user surpasses this limit, the service returns 503 for each rate-limited request. Ignore this variable to deactivate the rate limit.
+
+
+== Container Image 
+
+To publish the application as a container image in quay.io, first build the jar:
+
+    mvn package
+
+Next, build the image:
+
+    docker build -t quay.io/redhattraining/ossm-vertx-greet .
+
+Finally, push the image to quay:
+
+    docker push quay.io/redhattraining/ossm-vertx-greet
