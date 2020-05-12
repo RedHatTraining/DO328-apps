@@ -28,8 +28,8 @@ const FRONTEND_FQDN = `http://${FRONTEND_SERVICE}.${TARGET_PROJECT}.svc.cluster.
 
 
 const HISTORY_DATA = {
-    "source": "USD",
-    "target": "EUR"
+    source: "USD",
+    target: "EUR"
 };
 
 module.exports = {

@@ -8,7 +8,8 @@ ENV CI=true
 
 # Cache dependencies
 COPY package.json .
-RUN npm install
+COPY package-lock.json .
+RUN npm ci --production
 
 # Cache public files
 COPY public ./public
