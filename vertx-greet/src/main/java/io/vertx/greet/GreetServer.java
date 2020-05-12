@@ -1,6 +1,8 @@
 package io.vertx.greet;
 
-import java.time.Instant; 
+import java.time.Instant;
+import java.util.logging.Logger;
+
 import io.vertx.core.Vertx;
 import io.vertx.ext.web.Router;
 
@@ -12,6 +14,7 @@ public class GreetServer {
     private String greeting;
     private Instant lastRequestInstant;
     private Vertx vertx;
+    private final static Logger LOGGER = Logger.getLogger(GreetServer.class.getName());
 
     GreetServer(String greeting, float maxRequestsPerSecond) {
         this.greeting = greeting;
@@ -31,7 +34,9 @@ public class GreetServer {
         Router router = Router.router(vertx);
 
         router.get("/").handler(req -> {
-            Instant now = Instant.now(); 
+            Instant now = Instant.now();
+            LOGGER.info("Attending greeting request #"+counter);
+ 
             if (isRequestWithinRateLimits(now)) {
                 req.response().end(greeting + "\n");
             } else {
