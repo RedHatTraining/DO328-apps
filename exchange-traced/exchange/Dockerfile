@@ -1,4 +1,4 @@
-FROM ubi8:8.1
+FROM registry.access.redhat.com/ubi8:8.1
 ENV JAVA_OPTIONS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
 ENV AB_ENABLED=jmx_exporter
 
