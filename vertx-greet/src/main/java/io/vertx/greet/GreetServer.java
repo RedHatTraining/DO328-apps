@@ -1,5 +1,7 @@
 package io.vertx.greet;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.time.Instant;
 import java.util.logging.Logger;
 
@@ -15,7 +17,15 @@ public class GreetServer {
     private Instant lastRequestInstant;
     private Vertx vertx;
     private final static Logger LOGGER = Logger.getLogger(GreetServer.class.getName());
-
+    private static String HOSTNAME;
+    static {
+        try {
+            HOSTNAME = InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+            HOSTNAME = "unknown";
+        }
+    }
+  
     GreetServer(String greeting, float maxRequestsPerSecond) {
         this.greeting = greeting;
         this.maxRequestsPerSecond = maxRequestsPerSecond;
@@ -35,7 +45,7 @@ public class GreetServer {
 
         router.get("/").handler(req -> {
             Instant now = Instant.now();
-            LOGGER.info("Attending greeting request #"+counter);
+            LOGGER.info("Attending greeting request #"+counter+" from "+HOSTNAME);
  
             if (isRequestWithinRateLimits(now)) {
                 req.response().end(greeting + "\n");
