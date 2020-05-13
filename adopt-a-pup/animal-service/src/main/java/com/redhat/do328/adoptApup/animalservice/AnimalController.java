@@ -36,6 +36,11 @@ public class AnimalController {
         return animalService.createAnimalsBulk(animals);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/getAllAdoptable")
+    public List<Animal> getAllAdoptableAnimals() {
+        return animalService.getAllAdoptableAnimals();
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/{animal-id}")
     public Animal getAnimalById(@PathVariable(value = "animal-id") String animalId) {
         return animalService.findAnimalById(animalId);

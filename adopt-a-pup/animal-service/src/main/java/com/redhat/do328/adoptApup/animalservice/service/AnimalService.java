@@ -135,4 +135,8 @@ public class AnimalService {
             return animal;
         }).filter(Objects::nonNull).collect(Collectors.toList());
     }
+
+    public List<Animal> getAllAdoptableAnimals() {
+        return animalRepository.findAllByAdoptable(true);
+    }
 }

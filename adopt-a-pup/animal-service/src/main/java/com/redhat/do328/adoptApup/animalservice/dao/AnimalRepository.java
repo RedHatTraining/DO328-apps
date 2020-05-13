@@ -10,4 +10,5 @@ import java.util.List;
 
 public interface AnimalRepository extends PagingAndSortingRepository<Animal, String> {
     List<Animal> findAll();
+    List<Animal> findAllByAdoptable(boolean isAdoptable);
 }

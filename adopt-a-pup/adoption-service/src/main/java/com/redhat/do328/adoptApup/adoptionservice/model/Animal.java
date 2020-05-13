@@ -1,4 +1,4 @@
-package com.redhat.do328.adoptApup.animalservice.model;
+package com.redhat.do328.adoptApup.adoptionservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,7 +21,7 @@ public class Animal {
     private String breed;
     private int weight;
     private AnimalSize approximateSize;
-    private boolean adoptable;
+    private boolean status;
     private Residency residencyRequired;
     private int squareFootageOfHome;
     private boolean childSafe;
