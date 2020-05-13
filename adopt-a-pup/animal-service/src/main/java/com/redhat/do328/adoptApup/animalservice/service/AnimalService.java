@@ -85,9 +85,10 @@ public class AnimalService {
         return animal.get();
     }
 
-    public List<String> createAnimalsBulk(List<Animal> animals) throws Exception {
+    public List<String> createAnimalsBulk(List<Animal> animals, String shelterId) throws Exception {
         final List<String> animalIds = new ArrayList<>();
         for (Animal animal : animals) {
+            animal.setShelterId(shelterId);
             animalIds.add(createAnimal(animal));
         }
         return animalIds;

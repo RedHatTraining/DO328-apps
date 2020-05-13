@@ -33,7 +33,7 @@ public class AnimalController {
     @RequestMapping(method = RequestMethod.POST, value = "/{shelter-id}/createBulk")
     public List<String> createAnimalBulk(@RequestBody List<Animal> animals,
                                          @PathVariable(value = "shelter-id") String shelterId) throws Exception {
-        return animalService.createAnimalsBulk(animals);
+        return animalService.createAnimalsBulk(animals, shelterId);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/getAllAdoptable")
