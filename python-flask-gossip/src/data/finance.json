@@ -1,0 +1,49 @@
+{
+  "data": [
+    {
+      "id": "8f9f00d0-acce-4eda-9b31-2251ab393846",
+      "title": "Energy Sector +0.20%",
+      "timestamp": 1578454302
+    },
+    {
+      "id": "26fabd5b-d21e-405e-a624-e03a21b8d5ef",
+      "title": "Financials Sector -0.77%",
+      "timestamp": 1579263010
+    },
+    {
+      "id": "451bf2da-9af4-417b-bc5f-bb14bcdbdfc8",
+      "title": "Basic Materials Sector -0.48%",
+      "timestamp": 1579724882
+    },
+    {
+      "id": "a20e3370-52df-4631-8028-b1ba2ede2257",
+      "title": "Healthcare Sector +0.92%",
+      "timestamp": 1580165061
+    },
+    {
+      "id": "c8b770ed-997d-45ba-89a2-d10e9951e0d2",
+      "title": "Industrials Sector -1.02%",
+      "timestamp": 1580240625
+    },
+    {
+      "id": "35b7d3a9-0e47-40ab-aeed-b223ad6a8afa",
+      "title": "Technology Sector +0.11%",
+      "timestamp": 1581686667
+    },
+    {
+      "id": "e3ffea9c-5025-4d48-a451-e78cbbb37f79",
+      "title": "Cyclical Goods & Services Sector +0.07%",
+      "timestamp": 1581921237
+    },
+    {
+      "id": "52048c22-d270-4224-9f01-dc70d32c4fb1",
+      "title": "Non-Cyclical Goods & Services Sector +0.33%",
+      "timestamp": 1582278201
+    },
+    {
+      "id": "b7fc7f33-b777-4ec2-89ef-2339cbf662b5",
+      "title": "Utilities Sector +0.46%",
+      "timestamp": 1583351796
+    }
+  ]
+}

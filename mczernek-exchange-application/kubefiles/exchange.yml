@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: exchange
+spec:
+  selector:
+    matchLabels:
+      app: exchange
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: exchange
+      annotations:
+          sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+        - name: exchange
+          image: quay.io/redhattraining/ossm-exchange:1.0
+          ports:
+            - containerPort: 8080
+          env:
+            - name: NEWS_ENDPOINT
+              value: "http://feed-news.apps-crc.testing"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: exchange
+  name: exchange
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: exchange

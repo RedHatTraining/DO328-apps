@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/adopt-a-pup.iml" filepath="$PROJECT_DIR$/.idea/adopt-a-pup.iml" />
+      <module fileurl="file://$PROJECT_DIR$/adoption-service/adoption-service.iml" filepath="$PROJECT_DIR$/adoption-service/adoption-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/animal-service/animal-service.iml" filepath="$PROJECT_DIR$/animal-service/animal-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/notification-service/notification-service.iml" filepath="$PROJECT_DIR$/notification-service/notification-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shelter-service/shelter-service.iml" filepath="$PROJECT_DIR$/shelter-service/shelter-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/user-service/user-service.iml" filepath="$PROJECT_DIR$/user-service/user-service.iml" />
+    </modules>
+  </component>
+</project>

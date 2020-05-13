@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-cm
+data:
+# change ingress_gw to url of the istio-ingress gateway route,
+# e.g. istio-ingressgateway-istio-system.example.com/
+# if you want to change the /exchange, change the virtual service
+# for the exchange service too.
+  GW_ADDR: INGRESS_GW/exchange
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  selector:
+    matchLabels:
+      app: frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: frontend
+      annotations:
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+        - name: frontend
+          image: quay.io/redhattraining/ossm-frontend:1.0
+          ports:
+            - containerPort: 3000
+          env:
+            - name: REACT_APP_GW_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: frontend-cm
+                  key: GW_ADDR
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: frontend
+  name: frontend
+spec:
+  ports:
+  - port: 3000
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app: frontend

@@ -1,0 +1,14 @@
+{
+  "name": "history",
+  "version": "1.0.0",
+  "description": "A backend data service that returns historical data of currency exchange",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Marek Czernek <mczernek@redhat.com>",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
