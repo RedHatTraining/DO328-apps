@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Document(collation = "animals")
+@Document(collection = "animals")
 public class Animal {
     @JsonIgnore
     @Id

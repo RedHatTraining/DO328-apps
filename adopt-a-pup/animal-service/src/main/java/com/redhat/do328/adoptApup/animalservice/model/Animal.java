@@ -12,7 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Document(collation = "animals")
+@Document(collection = "animals")
 public class Animal {
     @JsonIgnore
     @Id

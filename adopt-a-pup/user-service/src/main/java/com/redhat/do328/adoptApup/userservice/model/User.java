@@ -11,7 +11,7 @@ import java.util.Collection;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-@Document(collation = "users")
+@Document(collection = "users")
 public class User extends org.springframework.security.core.userdetails.User {
     public User(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
