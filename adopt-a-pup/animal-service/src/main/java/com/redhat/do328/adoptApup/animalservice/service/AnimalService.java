@@ -7,7 +7,6 @@ import com.redhat.do328.adoptApup.animalservice.model.AnimalNotificationRequestC
 import com.redhat.do328.adoptApup.animalservice.model.AnimalStatusChangeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -38,9 +37,6 @@ public class AnimalService {
 
     @Autowired
     private AnimalNotificationSubscriptionRepository animalNotificationSubscriptionRepository;
-
-    @Autowired
-    private MongoTemplate mongoTemplate;
 
     @Autowired
     private RestTemplate restTemplate;
