@@ -2,20 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f788b161-9af5-4988-b67e-058c2cc6689b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/model/Email.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/model/EmailNotificationRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/models/Email.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/models/EmailNotificationRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/models/NotificationStatusResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/models/Status.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/AnimalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/AnimalController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/service/AnimalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/service/AnimalService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/NotificationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/NotificationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/NotificationServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/NotificationServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/services/EmailManagerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/services/EmailManagerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/notification-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/animal-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/animal-service/src/main/resources/application.properties" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/user-service/target/" />
     <ignored path="$PROJECT_DIR$/adoption-service/target/" />
@@ -35,14 +24,14 @@
     <favorites_list name="adopt-a-pup" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.64155847">
+    <splitter split-orientation="horizontal" split-proportion="0.8246753">
       <split-first>
         <leaf>
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/service/AnimalService.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="187">
-                  <caret line="64" column="138" selection-start-line="64" selection-start-column="138" selection-end-line="64" selection-end-column="138" />
+                <state relative-caret-position="180">
+                  <caret line="36" column="14" lean-forward="true" selection-start-line="36" selection-start-column="14" selection-end-line="36" selection-end-column="14" />
                   <folding>
                     <element signature="e#6776#6777#0" expanded="true" />
                     <element signature="e#6840#6841#0" expanded="true" />
@@ -51,10 +40,28 @@
               </provider>
             </entry>
           </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/animal-service/src/main/resources/application.properties">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="75">
+                  <caret line="5" column="39" selection-start-line="5" selection-start-column="39" selection-end-line="5" selection-end-column="39" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/model/AnimalNotificationRequestCriteria.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="135">
+                  <caret line="11" column="25" lean-forward="true" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
+                </state>
+              </provider>
+            </entry>
+          </file>
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/NotificationController.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="135">
+                <state relative-caret-position="225">
                   <caret line="15" column="14" lean-forward="true" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
                   <folding>
                     <element signature="imports" expanded="true" />
@@ -66,7 +73,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/services/EmailManagerService.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="55">
+                <state relative-caret-position="315">
                   <caret line="21" column="39" lean-forward="true" selection-start-line="21" selection-start-column="39" selection-end-line="21" selection-end-column="39" />
                   <folding>
                     <element signature="imports" expanded="true" />
@@ -76,11 +83,32 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/AnimalController.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="513">
+                  <caret line="50" column="5" lean-forward="true" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="5" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/adoption-service/src/main/java/com/redhat/do328/adoptApup/adoptionservice/AdoptionController.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="285">
+                  <caret line="19" selection-start-line="19" selection-end-line="19" />
+                  <folding>
+                    <element signature="imports" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/NotificationServiceApplication.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="92">
-                  <caret line="47" column="36" selection-start-line="47" selection-start-column="36" selection-end-line="47" selection-end-column="36" />
+                  <caret line="47" column="40" lean-forward="true" selection-start-line="47" selection-start-column="40" selection-end-line="47" selection-end-column="40" />
                   <folding>
                     <element signature="e#865#886#1" expanded="true" />
                     <element signature="e#920#941#1" expanded="true" />
@@ -90,58 +118,22 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/shelter-service/pom.xml">
+            <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_29.yml">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="308">
-                  <caret line="22" column="35" selection-start-line="22" selection-start-column="35" selection-end-line="22" selection-end-column="35" />
+                <state relative-caret-position="195">
+                  <caret line="13" column="22" lean-forward="true" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/animal-service/pom.xml">
+            <entry file="file://$PROJECT_DIR$/adoption-service/src/main/java/com/redhat/do328/adoptApup/adoptionservice/service/AdoptionService.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="270">
-                  <caret line="21" selection-start-line="21" selection-end-line="30" selection-end-column="21" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/notification-service/pom.xml">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="255">
-                  <caret line="17" column="40" selection-start-line="17" selection-start-column="40" selection-end-line="17" selection-end-column="40" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/models/EmailNotificationRequest.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="15">
-                  <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/models/Email.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="135">
-                  <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+                <state relative-caret-position="537">
+                  <caret line="95" column="16" lean-forward="true" selection-start-line="95" selection-start-column="16" selection-end-line="95" selection-end-column="16" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/models/Status.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="60">
-                  <caret line="4" column="11" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
                 </state>
               </provider>
             </entry>
@@ -268,7 +260,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/user-service/pom.xml" />
         <option value="$PROJECT_DIR$/user-service/src/main/java/com/redhat/do328/adoptApup/userservice/dao/UserRepository.java" />
         <option value="$PROJECT_DIR$/user-service/src/main/java/com/redhat/do328/adoptApup/userservice/service/MongoUserService.java" />
         <option value="$PROJECT_DIR$/user-service/src/main/java/com/redhat/do328/adoptApup/userservice/UserServiceApplication.java" />
@@ -280,7 +271,6 @@
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_20.json" />
         <option value="$PROJECT_DIR$/adoption-service/src/main/resources/static/application-properties.yaml" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_28.yml" />
-        <option value="$PROJECT_DIR$/animal-service/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/user-service/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/shelter-service/src/main/resources/application.properties" />
         <option value="$PROJECT_DIR$/shelter-service/src/main/java/com/redhat/do328/adoptApup/shelterservice/model/Shelter.java" />
@@ -301,7 +291,6 @@
         <option value="$PROJECT_DIR$/adoption-service/src/main/java/com/redhat/do328/adoptApup/adoptionservice/model/Status.java" />
         <option value="$PROJECT_DIR$/adoption-service/src/main/java/com/redhat/do328/adoptApup/adoptionservice/model/AdoptionApplication.java" />
         <option value="$PROJECT_DIR$/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/model/AnimalStatusChangeRequest.java" />
-        <option value="$PROJECT_DIR$/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/AnimalController.java" />
         <option value="$PROJECT_DIR$/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/dao/AnimalRepository.java" />
         <option value="$PROJECT_DIR$/adoption-service/src/main/java/com/redhat/do328/adoptApup/adoptionservice/model/AnimalStatusChangeRequest.java" />
         <option value="$PROJECT_DIR$/shelter-service/src/main/java/com/redhat/do328/adoptApup/shelterservice/service/ShelterService.java" />
@@ -315,10 +304,13 @@
         <option value="$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/models/EmailNotificationRequest.java" />
         <option value="$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/services/EmailManagerService.java" />
         <option value="$PROJECT_DIR$/notification-service/pom.xml" />
-        <option value="$PROJECT_DIR$/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/service/AnimalService.java" />
         <option value="$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/NotificationController.java" />
         <option value="$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/NotificationServiceApplication.java" />
         <option value="$PROJECT_DIR$/notification-service/src/main/resources/application.properties" />
+        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_29.yml" />
+        <option value="$PROJECT_DIR$/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/AnimalController.java" />
+        <option value="$PROJECT_DIR$/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/service/AnimalService.java" />
+        <option value="$PROJECT_DIR$/animal-service/src/main/resources/application.properties" />
       </list>
     </option>
   </component>
@@ -409,6 +401,16 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="adoptionservice" type="462c0819:PsiDirectoryNode" />
               <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="adopt-a-pup" type="b2602c69:ProjectViewProjectNode" />
+              <item name="adopt-a-pup" type="462c0819:PsiDirectoryNode" />
+              <item name="adoption-service" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="adoptionservice" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="adopt-a-pup" type="b2602c69:ProjectViewProjectNode" />
@@ -626,8 +628,8 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1589495098074" />
-    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="JSON&#10;TEXT&#10;yaml" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1589495561544" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="yaml&#10;JSON&#10;TEXT" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/animal-service/pom.xml" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -780,13 +782,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="41728000" />
+    <option name="totallyTimeSpent" value="42292000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="27" width="1920" height="1053" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49626866" visible="true" weight="0.1782284" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49626866" visible="true" weight="0.1782284" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -804,7 +806,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.6604803" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.1812227" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Spring" order="12" />
       <window_info anchor="bottom" id="Run with VisualVM" order="13" />
@@ -828,20 +830,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/adoption-service/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="30" column="21" selection-start-line="30" selection-start-column="21" selection-end-line="30" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_20.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="117" lean-forward="true" selection-start-column="117" selection-end-column="117" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_28.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -902,13 +890,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="56" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/animal-service/src/main/resources/application.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="6" />
         </state>
       </provider>
     </entry>
@@ -1071,43 +1052,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/AnimalController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="24" column="80" selection-start-line="24" selection-start-column="80" selection-end-line="24" selection-end-column="80" />
-          <folding>
-            <element signature="e#1748#1749#0" expanded="true" />
-            <element signature="e#1809#1810#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/adoption-service/src/main/java/com/redhat/do328/adoptApup/adoptionservice/AdoptionController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" selection-start-line="19" selection-end-line="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/models/ApplicationNotification.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/adoption-service/src/main/java/com/redhat/do328/adoptApup/adoptionservice/service/AdoptionService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="387">
-          <caret line="85" column="16" selection-start-line="85" selection-start-column="16" selection-end-line="85" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1085#1108#1" expanded="true" />
-            <element signature="e#1160#1184#1" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1165,17 +1113,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/service/AnimalService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="64" column="138" selection-start-line="64" selection-start-column="138" selection-end-line="64" selection-end-column="138" />
-          <folding>
-            <element signature="e#6776#6777#0" expanded="true" />
-            <element signature="e#6840#6841#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/models/Email.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -1193,9 +1130,61 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/notification-service/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/NotificationServiceApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="47" column="40" lean-forward="true" selection-start-line="47" selection-start-column="40" selection-end-line="47" selection-end-column="40" />
+          <folding>
+            <element signature="e#865#886#1" expanded="true" />
+            <element signature="e#920#941#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch_29.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="22" lean-forward="true" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/adoption-service/src/main/java/com/redhat/do328/adoptApup/adoptionservice/service/AdoptionService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="537">
+          <caret line="95" column="16" lean-forward="true" selection-start-line="95" selection-start-column="16" selection-end-line="95" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/adoption-service/src/main/java/com/redhat/do328/adoptApup/adoptionservice/AdoptionController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/AnimalController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="513">
+          <caret line="50" column="5" lean-forward="true" selection-start-line="50" selection-start-column="5" selection-end-line="50" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/services/EmailManagerService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="55">
+        <state relative-caret-position="315">
           <caret line="21" column="39" lean-forward="true" selection-start-line="21" selection-start-column="39" selection-end-line="21" selection-end-column="39" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1206,7 +1195,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/NotificationController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
+        <state relative-caret-position="225">
           <caret line="15" column="14" lean-forward="true" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1214,21 +1203,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/notification-service/src/main/java/com/redhat/do328/adoptApup/notificationservice/NotificationServiceApplication.java">
+    <entry file="file://$PROJECT_DIR$/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/model/AnimalNotificationRequestCriteria.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
-          <caret line="47" column="36" selection-start-line="47" selection-start-column="36" selection-end-line="47" selection-end-column="36" />
+        <state relative-caret-position="135">
+          <caret line="11" column="25" lean-forward="true" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/service/AnimalService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="36" column="14" lean-forward="true" selection-start-line="36" selection-start-column="14" selection-end-line="36" selection-end-column="14" />
           <folding>
-            <element signature="e#865#886#1" expanded="true" />
-            <element signature="e#920#941#1" expanded="true" />
+            <element signature="e#6776#6777#0" expanded="true" />
+            <element signature="e#6840#6841#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/notification-service/src/main/resources/application.properties">
+    <entry file="file://$PROJECT_DIR$/animal-service/src/main/resources/application.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+        <state relative-caret-position="75">
+          <caret line="5" column="39" selection-start-line="5" selection-start-column="39" selection-end-line="5" selection-end-column="39" />
         </state>
       </provider>
     </entry>

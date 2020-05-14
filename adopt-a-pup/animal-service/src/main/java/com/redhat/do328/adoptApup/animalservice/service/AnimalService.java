@@ -31,7 +31,7 @@ public class AnimalService {
     private static final STRawGroupDir templateFile = new STRawGroupDir("templates");
     public static final String NOTIFICATION_REQUEST_SUBJECT = "ALERT - Animal Availability Notification";
 
-    @Value("${notification-service.url:localhost:8081")
+    @Value("${notificationService.host}")
     private String notificationServiceUrl;
 
     @Autowired

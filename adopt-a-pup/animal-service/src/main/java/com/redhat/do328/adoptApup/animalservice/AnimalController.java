@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -24,14 +23,14 @@ public class AnimalController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/{shelter-id}/create")
     public String createAnimal(@RequestBody Animal animal,
-                               @PathVariable(value = "shelter-id") String shelterId) throws URISyntaxException {
+                               @PathVariable(value = "shelter-id") String shelterId) {
         animal.setShelterId(shelterId);
         return animalService.createAnimal(animal);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/{shelter-id}/createBulk")
     public List<String> createAnimalBulk(@RequestBody List<Animal> animals,
-                                         @PathVariable(value = "shelter-id") String shelterId) throws Exception {
+                                         @PathVariable(value = "shelter-id") String shelterId) {
         return animalService.createAnimalsBulk(animals, shelterId);
     }
 
@@ -52,7 +51,7 @@ public class AnimalController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/subscribe")
-    public void createNotificationSubscription(@RequestBody AnimalNotificationRequestCriteria criteria) throws URISyntaxException {
+    public void createNotificationSubscription(@RequestBody AnimalNotificationRequestCriteria criteria) {
         animalService.createNotificationSubscription(criteria);
     }
 }
