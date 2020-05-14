@@ -14,11 +14,9 @@ import java.util.UUID;
 @Data
 @Document(collection = "animals")
 public class Animal {
-    @JsonIgnore
     @Id
     private String animalId;
     private String animalName;
-    @JsonIgnore
     private String shelterId;
     private String breed;
     private int weight;
