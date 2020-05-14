@@ -60,8 +60,8 @@ public class AnimalService {
         }).filter(Objects::nonNull)
                 .collect(Collectors.toList());
         if (!CollectionUtils.isEmpty(matchingNotificationCriteria)) {
-            final Map<String, String> templatesToEmail = matchingNotificationCriteria.stream()
-                    .collect(Collectors.toMap(AnimalNotificationRequestCriteria::getEmail, criteria -> renderTemplate(criteria, animal)));
+            final Map<String, Email> templatesToEmail = matchingNotificationCriteria.stream()
+                    .collect(Collectors.toMap(AnimalNotificationRequestCriteria::getEmail, criteria -> new Email(renderTemplate(criteria, animal), NOTIFICATION_REQUEST_SUBJECT));
             final ResponseEntity<ResponseEntity> response = restTemplate.postForEntity(notificationServiceUrl + "/notifications/sendEmails", templatesToEmail, ResponseEntity.class);
             if (HttpStatus.OK.equals(response.getStatusCode())) {
                 animalNotificationSubscriptionRepository.deleteAll(matchingNotificationCriteria);
@@ -102,7 +102,7 @@ public class AnimalService {
             final Email email = new Email(renderedTemplate, NOTIFICATION_REQUEST_SUBJECT);
             notificationRequest.put(criteria.getEmail(), email);
         });
-        final ResponseEntity<ResponseEntity> response = restTemplate.postForEntity(notificationServiceUrl, notificationRequest, ResponseEntity.class);
+        final ResponseEntity<ResponseEntity> response = restTemplate.postForEntity(notificationServiceUrl + "/notifications/sendEmails", notificationRequest, ResponseEntity.class);
         if (HttpStatus.OK.equals(response.getStatusCode())) {
             animalNotificationSubscriptionRepository.delete(criteria);
         } else {
