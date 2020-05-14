@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f788b161-9af5-4988-b67e-058c2cc6689b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/adoption-service/src/main/java/com/redhat/do328/adoptApup/adoptionservice/AdoptionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/adoption-service/src/main/java/com/redhat/do328/adoptApup/adoptionservice/AdoptionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/service/AnimalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/service/AnimalService.java" afterDir="false" />
-    </list>
+    <list default="true" id="f788b161-9af5-4988-b67e-058c2cc6689b" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/user-service/target/" />
     <ignored path="$PROJECT_DIR$/adoption-service/target/" />
     <ignored path="$PROJECT_DIR$/animal-service/target/" />
@@ -553,7 +550,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1589490847562" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1589491313496" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="JSON&#10;TEXT&#10;yaml" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/animal-service/pom.xml" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -696,11 +693,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="37596000" />
+    <option name="totallyTimeSpent" value="37937000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="27" width="1920" height="1053" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49626866" visible="true" weight="0.05709712" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />

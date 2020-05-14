@@ -73,14 +73,14 @@ public class AdoptionService {
             denialReasons.add("Requires no children due to aggression issues");
         }
         if (StringUtils.isEmpty(application.getOccupation())) {
-            denialReasons.add("Dogs are expensive, get a job");
+            denialReasons.add("Dogs are expensive get a job");
         }
         if (!animal.isOtherDogSafe() && application.isOwnOtherAnimals()) {
             denialReasons.add("Does not do well with other animals");
         }
         final AdoptionApplicationResponse adoptionApplicationResponse = new AdoptionApplicationResponse();
         if (!denialReasons.isEmpty()) {
-            final String message = Joiner.on(",").join(denialReasons);
+            final String message = Joiner.on(", ").join(denialReasons);
             adoptionApplicationResponse.setMessage("This application has been denied for the following reason(s): " + message);
             adoptionApplicationResponse.setStatus(Status.DENIED);
         } else {
