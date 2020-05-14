@@ -23,7 +23,7 @@ const EUR_TO_USD = [
 ];
 
 module.exports = {
-    PORT : PORT,
-    EUR_TO_USD: EUR_TO_USD,
-    USD_TO_EUR: USD_TO_EUR,
+    PORT,
+    EUR_TO_USD,
+    USD_TO_EUR
 };

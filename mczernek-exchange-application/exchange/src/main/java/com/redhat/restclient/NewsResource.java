@@ -1,6 +1,7 @@
 package com.redhat.restclient;
 
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.eclipse.microprofile.opentracing.Traced;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @Path("/news")
 @Produces(MediaType.APPLICATION_JSON)
+@Traced
 public class NewsResource {
 
     @Inject
