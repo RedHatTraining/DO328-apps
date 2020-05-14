@@ -1,0 +1,25 @@
+
+body {
+  margin: 0;
+  font-family: "RedHatText", "Overpass", overpass, helvetica, arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--pf-global--palette--black-200);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.border-top-blue {
+  border-top: 2px solid var(--pf-global--palette--blue-300);
+}
+
+.border-top-red {
+  border-top: 2px solid var(--pf-global--palette--red-100);
+}
+
+.center {
+  text-align: center;
+}
