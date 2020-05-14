@@ -2,18 +2,17 @@ package com.redhat.do328.adoptApup.animalservice;
 
 import com.redhat.do328.adoptApup.animalservice.model.Animal;
 import com.redhat.do328.adoptApup.animalservice.model.AnimalNotificationRequestCriteria;
+import com.redhat.do328.adoptApup.animalservice.model.AnimalStatusChangeRequest;
 import com.redhat.do328.adoptApup.animalservice.service.AnimalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/animals")
@@ -34,6 +33,12 @@ public class AnimalController {
     public List<String> createAnimalBulk(@RequestBody List<Animal> animals,
                                          @PathVariable(value = "shelter-id") String shelterId) throws Exception {
         return animalService.createAnimalsBulk(animals, shelterId);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/{animal-id}/setAdoptionStatus")
+    public void setAdoptionStatus(@RequestBody AnimalStatusChangeRequest adoptionStatus,
+                                  @PathVariable("animal-id") String animalId) {
+        animalService.setAdoptionStatus(adoptionStatus, animalId);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/getAllAdoptable")

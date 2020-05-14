@@ -4,8 +4,10 @@ import com.redhat.do328.adoptApup.animalservice.dao.AnimalNotificationSubscripti
 import com.redhat.do328.adoptApup.animalservice.dao.AnimalRepository;
 import com.redhat.do328.adoptApup.animalservice.model.Animal;
 import com.redhat.do328.adoptApup.animalservice.model.AnimalNotificationRequestCriteria;
+import com.redhat.do328.adoptApup.animalservice.model.AnimalStatusChangeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,15 +15,11 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 import org.stringtemplate.v4.ST;
-import org.stringtemplate.v4.STGroup;
-import org.stringtemplate.v4.STGroupDir;
-import org.stringtemplate.v4.STGroupFile;
 import org.stringtemplate.v4.STRawGroupDir;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +40,9 @@ public class AnimalService {
 
     @Autowired
     private AnimalNotificationSubscriptionRepository animalNotificationSubscriptionRepository;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -139,5 +140,15 @@ public class AnimalService {
 
     public List<Animal> getAllAdoptableAnimals() {
         return animalRepository.findAllByAdoptable(true);
+    }
+
+    public void setAdoptionStatus(AnimalStatusChangeRequest adoptionStatus, String animalId) {
+        final Optional<Animal> animalById = animalRepository.findById(animalId);
+        if (!animalById.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Update status operation failed, please try again later");
+        }
+        final Animal animal = animalById.get();
+        animal.setAdoptable(adoptionStatus.isNewAdoptableStatus());
+        animalRepository.save(animal);
     }
 }

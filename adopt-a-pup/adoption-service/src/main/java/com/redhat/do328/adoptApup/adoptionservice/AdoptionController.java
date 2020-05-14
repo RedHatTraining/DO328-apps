@@ -1,5 +1,6 @@
 package com.redhat.do328.adoptApup.adoptionservice;
 
+import com.redhat.do328.adoptApup.adoptionservice.model.AdoptionApplicationResponse;
 import com.redhat.do328.adoptApup.adoptionservice.model.Animal;
 import com.redhat.do328.adoptApup.adoptionservice.model.Shelter;
 import com.redhat.do328.adoptApup.adoptionservice.service.AdoptionService;
@@ -22,5 +23,10 @@ public class AdoptionController {
     @RequestMapping(method = RequestMethod.GET, value = "/getAllAdoptableByShelter")
     public Map<Shelter, List<Animal>> getAllAdoptableAnimalsByShelter() throws URISyntaxException {
         return adoptionService.getAdoptableAnimals();
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/applyForAdoption")
+    public AdoptionApplicationResponse applyForAdoption(AdoptionServiceApplication application) {
+        return adoptionService.applyForAdoption(application);
     }
 }
