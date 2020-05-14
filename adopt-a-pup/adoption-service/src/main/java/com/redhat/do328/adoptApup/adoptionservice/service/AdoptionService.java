@@ -17,8 +17,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -37,9 +35,9 @@ public class AdoptionService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public Map<Shelter, List<Animal>> getAdoptableAnimals() throws URISyntaxException {
-        final ResponseEntity<Animal[]> animalResponse = restTemplate.getForEntity(new URI(animalServiceHost + "/animals/getAllAdoptable"), Animal[].class);
-        final ResponseEntity<Shelter[]> shelterResponse = restTemplate.getForEntity(new URI(shelterServiceHost + "/shelters/getAll"), Shelter[].class);
+    public Map<Shelter, List<Animal>> getAdoptableAnimals()  {
+        final ResponseEntity<Animal[]> animalResponse = restTemplate.getForEntity(animalServiceHost + "/animals/getAllAdoptable", Animal[].class);
+        final ResponseEntity<Shelter[]> shelterResponse = restTemplate.getForEntity(shelterServiceHost + "/shelters/getAll", Shelter[].class);
 
         if (!animalResponse.getStatusCode().is2xxSuccessful() || !shelterResponse.getStatusCode().is2xxSuccessful()
                 || animalResponse.getBody() == null || shelterResponse.getBody() == null) {
@@ -55,8 +53,8 @@ public class AdoptionService {
         .collect(Collectors.toList())));
     }
 
-    public AdoptionApplicationResponse applyForAdoption(AdoptionApplication application) throws URISyntaxException {
-        final ResponseEntity<Animal> animalResponse = restTemplate.getForEntity(new URI(animalServiceHost + "/animals/" + application.getAnimalId() + "/getAnimalById"), Animal.class);
+    public AdoptionApplicationResponse applyForAdoption(AdoptionApplication application) {
+        final ResponseEntity<Animal> animalResponse = restTemplate.getForEntity(animalServiceHost + "/animals/" + application.getAnimalId() + "/getAnimalById", Animal.class);
         // TODO this needs to be fixed for concurrency issues.. what if it's adoptable at the time of request but immediately after someone else tries?
         if (!animalResponse.getStatusCode().is2xxSuccessful() || animalResponse.getBody() == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "This animal was not found.");
@@ -86,7 +84,7 @@ public class AdoptionService {
             adoptionApplicationResponse.setMessage("This application has been denied for the following reason(s): " + message);
             adoptionApplicationResponse.setStatus(Status.DENIED);
         } else {
-            final ResponseEntity<ResponseEntity> responseEntityResponseEntity = restTemplate.postForEntity(new URI(animalServiceHost + "/animals/" + application.getAnimalId() + "/setAdoptionStatus"),
+            final ResponseEntity<ResponseEntity> responseEntityResponseEntity = restTemplate.postForEntity(animalServiceHost + "/animals/" + application.getAnimalId() + "/setAdoptionStatus",
                     new AnimalStatusChangeRequest(false), ResponseEntity.class);
             if (!responseEntityResponseEntity.getStatusCode().is2xxSuccessful()) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong with this application, please try again later");

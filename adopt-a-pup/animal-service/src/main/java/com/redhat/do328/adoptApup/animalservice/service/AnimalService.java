@@ -17,8 +17,6 @@ import org.springframework.web.server.ResponseStatusException;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STRawGroupDir;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,7 +45,7 @@ public class AnimalService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public String createAnimal(Animal animal) throws URISyntaxException {
+    public String createAnimal(Animal animal) {
         final String animalID = UUID.randomUUID().toString();
         animal.setAnimalId(animalID);
         animalRepository.save(animal);
@@ -66,7 +64,7 @@ public class AnimalService {
         if (!CollectionUtils.isEmpty(matchingNotificationCriteria)) {
             final Map<String, String> templatesToEmail = matchingNotificationCriteria.stream()
                     .collect(Collectors.toMap(AnimalNotificationRequestCriteria::getEmail, criteria -> renderTemplate(criteria, animal)));
-            final ResponseEntity<ResponseEntity> response = restTemplate.postForEntity(new URI(notificationServiceUrl), templatesToEmail, ResponseEntity.class);
+            final ResponseEntity<ResponseEntity> response = restTemplate.postForEntity(notificationServiceUrl, templatesToEmail, ResponseEntity.class);
             if (HttpStatus.OK.equals(response.getStatusCode())) {
                 animalNotificationSubscriptionRepository.deleteAll(matchingNotificationCriteria);
             } else {
@@ -86,7 +84,7 @@ public class AnimalService {
         return animal.get();
     }
 
-    public List<String> createAnimalsBulk(List<Animal> animals, String shelterId) throws Exception {
+    public List<String> createAnimalsBulk(List<Animal> animals, String shelterId) {
         final List<String> animalIds = new ArrayList<>();
         for (Animal animal : animals) {
             animal.setShelterId(shelterId);
@@ -95,7 +93,7 @@ public class AnimalService {
         return animalIds;
     }
 
-    public void createNotificationSubscription(AnimalNotificationRequestCriteria criteria) throws URISyntaxException {
+    public void createNotificationSubscription(AnimalNotificationRequestCriteria criteria) {
         animalNotificationSubscriptionRepository.save(criteria);
 
         List<Animal> animals = animalRepository.findAll();
@@ -105,7 +103,7 @@ public class AnimalService {
             final String renderedTemplate = renderTemplate(criteria, animal);
             notificationRequest.put(criteria.getEmail(), renderedTemplate);
         });
-        final ResponseEntity<ResponseEntity> response = restTemplate.postForEntity(new URI(notificationServiceUrl), notificationRequest, ResponseEntity.class);
+        final ResponseEntity<ResponseEntity> response = restTemplate.postForEntity(notificationServiceUrl, notificationRequest, ResponseEntity.class);
         if (HttpStatus.OK.equals(response.getStatusCode())) {
             animalNotificationSubscriptionRepository.delete(criteria);
         } else {

@@ -1,5 +1,6 @@
 package com.redhat.do328.adoptApup.adoptionservice;
 
+import com.redhat.do328.adoptApup.adoptionservice.model.AdoptionApplication;
 import com.redhat.do328.adoptApup.adoptionservice.model.AdoptionApplicationResponse;
 import com.redhat.do328.adoptApup.adoptionservice.model.Animal;
 import com.redhat.do328.adoptApup.adoptionservice.model.Shelter;
@@ -26,7 +27,7 @@ public class AdoptionController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/applyForAdoption")
-    public AdoptionApplicationResponse applyForAdoption(AdoptionServiceApplication application) {
+    public AdoptionApplicationResponse applyForAdoption(AdoptionApplication application) {
         return adoptionService.applyForAdoption(application);
     }
 }
