@@ -6,6 +6,7 @@ import com.redhat.do328.adoptApup.animalservice.model.Animal;
 import com.redhat.do328.adoptApup.animalservice.model.AnimalNotificationRequestCriteria;
 import com.redhat.do328.adoptApup.animalservice.model.AnimalStatusChangeRequest;
 import com.redhat.do328.adoptApup.animalservice.model.Email;
+import com.redhat.do328.adoptApup.animalservice.model.EmailNotificationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -102,7 +103,7 @@ public class AnimalService {
             final Email email = new Email(renderedTemplate, NOTIFICATION_REQUEST_SUBJECT);
             notificationRequest.put(criteria.getEmail(), email);
         });
-        final ResponseEntity<ResponseEntity> response = restTemplate.postForEntity(notificationServiceUrl + "/notifications/sendEmails", notificationRequest, ResponseEntity.class);
+        final ResponseEntity<ResponseEntity> response = restTemplate.postForEntity(notificationServiceUrl + "/notifications/sendEmails", new EmailNotificationRequest(notificationRequest), ResponseEntity.class);
         if (HttpStatus.OK.equals(response.getStatusCode())) {
             animalNotificationSubscriptionRepository.delete(criteria);
         } else {
@@ -128,7 +129,7 @@ public class AnimalService {
             if ((criteria.getBreed() != null && !animal.getBreed().equals(criteria.getBreed()))
                     || animal.getWeight() < criteria.getMinWeight()
                     || animal.getWeight() > criteria.getMaxWeight()
-                    || criteria.getApproximateSize() != null && criteria.getApproximateSize().equals(animal.getApproximateSize())) {
+                    || criteria.getApproximateSize() != null && !criteria.getApproximateSize().equals(animal.getApproximateSize())) {
                 return null;
             }
             return animal;
