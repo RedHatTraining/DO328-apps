@@ -22,7 +22,7 @@ class VerticalPage extends React.Component {
     const { isNavOpen } = this.state;
 
     const logoProps = {
-      href: '/'
+      href: '/frontend/'
     };
     const Header = (
       <PageHeader
