@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f788b161-9af5-4988-b67e-058c2cc6689b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/animal-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/animal-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/adoption-service/src/main/java/com/redhat/do328/adoptApup/adoptionservice/model/Animal.java" beforeDir="false" afterPath="$PROJECT_DIR$/adoption-service/src/main/java/com/redhat/do328/adoptApup/adoptionservice/model/Animal.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/user-service/target/" />
     <ignored path="$PROJECT_DIR$/adoption-service/target/" />
@@ -63,8 +63,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/animal-service/pom.xml">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="75">
-                  <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
+                <state relative-caret-position="150">
+                  <caret line="13" column="31" selection-start-line="13" selection-start-column="31" selection-end-line="13" selection-end-column="31" />
                 </state>
               </provider>
             </entry>
@@ -210,6 +210,7 @@
       <find>locale</find>
       <find>@document</find>
       <find>getAllAdoptable</find>
+      <find>status</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -249,9 +250,9 @@
         <option value="$PROJECT_DIR$/adoption-service/src/main/resources/application.properties" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_21.json" />
         <option value="$PROJECT_DIR$/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/model/Animal.java" />
-        <option value="$PROJECT_DIR$/adoption-service/src/main/java/com/redhat/do328/adoptApup/adoptionservice/model/Animal.java" />
         <option value="$PROJECT_DIR$/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/AnimalServiceApplication.java" />
         <option value="$PROJECT_DIR$/animal-service/pom.xml" />
+        <option value="$PROJECT_DIR$/adoption-service/src/main/java/com/redhat/do328/adoptApup/adoptionservice/model/Animal.java" />
       </list>
     </option>
   </component>
@@ -494,7 +495,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1589480790536" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1589483414237" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="TEXT&#10;JSON&#10;yaml" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/animal-service/pom.xml" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -634,13 +635,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30622000" />
+    <option name="totallyTimeSpent" value="31356000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="27" width="1920" height="1053" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49626866" visible="true" weight="0.21824974" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49626866" visible="true" weight="0.21824974" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -658,7 +659,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.41484717" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.41484717" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="bottom" id="Spring" order="12" />
       <window_info anchor="bottom" id="Run with VisualVM" order="13" />
@@ -1046,8 +1047,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/animal-service/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="8" column="23" selection-start-line="8" selection-start-column="23" selection-end-line="8" selection-end-column="23" />
+        <state relative-caret-position="150">
+          <caret line="13" column="31" selection-start-line="13" selection-start-column="31" selection-end-line="13" selection-end-column="31" />
         </state>
       </provider>
     </entry>

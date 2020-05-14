@@ -18,7 +18,7 @@ public class Animal {
     private String breed;
     private int weight;
     private AnimalSize approximateSize;
-    private boolean status;
+    private boolean adoptable;
     private Residency residencyRequired;
     private int squareFootageOfHome;
     private boolean childSafe;
