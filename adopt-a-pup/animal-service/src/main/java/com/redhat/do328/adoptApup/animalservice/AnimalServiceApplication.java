@@ -15,7 +15,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication(scanBasePackages = "com.redhat.do328.adoptApup.animalservice")
 @EnableSwagger2
-//@EnableWebSecurity
 public class AnimalServiceApplication {
 
 	public static void main(String[] args) {
@@ -23,10 +22,6 @@ public class AnimalServiceApplication {
 	}
 
 
-//	@Override
-//	protected void configure(HttpSecurity httpSecurity) throws Exception {
-//		httpSecurity.authorizeRequests().anyRequest().authenticated();
-//	}
 
 	@Bean
 	public RestTemplate restTemplate() {
