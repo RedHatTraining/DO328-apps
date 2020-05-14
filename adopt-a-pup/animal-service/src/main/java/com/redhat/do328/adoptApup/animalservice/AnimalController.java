@@ -45,7 +45,7 @@ public class AnimalController {
     public Animal getAnimalById(@PathVariable(value = "animal-id") String animalId) {
         return animalService.findAnimalById(animalId);
     }
-q
+
     @RequestMapping(method = RequestMethod.POST, value = "/subscribe")
     public void createNotificationSubscription(@RequestBody AnimalNotificationRequestCriteria criteria) throws URISyntaxException {
         animalService.createNotificationSubscription(criteria);
