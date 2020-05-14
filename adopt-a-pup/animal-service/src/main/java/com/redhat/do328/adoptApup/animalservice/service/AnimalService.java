@@ -5,6 +5,7 @@ import com.redhat.do328.adoptApup.animalservice.dao.AnimalRepository;
 import com.redhat.do328.adoptApup.animalservice.model.Animal;
 import com.redhat.do328.adoptApup.animalservice.model.AnimalNotificationRequestCriteria;
 import com.redhat.do328.adoptApup.animalservice.model.AnimalStatusChangeRequest;
+import com.redhat.do328.adoptApup.animalservice.model.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 @Service
 public class AnimalService {
     private static final STRawGroupDir templateFile = new STRawGroupDir("templates");
+    public static final String NOTIFICATION_REQUEST_SUBJECT = "ALERT - Animal Availability Notification";
 
     @Value("${notification-service.url:localhost:8081")
     private String notificationServiceUrl;
@@ -60,7 +62,7 @@ public class AnimalService {
         if (!CollectionUtils.isEmpty(matchingNotificationCriteria)) {
             final Map<String, String> templatesToEmail = matchingNotificationCriteria.stream()
                     .collect(Collectors.toMap(AnimalNotificationRequestCriteria::getEmail, criteria -> renderTemplate(criteria, animal)));
-            final ResponseEntity<ResponseEntity> response = restTemplate.postForEntity(notificationServiceUrl, templatesToEmail, ResponseEntity.class);
+            final ResponseEntity<ResponseEntity> response = restTemplate.postForEntity(notificationServiceUrl + "/notifications/sendEmails", templatesToEmail, ResponseEntity.class);
             if (HttpStatus.OK.equals(response.getStatusCode())) {
                 animalNotificationSubscriptionRepository.deleteAll(matchingNotificationCriteria);
             } else {
@@ -94,10 +96,11 @@ public class AnimalService {
 
         List<Animal> animals = animalRepository.findAll();
         final List<Animal> matchingAnimals = matchCriteria(criteria, animals);
-        final Map<String, String> notificationRequest = new HashMap<>();
+        final Map<String, Email> notificationRequest = new HashMap<>();
         matchingAnimals.forEach(animal -> {
             final String renderedTemplate = renderTemplate(criteria, animal);
-            notificationRequest.put(criteria.getEmail(), renderedTemplate);
+            final Email email = new Email(renderedTemplate, NOTIFICATION_REQUEST_SUBJECT);
+            notificationRequest.put(criteria.getEmail(), email);
         });
         final ResponseEntity<ResponseEntity> response = restTemplate.postForEntity(notificationServiceUrl, notificationRequest, ResponseEntity.class);
         if (HttpStatus.OK.equals(response.getStatusCode())) {

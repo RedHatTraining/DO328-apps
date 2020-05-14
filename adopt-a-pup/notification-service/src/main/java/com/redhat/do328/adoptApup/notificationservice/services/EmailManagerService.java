@@ -1,46 +1,40 @@
 package com.redhat.do328.adoptApup.notificationservice.services;
 
+import com.redhat.do328.adoptApup.notificationservice.models.Email;
+import com.redhat.do328.adoptApup.notificationservice.models.EmailNotificationRequest;
+import com.redhat.do328.adoptApup.notificationservice.models.NotificationStatusResponse;
+import com.redhat.do328.adoptApup.notificationservice.models.Status;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-
-import javax.websocket.Session;
-import java.util.Properties;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class EmailManagerService {
 
-    public void sendEmail() {
-        String to = "abcd@gmail.com";
-        String from = "web@gmail.com";
-        String host = "localhost";
-        Properties properties = System.getProperties();
+    @Value("${spring.mail.host}")
+    private String smptHost;
 
-        // Setup mail server
-        properties.setProperty("mail.smtp.host", host);
+    @Autowired
+    private JavaMailSender emailSender;
 
-        // Get the default Session object.
-        Session session = Session.getDefaultInstance(properties);
-
+    public NotificationStatusResponse sendEmails(EmailNotificationRequest emailNotificationRequest) {
         try {
-            // Create a default MimeMessage object.
-            MimeMessage message = new MimeMessage(session);
-
-            // Set From: header field of the header.
-            message.setFrom(new InternetAddress(from));
-
-            // Set To: header field of the header.
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-
-            // Set Subject: header field
-            message.setSubject("This is the Subject Line!");
-
-            // Now set the actual message
-            message.setText("This is actual message");
-
-            // Send message
-            Transport.send(message);
-            System.out.println("Sent message successfully....");
-        } catch (MessagingException mex) {
-            mex.printStackTrace();
+            emailNotificationRequest.getMessagesByEmail().keySet().stream().forEach(email -> {
+                final Email emailDetails = emailNotificationRequest.getMessagesByEmail().get(email);
+                final SimpleMailMessage message = new SimpleMailMessage();
+                message.setTo(email);
+                message.setSubject(emailDetails.getSubject());
+                message.setText(emailDetails.getMessage());
+                message.setFrom("noreply@adoptapup.com");
+                emailSender.send(message);
+            });
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error occurred sending email notification(s)");
         }
+        return new NotificationStatusResponse(Status.SUCCESS);
     }
 }

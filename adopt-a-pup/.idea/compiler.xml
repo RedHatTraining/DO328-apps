@@ -25,6 +25,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="adoption-service" options="-parameters" />
       <module name="animal-service" options="-parameters" />
+      <module name="notification-service" options="-parameters" />
       <module name="shelter-service" options="-parameters" />
       <module name="user-service" options="-parameters" />
     </option>
