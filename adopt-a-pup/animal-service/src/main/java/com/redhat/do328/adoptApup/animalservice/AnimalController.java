@@ -41,11 +41,11 @@ public class AnimalController {
         return animalService.getAllAdoptableAnimals();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{animal-id}/get")
+    @RequestMapping(method = RequestMethod.GET, value = "/{animal-id}/getAnimalById")
     public Animal getAnimalById(@PathVariable(value = "animal-id") String animalId) {
         return animalService.findAnimalById(animalId);
     }
-
+q
     @RequestMapping(method = RequestMethod.POST, value = "/subscribe")
     public void createNotificationSubscription(@RequestBody AnimalNotificationRequestCriteria criteria) throws URISyntaxException {
         animalService.createNotificationSubscription(criteria);
