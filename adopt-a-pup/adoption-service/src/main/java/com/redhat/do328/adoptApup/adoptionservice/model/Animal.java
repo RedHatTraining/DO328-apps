@@ -1,6 +1,5 @@
 package com.redhat.do328.adoptApup.adoptionservice.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
