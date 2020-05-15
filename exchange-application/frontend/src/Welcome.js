@@ -27,7 +27,7 @@ export default class WelcomePage extends Component {
                     </Text> repository.
                 </Text>
                 <Text component="p">
-                    You can ask questions or file issues at <Text component="a" src="https://github.com/RedHatTraining/DO328-apps/issues"> here</Text>.
+                    You can ask questions or file issues <Text component="a" href="https://github.com/RedHatTraining/DO328-apps/issues">here</Text>.
                 </Text>
             </TextContent>
 
