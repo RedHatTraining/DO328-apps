@@ -14,6 +14,7 @@ import {
 
 class App extends Component {
   render() {
+    var enableNews = process.env.REACT_APP_NEWS_ENABLED
     return (
       <Router basename="/frontend">
         <Switch>
@@ -27,9 +28,11 @@ class App extends Component {
             <Route path="/history" exact>
               <HistoricalDataForm />
             </Route>
+            {enableNews &&
             <Route path="/news" exact>
               <NewsBoard />
             </Route>
+            }
           </Structure>
         </Switch>
       </Router>

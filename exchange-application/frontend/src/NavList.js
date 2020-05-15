@@ -11,6 +11,7 @@ import { Link} from "react-router-dom";
 
 class NavDefaultList extends React.Component {
     render() {
+        var enableNews = process.env.REACT_APP_NEWS_ENABLED
         return (
             <Nav onSelect={this.onSelect} theme="dark">
                 <NavList>
@@ -23,9 +24,10 @@ class NavDefaultList extends React.Component {
                     <NavItem id="exchange" isActive={window.location.pathname.endsWith("/exchange")}>
                         <Link to="/exchange" >Exchange</Link>
                     </NavItem>
+                    {enableNews &&
                     <NavItem id="news" isActive={window.location.pathname.endsWith("/news")}>
                         <Link to="/news" >News</Link>
-                    </NavItem>
+                    </NavItem>}
                 </NavList>
             </Nav>
         );

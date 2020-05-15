@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {
+    Alert, 
+    AlertActionCloseButton,
     Form,
     FormGroup,
     FormSelect,
@@ -13,6 +15,7 @@ import {
 
 import Spinner from './Loading';
 import RenderedChart from './Graph'
+import FetchUtils from './FetchUtils'
 
 
 class CurrencyPicker extends Component {
@@ -27,6 +30,9 @@ class CurrencyPicker extends Component {
             requestExchangeData: false,
             inputValue: 1,
             inputValid: true,
+            error: {
+                isActive: false,
+            }
         };
     }
 
@@ -35,12 +41,25 @@ class CurrencyPicker extends Component {
             loading: true
         })
 
-        fetch(`http://${process.env.REACT_APP_GW_ENDPOINT}/currencies`)
+        this.getCurrencies()
+    }
+
+    getCurrencies = () => {
+        FetchUtils.fetchWithRetry(`http://${process.env.REACT_APP_GW_ENDPOINT}/currencies`)
             .then(currencies => currencies.json())
             .then(currencies => this.setState({
                 currencies, src: currencies[0], target: currencies[1], loading: false
             }))
-            .catch(err => console.log(err));
+            .catch(err => {
+                console.log(err);
+                this.setState({
+                    error: {
+                        isActive: true,
+                        header: "Fetching currencies failed",
+                        message: `Got the following error trying to fetch currencies: ${err}`,
+                    }
+                })
+            });
     }
 
     onChangeSrc = (src) => {
@@ -68,7 +87,7 @@ class CurrencyPicker extends Component {
             source: this.state.src,
             target: this.state.target
         }
-        fetch(`http://${process.env.REACT_APP_GW_ENDPOINT}/exchangeRate/historicalData`, {
+        FetchUtils.fetchWithRetry(`http://${process.env.REACT_APP_GW_ENDPOINT}/exchangeRate/singleCurrency`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -76,19 +95,41 @@ class CurrencyPicker extends Component {
             },
             body: JSON.stringify(payload)
         })
-            .then(exchangeData => {
-                exchangeData.json().then( json => {
-                    this.setState({ exchangeData: json })
-                })
+        .then(exchangeData => exchangeData.json().then(exchangeData => this.setState({exchangeData})))
+        .catch(err => {
+            console.log(err)
+            this.setState({
+                error: {
+                    isActive: true,
+                    header: "Fetching exchange rate failed",
+                    message: `Got the following error trying to fetch currencies: ${err}`,
+                },
+                requestExchangeData: false
             })
-            .catch(err => console.log(err))
+        })
     };
 
+    closeAlert = () => {
+        this.setState({
+            error: {
+                isActive: false,
+            }
+        })
+    }
+
     render() {
-        const { exchangeData, requestExchangeData } = this.state;
+        const { exchangeData, requestExchangeData, error } = this.state;
 
         return (
             <React.Fragment>
+                 {error.isActive && 
+                    <Alert
+                        className="popup"
+                        variant="danger"
+                        title={error.header}
+                        action={<AlertActionCloseButton onClose={this.closeAlert} />}>
+                {error.message}
+              </Alert>}
                 <TextContent>
                     <Text component="h1" className="centered">
                         <b>Historical Currency Data</b>
