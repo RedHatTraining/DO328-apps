@@ -22,8 +22,8 @@ is added by the frontend application.
 To deploy this application, execute:
 
 ```sh
-oc process -o yaml -f kubefiles/template.yml \
+oc process -o yaml -f kubefiles/app-template.yml \
      -p INGRESS_GW=ingress-gateway.istio-system-app.apps.example.com \
      -p NEWS_ENDPOINT=url \
-     | oc create -f
+     | oc create -f -
 ```
