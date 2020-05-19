@@ -1,4 +1,4 @@
-# bank-gw microservice v1
+# payment microservice v1
 
 This is a simple microservice that simulates a payment gateway service. 
 It accepts payment amounts and returns a randomly generated transaction id.
@@ -17,9 +17,9 @@ mvn clean quarkus:dev
 ## Packaging and running the application
 
 The application is packageable using `mvn clean package`.
-It produces the executable `bank-gw-1.0.0-runner.jar` file in `/target` directory.
+It produces the executable `payment-1.0.0-runner.jar` file in `/target` directory.
 
-The application is now runnable using `java -jar target/bank-gw-1.0.0-runner.jar`.
+The application is now runnable using `java -jar target/payment-1.0.0-runner.jar`.
 
 ## Creating a native executable
 
@@ -27,6 +27,6 @@ You can create a native executable using: `mvn clean package -Pnative`.
 
 Or you can use Docker to build the native executable using: `mvn clean package -Pnative -Dquarkus.native.container-build=true`.
 
-You can then execute your binary: `./target/bank-gw-1.0.0-runner`
+You can then execute your binary: `./target/payment-1.0.0-runner`
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/building-native-image-guide .
