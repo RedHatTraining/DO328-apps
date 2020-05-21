@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import '@patternfly/react-core/dist/styles/base.css';
 import './App.css'
+import './Custom.css'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
