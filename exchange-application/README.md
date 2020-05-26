@@ -16,6 +16,9 @@ Note that this application template is written for OpenShift Service Mesh.
 The project where you deploy this application should be managed by OSSM
 (i.e. be in the ServiceMeshMemberRoll resource).
 
+If you want to use the news endpoint, provide the `NEWS_ENABLED`
+variable in the template.
+
 Also note there is no `http://` in the `INGRESS_GW` parameter. Protocol
 is added by the frontend application.
 

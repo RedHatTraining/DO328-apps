@@ -57,6 +57,8 @@ objects:
                     configMapKeyRef:
                       name: frontend-cm
                       key: GW_ADDR
+                - name: REACT_APP_NEWS_ENABLED
+                  value: ${NEWS_ENABLED}
   - kind: Service
     apiVersion: v1
     metadata:
@@ -235,5 +237,9 @@ parameters:
     value: "1.0"
   - name: NEWS_ENDPOINT
     description: "URL of the news application  backend"
+    required: false
+    value: ""
+  - name: NEWS_ENABLED
+    description: "Flag whether to show the news part of the application or not. Empty variable means false."
     required: false
     value: ""
