@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: news
+spec:
+  selector:
+    matchLabels:
+      app: news
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: news
+    spec:
+      containers:
+        - name: news
+          image: quay.io/redhattraining/ossm-python-flask-gossip:2.0
+          ports:
+            - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: news
+  name: news
+spec:
+  ports:
+  - port: 5000
+    protocol: TCP
+    targetPort: 5000
+  selector:
+    app: news
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: news
+  labels:
+    app: news
+spec:
+  to:
+    kind: Service
+    name: news
+  port:
+    targetPort: 5000
