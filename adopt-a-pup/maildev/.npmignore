@@ -1,0 +1,10 @@
+assets
+coverage
+docs
+scripts
+!app/scripts
+test
+
+.*
+Dockerfile
+rules.json

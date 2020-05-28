@@ -1,0 +1,17 @@
+assets
+coverage
+docs
+node_modules
+scripts
+test
+
+.*
+
+# Only add .min.js dependencies
+app/components/**/*.js*
+!app/components/**/*.min.js
+
+appveyor.yml
+codecov.yml
+Dockerfile
+rules.json

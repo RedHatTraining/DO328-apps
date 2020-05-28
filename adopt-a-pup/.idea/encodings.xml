@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding" addBOMForNewFiles="with NO BOM">
+  <component name="Encoding">
     <file url="file://$PROJECT_DIR$/adoption-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/adoption-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/animal-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/animal-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/notification-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/notification-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/shelter-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/shelter-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/user-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user-service/src/main/java" charset="UTF-8" />
   </component>
 </project>
