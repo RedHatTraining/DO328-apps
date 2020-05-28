@@ -2,7 +2,7 @@ FROM ubi8/python-36
 
 ENV FLASK_APP="gossip.py"
 
-COPY ../v1/src /app
+COPY src /app
 COPY requirements.txt /app
 
 WORKDIR /app

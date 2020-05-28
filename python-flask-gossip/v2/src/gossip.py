@@ -1,6 +1,5 @@
 import json
 import os
-import time
 import random
 from flask import abort, Flask, jsonify
 from flask_cors import CORS
