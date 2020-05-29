@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f788b161-9af5-4988-b67e-058c2cc6689b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/adoption-service/src/main/java/com/redhat/do328/adoptApup/adoptionservice/model/Email.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/adoption-service/src/main/java/com/redhat/do328/adoptApup/adoptionservice/model/EmailNotificationRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/adoption-service/src/main/resources/templates/applicationApproval.st" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/adoption-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/adoption-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/adoption-service/src/main/java/com/redhat/do328/adoptApup/adoptionservice/service/AdoptionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/adoption-service/src/main/java/com/redhat/do328/adoptApup/adoptionservice/service/AdoptionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animal-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/animal-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Readme.MD" beforeDir="false" afterPath="$PROJECT_DIR$/Readme.MD" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,7 +194,7 @@
       <workItem from="1590077824497" duration="3732000" />
       <workItem from="1590698930822" duration="9514000" />
       <workItem from="1590709434555" duration="605000" />
-      <workItem from="1590710087254" duration="671000" />
+      <workItem from="1590710087254" duration="1503000" />
     </task>
     <servers />
   </component>
