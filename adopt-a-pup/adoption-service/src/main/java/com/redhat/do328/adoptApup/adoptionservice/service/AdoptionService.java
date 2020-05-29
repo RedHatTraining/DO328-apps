@@ -1,13 +1,7 @@
 package com.redhat.do328.adoptApup.adoptionservice.service;
 
 import com.google.common.base.Joiner;
-import com.redhat.do328.adoptApup.adoptionservice.model.AdoptionApplication;
-import com.redhat.do328.adoptApup.adoptionservice.model.AdoptionApplicationResponse;
-import com.redhat.do328.adoptApup.adoptionservice.model.Animal;
-import com.redhat.do328.adoptApup.adoptionservice.model.AnimalStatusChangeRequest;
-import com.redhat.do328.adoptApup.adoptionservice.model.Residency;
-import com.redhat.do328.adoptApup.adoptionservice.model.Shelter;
-import com.redhat.do328.adoptApup.adoptionservice.model.Status;
+import com.redhat.do328.adoptApup.adoptionservice.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -16,21 +10,25 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
+import org.stringtemplate.v4.ST;
+import org.stringtemplate.v4.STRawGroupDir;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class AdoptionService {
+    private static final STRawGroupDir templateFile = new STRawGroupDir("templates");
+    private static final String APPROVAL_SUBJECT = "CONGRATULATIONS! Your application has been approved";
 
     @Value("${animalService.host}")
     private String animalServiceHost;
 
     @Value("${shelterService.host}")
     private String shelterServiceHost;
+
+    @Value("${notificationService.host}")
+    private String notificationServiceHost;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -95,10 +93,23 @@ public class AdoptionService {
             final String userEmail = application.getEmail();
             final String shelterEmail = shelter.getEmail();
             // TODO send email to shelter
+            final String renderedTemplate = renderTemplate(application.getUsername(), animal.getAnimalName(), shelter.getShelterName(), shelterEmail, shelter.getPhoneNumber());
+            final EmailNotificationRequest emailNotificationRequest = new EmailNotificationRequest(Collections.singletonMap(application.getEmail(), new Email(renderedTemplate, APPROVAL_SUBJECT)));
 
+            restTemplate.postForEntity(notificationServiceHost + "/notifications/sendEmails", emailNotificationRequest, ResponseEntity.class );
             adoptionApplicationResponse.setStatus(Status.APPROVED);
             adoptionApplicationResponse.setMessage("Congratulations, your application to adopt " + animal.getAnimalName() + " has been approved! You should be receiving an email soon with further instructions");
         }
         return adoptionApplicationResponse;
+    }
+
+    private String renderTemplate(final String username, final String animalName, final String shelterName, final String shelterEmail, final String shelterPhone) {
+        final ST template = templateFile.getInstanceOf("applicationApproval");
+        template.add("username", username);
+        template.add("animalName", animalName);
+        template.add("shelterName", shelterName);
+        template.add("shelterEmail", shelterEmail);
+        template.add("shelterPhone", shelterPhone);
+        return template.render();
     }
 }
