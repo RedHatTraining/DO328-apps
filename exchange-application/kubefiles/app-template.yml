@@ -1,0 +1,245 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: financial-app
+  annotations:
+    description: "Financial sample application for Red Hat Training"
+objects:
+  - apiVersion: networking.istio.io/v1alpha3
+    kind: VirtualService
+    metadata:
+      name: frontend-vservice
+    spec:
+      hosts:
+      - "*"
+      gateways:
+      - exchange-gw
+      http:
+      - match:
+        - uri:
+            prefix: /frontend
+        route:
+        - destination:
+            host: frontend
+            port:
+              number: 3000
+  - apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: frontend-cm
+    data:
+      GW_ADDR: ${INGRESS_GW}/exchange
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: frontend
+    spec:
+      selector:
+        matchLabels:
+          app: frontend
+      replicas: 1
+      template:
+        metadata:
+          labels:
+            app: frontend
+          annotations:
+            sidecar.istio.io/inject: "true"
+        spec:
+          containers:
+            - name: frontend
+              image: quay.io/redhattraining/ossm-frontend:${FRONTEND_TAG}
+              imagePullPolicy: Always
+              ports:
+                - containerPort: 3000
+              env:
+                - name: REACT_APP_GW_ENDPOINT
+                  valueFrom:
+                    configMapKeyRef:
+                      name: frontend-cm
+                      key: GW_ADDR
+                - name: REACT_APP_NEWS_ENABLED
+                  value: ${NEWS_ENABLED}
+  - kind: Service
+    apiVersion: v1
+    metadata:
+      labels:
+        app: frontend
+      name: frontend
+    spec:
+      ports:
+      - port: 3000
+        protocol: TCP
+        targetPort: 3000
+      selector:
+        app: frontend
+  - kind: Deployment
+    apiVersion: apps/v1
+    metadata:
+      name: history
+    spec:
+      selector:
+        matchLabels:
+          app: history
+      replicas: 1
+      template:
+        metadata:
+          labels:
+            app: history
+          annotations:
+              sidecar.istio.io/inject: "true"
+        spec:
+          containers:
+            - name: history
+              image: quay.io/redhattraining/ossm-history:${HISTORY_TAG}
+              imagePullPolicy: Always
+              ports:
+                - containerPort: 8080
+  - kind: Service
+    apiVersion: v1
+    metadata:
+      labels:
+        app: history
+      name: history
+    spec:
+      ports:
+      - port: 8080
+        protocol: TCP
+        targetPort: 8080
+      selector:
+        app: history
+  - kind: Deployment
+    apiVersion: apps/v1
+    metadata:
+      name: currency
+    spec:
+      selector:
+        matchLabels:
+          app: currency
+      replicas: 1
+      template:
+        metadata:
+          labels:
+            app: currency
+          annotations:
+              sidecar.istio.io/inject: "true"
+        spec:
+          containers:
+            - name: currency
+              image: quay.io/redhattraining/ossm-currencies:${CURRENCIES_TAG}
+              imagePullPolicy: Always
+              ports:
+                - containerPort: 5000
+  - kind: Service
+    apiVersion: v1
+    metadata:
+      labels:
+        app: currency
+      name: currency
+    spec:
+      ports:
+      - port: 5000
+        protocol: TCP
+        targetPort: 5000
+      selector:
+        app: currency
+  - kind: Gateway
+    apiVersion: networking.istio.io/v1alpha3
+    metadata:
+      name: exchange-gw
+    spec:
+      selector:
+        istio: ingressgateway # use istio default controller
+      servers:
+      - port:
+          number: 80
+          name: http
+          protocol: HTTP
+        hosts:
+        - "*"
+  - kind: VirtualService
+    apiVersion: networking.istio.io/v1alpha3
+    metadata:
+      name: exchange-vservice
+    spec:
+      hosts:
+      - "*"
+      gateways:
+      - exchange-gw
+      http:
+      - match:
+        - uri:
+            prefix: /exchange
+        rewrite:
+          uri: /
+        route:
+        - destination:
+            host: exchange
+            port:
+              number: 8080
+  - kind: Deployment
+    apiVersion: apps/v1
+    metadata:
+      name: exchange
+    spec:
+      selector:
+        matchLabels:
+          app: exchange
+      replicas: 1
+      template:
+        metadata:
+          labels:
+            app: exchange
+          annotations:
+              sidecar.istio.io/inject: "true"
+        spec:
+          containers:
+            - name: exchange
+              image: quay.io/redhattraining/ossm-exchange:${EXCHANGE_TAG}
+              imagePullPolicy: Always
+              ports:
+                - containerPort: 8080
+              env:
+                - name: NEWS_ENDPOINT
+                  value: ${NEWS_ENDPOINT}
+  - kind: Service
+    apiVersion: v1
+    metadata:
+      labels:
+        app: exchange
+      name: exchange
+    spec:
+      ports:
+      - port: 8080
+        protocol: TCP
+        targetPort: 8080
+      selector:
+        app: exchange
+
+parameters:
+  - name: INGRESS_GW
+    description: "The address of the Istio Ingress Gateway, to be used for the external exchange service"
+    required: true
+  - name: FRONTEND_TAG
+    description: "The tag of the image used to deploy the Frontend service"
+    required: false
+    value: "1.0"
+  - name: HISTORY_TAG
+    description: "The tag of the image used to deploy the History service"
+    required: false
+    value: "1.0"
+  - name: CURRENCIES_TAG
+    description: "The tag of the image used to deploy the Currencies service"
+    required: false
+    value: "1.0"
+  - name: EXCHANGE_TAG
+    description: "The tag of the image used to deploy the EXCHANGE service"
+    required: false
+    value: "1.0"
+  - name: NEWS_ENDPOINT
+    description: "URL of the news application  backend"
+    required: false
+    value: ""
+  - name: NEWS_ENABLED
+    description: "Flag whether to show the news part of the application or not. Empty variable means false."
+    required: false
+    value: ""
