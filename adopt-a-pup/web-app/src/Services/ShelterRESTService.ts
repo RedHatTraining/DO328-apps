@@ -1,18 +1,18 @@
-import { ShelterService } from "./ShelterService";
+import { ShelterService, ShelterParams } from "./ShelterService";
+import { RESTService } from "./RESTService";
 
 
-export default class ShelterRESTService implements ShelterService {
-
-    private baseUrl: string;
+export default class ShelterRESTService extends RESTService implements ShelterService {
 
     constructor(baseUrl: string) {
-        this.baseUrl = baseUrl;
+        super(baseUrl, "shelter-service");
     }
 
-    getAll() {
-        return [
-            "Shelter1",
-            "shelter2"
-        ];
+    public async create(params: ShelterParams): Promise<void> {
+        return this.post("/create", params);
+    }
+
+    public getAll(): Promise<Array<any>> {
+        return this.get<Array<any>>("/getAll");
     }
 }

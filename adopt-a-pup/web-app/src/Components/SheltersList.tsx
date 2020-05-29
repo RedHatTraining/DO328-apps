@@ -21,16 +21,18 @@ export default class ShelterList extends React.Component<ShelterListProps, Shelt
     }
 
     public async componentDidMount() {
-        const shelters = this.props.shelterService.getAll();
+        const shelters = await this.props.shelterService.getAll();
         this.setState({
             shelters
         });
     }
 
     public render() {
+        const { shelters } = this.state;
+
         return (
             <List>
-                {this.state.shelters.map(shelter => <ListItem key={shelter.id}>{shelter}</ListItem>)}
+                {shelters.map(shelter => <ListItem key={shelter.id}>{shelter.name}</ListItem>)}
             </List>
         );
     }

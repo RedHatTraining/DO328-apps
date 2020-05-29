@@ -1,8 +1,7 @@
 import React from "react";
 import { Brand, Page, PageHeader, PageSidebar, PageSection } from "@patternfly/react-core";
-
 import imgBrand from "./training_white.png";
-import NavList from "./NavList";
+import NavList from "./Components/NavList";
 
 
 type LayoutProps = {
@@ -13,7 +12,7 @@ type LayoutState = {
     isNavOpen: boolean
 }
 
-class Layout extends React.Component<LayoutProps, LayoutState> {
+export default class Layout extends React.Component<LayoutProps, LayoutState> {
 
     constructor(props: LayoutProps) {
         super(props);
@@ -59,5 +58,3 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
         });
     }
 }
-
-export default Layout;

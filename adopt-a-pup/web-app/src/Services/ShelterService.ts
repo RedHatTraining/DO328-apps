@@ -1,4 +1,10 @@
+export type ShelterParams = {
+    name: string
+}
+
+
 export interface ShelterService {
-    getAll(): Array<any>;
+    create(params: ShelterParams): Promise<void>;
+    getAll(): Promise<any[]>;
 }
 

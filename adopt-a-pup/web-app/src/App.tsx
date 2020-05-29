@@ -6,15 +6,20 @@ import {
     Switch,
     Route,
 } from "react-router-dom";
-import ShelterList from "./Components/SheltersList";
-import ShelterRESTService from "./Services/ShelterRESTService";
+// import ShelterRESTService from "./Services/ShelterRESTService";
 import AnimalList from "./Components/AnimalList";
+import SheltersView from "./Views/SheltersView";
+import ShelterFakeService from "./Services/ShelterFakeService";
+// import ShelterRESTService from "./Services/ShelterRESTService";
+
+// Services to connect to backends
+const shelterService = new ShelterFakeService();
+// Uncomment to use a real backend
+// const shelterService = new ShelterRESTService(SERVICE_BASE_URL);
 
 
-const shelterService = new ShelterRESTService("...");
-
-
-class App extends Component {
+// The main React component that runs the whole webapp
+export default class App extends Component {
     render() {
         return (
             <Router basename="/frontend">
@@ -24,10 +29,10 @@ class App extends Component {
                             Main
                         </Route>
                         <Route path="/shelters" exact>
-                            <ShelterList shelterService={shelterService} ></ShelterList>
+                            <SheltersView shelterService={shelterService} />
                         </Route>
                         <Route path="/your-animals" exact>
-                            <AnimalList></AnimalList>
+                            <AnimalList />
                         </Route>
                     </Structure>
                 </Switch>
@@ -35,5 +40,3 @@ class App extends Component {
         );
     }
 }
-
-export default App;
