@@ -1,0 +1,135 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  template: email-service-template
+metadata:
+  openshift.io/display-name: email-service
+  openshift.io/provider-display-name: Red Hat, Inc.
+  name: email-service
+objects:
+  - apiVersion: apps.openshift.io/v1
+    kind: DeploymentConfig
+    metadata:
+      labels:
+        app: email-service
+        app.kubernetes.io/component: email-service
+        app.kubernetes.io/instance: email-service
+      name: email-service
+    spec:
+      replicas: 1
+      revisionHistoryLimit: 10
+      selector:
+        deploymentconfig: email-service
+      strategy:
+        activeDeadlineSeconds: 21600
+        resources: {}
+        rollingParams:
+          intervalSeconds: 1
+          maxSurge: 25%
+          maxUnavailable: 25%
+          timeoutSeconds: 600
+          updatePeriodSeconds: 1
+        type: Rolling
+      template:
+        metadata:
+          annotations:
+            openshift.io/generated-by: OpenShiftNewApp
+          creationTimestamp: null
+          labels:
+            deploymentconfig: email-service
+            app: email-service
+        spec:
+          containers:
+            - env:
+                - name: smtp
+                  value: "1025"
+                - name: web
+                  value: "1080"
+              imagePullPolicy: Always
+              name: email-service
+              ports:
+                - containerPort: 25
+                  protocol: TCP
+                - containerPort: 80
+                  protocol: TCP
+              resources: {}
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+          dnsPolicy: ClusterFirst
+          restartPolicy: Always
+          schedulerName: default-scheduler
+          securityContext: {}
+          serviceAccount: maildev
+          serviceAccountName: maildev
+          terminationGracePeriodSeconds: 30
+      test: false
+      triggers:
+        - type: ConfigChange
+        - imageChangeParams:
+            automatic: true
+            containerNames:
+              - email-service
+            from:
+              kind: ImageStreamTag
+              name: email-service:latest
+          type: ImageChange
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      labels:
+        app: email-service
+        app.kubernetes.io/component: email-service
+        app.kubernetes.io/instance: email-service
+      name: email-service
+    spec:
+      lookupPolicy:
+        local: false
+      tags:
+        - annotations:
+            openshift.io/imported-from: maildev/maildev
+          from:
+            kind: DockerImage
+            name: maildev/maildev
+          generation: 1
+          importPolicy: {}
+          name: latest
+          referencePolicy:
+            type: Source
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        app: email-service
+        app.kubernetes.io/component: email-service
+        app.kubernetes.io/instance: email-service
+      name: email-service
+    spec:
+      ports:
+        - name: 25-tcp
+          port: 25
+          protocol: TCP
+          targetPort: 25
+        - name: 80-tcp
+          port: 80
+          protocol: TCP
+          targetPort: 80
+      selector:
+        deploymentconfig: email-service
+      sessionAffinity: None
+      type: ClusterIP
+  - apiVersion: route.openshift.io/v1
+    kind: Route
+    metadata:
+      labels:
+        app: email-service
+        app.kubernetes.io/component: email-service
+        app.kubernetes.io/instance: email-service
+      name: email-service
+    spec:
+      port:
+        targetPort: 25-tcp
+      to:
+        kind: Service
+        name: email-service
+        weight: 100
+      wildcardPolicy: None

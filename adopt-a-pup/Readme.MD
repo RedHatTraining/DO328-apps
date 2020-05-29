@@ -14,7 +14,8 @@ oc new-build  openshift/java:latest~https://github.com/jonahkh/DO328-apps --cont
 ```
 Run these commands after the builds have completed ensuring that the image streams have been created
 
-```oc new-app --template=openshift/mongodb-persistent --name=mongodb -e MONGODB_USER=developer -e MONGODB_PASSWORD=developer -e MONGODB_DATABASE=adopt-a-pup -n adopt-a-pup
+```
+oc new-app --template=openshift/mongodb-persistent --name=mongodb -e MONGODB_USER=developer -e MONGODB_PASSWORD=developer -e MONGODB_DATABASE=adopt-a-pup -n adopt-a-pup
 oc new-app --name=notification-service adopt-a-pup/notification-service -n adopt-a-pup
 oc new-app --name=adoption-service adopt-a-pup/adoption-service -n adopt-a-pup
 oc new-app --name=animal-service adopt-a-pup/animal-service -n adopt-a-pup

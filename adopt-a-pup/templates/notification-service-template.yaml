@@ -1,0 +1,146 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  template: notification-service-template
+metadata:
+  openshift.io/display-name: notification-service
+  openshift.io/provider-display-name: Red Hat, Inc.
+  name: notification-service
+objects:
+  - apiVersion: build.openshift.io/v1
+    kind: BuildConfig
+    metadata:
+      labels:
+        build: notification-service
+      name: notification-service
+    spec:
+      failedBuildsHistoryLimit: 5
+      nodeSelector: null
+      output:
+        to:
+          kind: ImageStreamTag
+          name: notification-service:latest
+      postCommit: {}
+      resources: {}
+      runPolicy: Serial
+      source:
+        contextDir: adopt-a-pup/notification-service
+        git:
+          uri: https://github.com/jonahkh/DO328-apps
+        type: Git
+      strategy:
+        sourceStrategy:
+          from:
+            kind: ImageStreamTag
+            name: java:latest
+            namespace: openshift
+        type: Source
+      successfulBuildsHistoryLimit: 5
+      triggers:
+        - github:
+            secret: 5VB4o3T3zM_FxukeaLIP
+          type: GitHub
+        - generic:
+            secret: eFgs1wnpb7uALnq76gr-
+          type: Generic
+        - type: ConfigChange
+        - type: ImageChange
+  - apiVersion: apps.openshift.io/v1
+    kind: DeploymentConfig
+    metadata:
+      labels:
+        app: notification-service
+        app.kubernetes.io/component: notification-service
+        app.kubernetes.io/instance: notification-service
+      name: notification-service
+    spec:
+      replicas: 1
+      revisionHistoryLimit: 10
+      selector:
+        deploymentconfig: notification-service
+      strategy:
+        activeDeadlineSeconds: 21600
+        resources: {}
+        rollingParams:
+          intervalSeconds: 1
+          maxSurge: 25%
+          maxUnavailable: 25%
+          timeoutSeconds: 600
+          updatePeriodSeconds: 1
+        type: Rolling
+      template:
+        metadata:
+          annotations:
+            openshift.io/generated-by: OpenShiftNewApp
+          creationTimestamp: null
+          labels:
+            deploymentconfig: notification-service
+            app: notification-service
+        spec:
+          containers:
+            - env:
+                - name: spring.mail.host
+                  value: email-service
+              imagePullPolicy: Always
+              name: notification-service
+              ports:
+                - containerPort: 8443
+                  protocol: TCP
+                - containerPort: 8778
+                  protocol: TCP
+                - containerPort: 8080
+                  protocol: TCP
+              resources: {}
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+          dnsPolicy: ClusterFirst
+          restartPolicy: Always
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+      test: false
+      triggers:
+        - type: ConfigChange
+        - imageChangeParams:
+            automatic: true
+            containerNames:
+              - notification-service
+            from:
+              kind: ImageStreamTag
+              name: notification-service:latest
+          type: ImageChange
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      labels:
+        build: notification-service
+      name: notification-service
+    spec:
+      lookupPolicy:
+        local: false
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        app: notification-service
+        app.kubernetes.io/component: notification-service
+        app.kubernetes.io/instance: notification-service
+      name: notification-service
+    spec:
+      ports:
+        - name: 8080-tcp
+          port: 8080
+          protocol: TCP
+          targetPort: 8080
+        - name: 8443-tcp
+          port: 8443
+          protocol: TCP
+          targetPort: 8443
+        - name: 8778-tcp
+          port: 8778
+          protocol: TCP
+          targetPort: 8778
+      selector:
+        deploymentconfig: notification-service
+      sessionAffinity: None
+      type: ClusterIP

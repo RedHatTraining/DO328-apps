@@ -1,0 +1,16 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: email-service
+    app.kubernetes.io/component: email-service
+    app.kubernetes.io/instance: email-service
+  name: email-service
+spec:
+  port:
+    targetPort: 25-tcp
+  to:
+    kind: Service
+    name: email-service
+    weight: 100
+  wildcardPolicy: None
