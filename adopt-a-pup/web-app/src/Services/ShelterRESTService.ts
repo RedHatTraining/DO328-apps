@@ -13,6 +13,6 @@ export default class ShelterRESTService extends RESTService implements ShelterSe
     }
 
     public getAll(): Promise<Array<any>> {
-        return this.get<Array<any>>("/getAll");
+        return this.get<Array<any>>("/shelters/getAll");
     }
 }

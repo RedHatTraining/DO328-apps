@@ -31,7 +31,7 @@ data:
                               route: { cluster: animal-service, timeout: { seconds: 60 } }
                             - match: { prefix: "/adoption/" }
                               route: { cluster: adoption-service, timeout: { seconds: 60 } }
-                            - match: { prefix: "/shelter/" }
+                            - match: { prefix: "/shelters/" }
                               route: { cluster: shelter-service, timeout: { seconds: 60 } }
                             - match: { prefix: "/email/" }
                               route: { cluster: email-service, timeout: { seconds: 60 } }
