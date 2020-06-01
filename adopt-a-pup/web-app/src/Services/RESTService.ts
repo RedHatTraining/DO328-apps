@@ -21,7 +21,7 @@ export abstract class RESTService {
         }
     }
 
-    protected async post<T>(url: string, body: any): Promise<T> {
+    protected async post<T>(url: string, body: T): Promise<any> {
         try {
             const r = await this.axiosInstance.post<T>(url, body);
             return r.data;

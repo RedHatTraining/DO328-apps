@@ -1,5 +1,6 @@
 import { Animal } from "../Models/Animal";
 import { AdoptionService } from "./AdoptionService";
+import { AdoptionApplication } from "../Models/AdoptionApplication";
 
 
 export default class AdoptionFakeService implements AdoptionService {
@@ -16,8 +17,8 @@ export default class AdoptionFakeService implements AdoptionService {
         ];
     }
 
-    public async applyForAdoption(animal: Animal): Promise<void> {
-        console.log(`Adoption application sent for animal ${animal.id}`);
+    public async applyForAdoption(adoption: AdoptionApplication): Promise<void> {
+        console.log(`Adoption application sent for animal ${adoption.animalId}`);
     }
 
 }

@@ -9,9 +9,9 @@ export default class HomeView extends React.Component {
         return (
             <PageSection variant={PageSectionVariants.light}>
                 <TextContent>
-                    <Text component="h1">Hello!</Text>
+                    <Text component="h1">Adopt a Pup</Text>
                     <Text component="p">
-                        This is the main page to adopt a pup.
+                        Hello! This is the main page to adopt a pup.
                     </Text>
                 </TextContent>
             </PageSection>

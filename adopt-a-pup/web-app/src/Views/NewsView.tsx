@@ -19,7 +19,7 @@ export default class NewsView extends React.Component<NewsViewProps> {
                     <TextContent>
                         <Text component="h1">Animal News</Text>
                         <Text component="p">
-                            Latest animal news 🐶!
+                            Latest animal news!
                         </Text>
                     </TextContent>
                 </PageSection>

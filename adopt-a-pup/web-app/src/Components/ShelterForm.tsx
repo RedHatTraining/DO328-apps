@@ -87,7 +87,7 @@ export default class ShelterForm extends React.Component<ShelterFormProps, Shelt
                         name="simple-form-name"
                         aria-describedby="simple-form-name-helper"
                         value={name}
-                        onChange={this.handleNameChange}
+                        onChange={this.handleNameChange.bind(this)}
                     />
                 </FormGroup>
                 <FormGroup

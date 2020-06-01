@@ -15,17 +15,31 @@ import AnimalFakeService from "./Services/AnimalFakeService";
 import AnimalsView from "./Views/AnimalsView";
 import HomeView from "./Views/HomeView";
 import AdoptionFakeService from "./Services/AdoptionFakeService";
+import ShelterRESTService from "./Services/ShelterRESTService";
+import AdoptionRESTService from "./Services/AdoptionRESTService";
+import AnimalRESTService from "./Services/AnimalRESTService";
+import { NewsService } from "./Services/NewsService";
+import { AnimalService } from "./Services/AnimalService";
+import { AdoptionService } from "./Services/AdoptionService";
+import { ShelterService } from "./Services/ShelterService";
 // import ShelterRESTService from "./Services/ShelterRESTService";
 
 // Services to connect to backends
+let animalService: AnimalService;
+let adoptionService: AdoptionService;
+let shelterService: ShelterService;
+let newsService: NewsService;
 
-const shelterService = new ShelterFakeService();
-// const shelterService = new ShelterRESTService(SERVICE_BASE_URL);
+// Fake services for frontend-isolated developemtn
+shelterService = new ShelterFakeService();
+newsService = new NewsFakeService();
+animalService = new AnimalFakeService();
+adoptionService = new AdoptionFakeService();
 
-const newsService = new NewsFakeService();
-const animalService = new AnimalFakeService();
-const adoptionService = new AdoptionFakeService();
-
+// Uncomment to use Real services
+// adoptionService = new AdoptionRESTService(process.env.REACT_APP_ADOPTION_SERVICE_URL || "");
+// animalService = new AnimalRESTService(process.env.REACT_APP_ANIMAL_SERVICE_URL || "");
+// shelterService = new ShelterRESTService(process.env.REACT_APP_SHELTER_SERVICE_URL || "");
 
 // The main React component that runs the whole webapp
 export default class App extends Component {
@@ -42,7 +56,10 @@ export default class App extends Component {
                             <SheltersView shelterService={shelterService} />
                         </Route>
                         <Route path="/animals" exact>
-                            <AnimalsView animalService={animalService} adoptionService={adoptionService} />
+                            <AnimalsView
+                                animalService={animalService}
+                                adoptionService={adoptionService}
+                            />
                         </Route>
                         {enableNews &&
                         <Route path="/news" exact>

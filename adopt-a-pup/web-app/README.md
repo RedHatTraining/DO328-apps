@@ -12,7 +12,23 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
-In the project directory, you can run:
+Before anything else, install dependencies:
+
+```sh
+npm ci
+```
+
+Also, if you want to inject env variables, create a `.env` file. For example:
+
+```
+REACT_APP_NEWS_ENABLED=1
+REACT_APP_ADOPTION_SERVICE_URL=http://localhost:8080
+REACT_APP_ANIMAL_SERVICE_URL=http://localhost:8081
+REACT_APP_SHELTER_SERVICE_URL=http://localhost:8082
+```
+
+
+Next, in the project directory, you can run:
 
 ### `npm start`
 

@@ -5,6 +5,7 @@ import {
 import { AnimalService } from "../Services/AnimalService";
 import { Animal } from "../Models/Animal";
 import { AdoptionService } from "../Services/AdoptionService";
+import { Residency } from "../Models/Residency";
 
 
 type AnimalListProps = {
@@ -41,7 +42,18 @@ export default class AdoptableAnimalList extends React.Component<AnimalListProps
 
     private async handleAdoptButtonClick(animal: Animal) {
         try {
-            await this.props.adoptionService.applyForAdoption(animal);
+            // TODO: Application form
+            const adoptionApplication = {
+                username: "todo",
+                residency: Residency.HOUSE,
+                animalId: animal.id,
+                squareFootageOfHome: 100,
+                occupation: "todo",
+                ownOtherAnimals: false,
+                kidsUnder16: true,
+                email: "todo@todo.com"
+            };
+            await this.props.adoptionService.applyForAdoption(adoptionApplication);
             this.setState({ showAdoptSucessAlert: true });
         } catch {
             this.setState({ showAdoptErrorAlert: true });

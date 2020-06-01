@@ -1,7 +1,8 @@
 import { Animal } from "../Models/Animal";
+import { AdoptionApplication } from "../Models/AdoptionApplication";
 
 
 export interface AdoptionService {
     getAdoptableByShelter(): Promise<Animal[]>;
-    applyForAdoption(animal: Animal): Promise<void>;
+    applyForAdoption(adoptionApplication: AdoptionApplication): Promise<void>;
 }
