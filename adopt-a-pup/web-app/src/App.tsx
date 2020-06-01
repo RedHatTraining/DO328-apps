@@ -22,6 +22,8 @@ import { NewsService } from "./Services/NewsService";
 import { AnimalService } from "./Services/AnimalService";
 import { AdoptionService } from "./Services/AdoptionService";
 import { ShelterService } from "./Services/ShelterService";
+import AnimalDetailsView from "./Views/AnimalDetailsView";
+import AnimalDetails from "./Components/AnimalDetails";
 // import ShelterRESTService from "./Services/ShelterRESTService";
 
 // Services to connect to backends
@@ -66,6 +68,12 @@ export default class App extends Component {
                             <NewsView newsService={newsService} />
                         </Route>
                         }
+                        <Route path={`/animals/:animalId`} component={AnimalDetails}>
+                            {/* <AnimalDetailsView 
+                                // animalId={this.pro}
+                                animalService={animalService}
+                                adoptionService={adoptionService}/> */}
+                        </Route>
                     </Structure>
                 </Switch>
             </Router>

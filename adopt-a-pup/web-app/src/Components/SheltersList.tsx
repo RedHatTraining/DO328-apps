@@ -32,7 +32,7 @@ export default class ShelterList extends React.Component<ShelterListProps, Shelt
 
         return (
             <List>
-                {shelters.map(shelter => <ListItem key={shelter.id}>{shelter.name}</ListItem>)}
+                {shelters.map(shelter => <ListItem key={shelter.shelterId}>{shelter.shelterName}</ListItem>)}
             </List>
         );
     }

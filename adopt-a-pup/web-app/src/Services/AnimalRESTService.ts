@@ -10,23 +10,23 @@ export default class AnimalRESTService extends RESTService implements AnimalServ
         super(baseUrl, "shelter-service");
     }
     public async create(animal: Animal): Promise<void> {
-        await this.post(`/${animal.shelterId}/create`, animal);
+        await this.post(`/animals/${animal.shelterId}/create`, animal);
     }
 
     public getAllAdoptable(): Promise<Animal[]> {
-        throw new Error("Method not implemented.");
+        return this.get("/animals/getAllAdoptable")
     }
 
     public getById(id: string): Promise<Animal> {
-        throw new Error("Method not implemented.");
+        return this.get(`/animals/${id}/getAnimalById`);
     }
 
     public getAdoptableByShelter(): Promise<Animal[]> {
-        return this.get("/getAllAdoptableByShelter");
+        return this.get("/animals/getAllAdoptableByShelter");
     }
 
     public async applyForAdoption(adoptionApplication: AdoptionApplication): Promise<void> {
-        await this.post("/applyForAdoption", adoptionApplication);
+        await this.post("/animals/applyForAdoption", adoptionApplication);
     }
 
 }

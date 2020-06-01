@@ -6,6 +6,8 @@ import { AnimalService } from "../Services/AnimalService";
 import { Animal } from "../Models/Animal";
 import { AdoptionService } from "../Services/AdoptionService";
 import { Residency } from "../Models/Residency";
+import AnimalDetailsView from "../Views/AnimalDetailsView";
+import { Link, useHistory } from "react-router-dom";
 
 
 type AnimalListProps = {
@@ -18,6 +20,8 @@ type AnimalListState = {
     showAdoptSucessAlert: boolean,
     showAdoptErrorAlert: boolean
 }
+
+
 
 /**
  * Card list to show adoptable animals and apply for adoption
@@ -46,7 +50,7 @@ export default class AdoptableAnimalList extends React.Component<AnimalListProps
             const adoptionApplication = {
                 username: "todo",
                 residency: Residency.HOUSE,
-                animalId: animal.id,
+                animalId: animal.animalId,
                 squareFootageOfHome: 100,
                 occupation: "todo",
                 ownOtherAnimals: false,
@@ -82,20 +86,25 @@ export default class AdoptableAnimalList extends React.Component<AnimalListProps
 
 
     private renderAnimalCard(animal: Animal) {
-        const pictureSrc = `/photos/${animal.id}.jpeg`;
+        const pictureSrc = `/photos/${animal.animalId}.jpeg`;
 
         return (
-            <GalleryItem key={animal.id}>
+            <GalleryItem key={animal.animalId}>
                 <Card>
                     <CardHeader>
-                        {animal.name}
+                        {animal.animalName}
                     </CardHeader>
                     <CardBody>
-                        <img src={pictureSrc} alt={animal.name}></img>
+                        <img src={pictureSrc} alt={animal.animalName}></img>
                         <CardActions>
-                            <Button onClick={() => this.handleAdoptButtonClick(animal)}>
+                            {/* <Button onClick={() => this.handleAdoptButtonClick(animal)}>
                                 Adopt
-                            </Button>
+                            </Button> */}
+                            <Link to={`/animals/${animal.animalId}`}>
+                                <Button>
+                                    Details
+                                </Button>
+                            </Link>
                         </CardActions>
                     </CardBody>
                 </Card>
@@ -103,7 +112,6 @@ export default class AdoptableAnimalList extends React.Component<AnimalListProps
         );
 
     }
-
 
     private renderAdoptErrorAlert(): React.ReactNode | null {
         if (this.state.showAdoptErrorAlert) {

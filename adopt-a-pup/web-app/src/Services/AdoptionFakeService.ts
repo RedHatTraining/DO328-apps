@@ -8,11 +8,17 @@ export default class AdoptionFakeService implements AdoptionService {
     public async getAdoptableByShelter(): Promise<Animal[]> {
         return [
             {
-                id: "a1",
-                name: "Dog 1",
+                animalId: "a1",
+                animalName: "Dog 1",
                 breed: "Shepherd",
                 shelterId: "s1",
-                adoptable: true
+                adoptable: true,
+                weight: 100,
+                approximateSize: "L",
+                residencyRequired: "HOUSE",
+                squareFootageOfHome: 800,
+                childSafe: true,
+                otherDogSafe: true
             }
         ];
     }
