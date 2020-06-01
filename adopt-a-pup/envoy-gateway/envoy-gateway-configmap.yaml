@@ -37,7 +37,7 @@ data:
                               route: { cluster: email-service, timeout: { seconds: 60 } }
                           cors:
                             allow_methods: GET, PUT, DELETE, POST, OPTIONS
-                            allow_headers: access-control-request-header,access-control-request-method,authorization,keep-alive,user-agent,cache-control,content-type,content-transfer-encoding,custom-header-1,x-accept-content-transfer-encoding,x-accept-response-streaming,x-user-agent
+                            allow_headers: access-control-allow-origin,access-control-request-header,access-control-request-method,authorization,keep-alive,user-agent,cache-control,content-type,content-transfer-encoding,custom-header-1,x-accept-content-transfer-encoding,x-accept-response-streaming,x-user-agent
                             max_age: "1728000"
                             expose_headers: x-total-pages,x-total-count
                     http_filters:
