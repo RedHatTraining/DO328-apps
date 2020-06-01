@@ -1,0 +1,65 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: mongodb-ephemeral
+  annotations:
+    description: "MongoDB"
+objects:
+  - kind: Deployment
+    apiVersion: apps/v1
+    metadata:
+      name: mongodb
+    spec:
+      selector:
+        matchLabels:
+          app: mongodb
+      replicas: 1
+      template:
+        metadata:
+          labels:
+            app: mongodb
+        spec:
+          containers:
+            - name: mongodb
+              image: registry.access.redhat.com/rhscl/mongodb-36-rhel7
+              ports:
+                - containerPort: 27017
+              env:
+                - name: MONGODB_USER
+                  value: ${MONGODB_USER}
+                - name: MONGODB_PASSWORD
+                  value: ${MONGODB_PASSWORD}
+                - name: MONGODB_DATABASE
+                  value: ${MONGODB_DATABASE}
+                - name: MONGODB_ADMIN_PASSWORD
+                  value: ${MONGODB_ADMIN_PASSWORD}
+  - kind: Service
+    apiVersion: v1
+    metadata:
+      labels:
+        app: mongodb
+      name: mongodb
+    spec:
+      ports:
+        - port: 27017
+          protocol: TCP
+          targetPort: 27017
+      selector:
+        app: mongodb
+parameters:
+  - name: MONGODB_USER
+    description: "MongoDB user"
+    required: true
+    value: "developer"
+  - name: MONGODB_PASSWORD
+    description: "MongoDB password"
+    required: true
+    value: "developer"
+  - name: MONGODB_DATABASE
+    description: "MongoDB database"
+    required: false
+    value: "adopt-a-pup"
+  - name: MONGODB_ADMIN_PASSWORD
+    description: "MongoDB admin password"
+    required: false
+    value: "redhat"

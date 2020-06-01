@@ -1,0 +1,2 @@
+{"_id":"e038ae3c-592f-403e-9233-4b6eeab30e3c","shelterName":"Denver Doggos","state":"Colorado","country":"US","address":"123 N Pupper St","email":"admin@denverdoggos.com","phoneNumber":"303-123-4567","_class":"com.redhat.do328.adoptApup.shelterservice.model.Shelter"}
+{"_id":"6a432062-96a4-4a66-b888-1ab7225e6b2c","shelterName":"Minneapolis Mutts","state":"Minnesota","country":"US","address":"200 Good Boy Ave","email":"frontdesk@minneapolismutts.com","phoneNumber":"212-555-9758","_class":"com.redhat.do328.adoptApup.shelterservice.model.Shelter"}
