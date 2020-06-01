@@ -32,7 +32,7 @@ export default class Layout extends React.Component<LayoutProps, LayoutState> {
 
         const Header = (
             <PageHeader
-                logo={<Brand src={imgBrand} alt="Patternfly Logo" />}
+                logo={<Brand src={imgBrand} alt="Red Hat Training Logo" className="logo"/>}
                 logoProps={logoProps}
                 showNavToggle
                 isNavOpen={isNavOpen}

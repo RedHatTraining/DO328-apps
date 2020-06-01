@@ -9,24 +9,31 @@ import {
 // import ShelterRESTService from "./Services/ShelterRESTService";
 import AnimalList from "./Components/AnimalList";
 import SheltersView from "./Views/SheltersView";
+import NewsView from "./Views/NewsView";
 import ShelterFakeService from "./Services/ShelterFakeService";
+import NewsFakeService from "./Services/NewsFakeService";
 // import ShelterRESTService from "./Services/ShelterRESTService";
 
 // Services to connect to backends
+
 const shelterService = new ShelterFakeService();
-// Uncomment to use a real backend
 // const shelterService = new ShelterRESTService(SERVICE_BASE_URL);
+
+const newsService = new NewsFakeService();
+
+
 
 
 // The main React component that runs the whole webapp
 export default class App extends Component {
     render() {
+        const enableNews = process.env.REACT_APP_NEWS_ENABLED;
         return (
             <Router basename="/frontend">
                 <Switch>
                     <Structure>
                         <Route path="/" exact >
-                            Main
+                            Adopt a pup
                         </Route>
                         <Route path="/shelters" exact>
                             <SheltersView shelterService={shelterService} />
@@ -34,6 +41,11 @@ export default class App extends Component {
                         <Route path="/your-animals" exact>
                             <AnimalList />
                         </Route>
+                        {enableNews &&
+                        <Route path="/news" exact>
+                            <NewsView newsService={newsService} />
+                        </Route>
+                        }
                     </Structure>
                 </Switch>
             </Router>

@@ -5,12 +5,12 @@ import { ShelterService } from "../Services/ShelterService";
 import { PageSection, PageSectionVariants, Text, TextContent } from "@patternfly/react-core";
 
 
-type ShelterListProps = {
+type SheltersViewProps = {
     shelterService: ShelterService;
 }
 
 
-export default class SheltersView extends React.Component<ShelterListProps> {
+export default class SheltersView extends React.Component<SheltersViewProps> {
 
     public render() {
         return (
