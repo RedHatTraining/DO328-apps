@@ -13,6 +13,7 @@ export default class NavDefaultList extends React.Component {
 
     public render() {
         const { pathname } = window.location;
+        const enableNews = process.env.REACT_APP_NEWS_ENABLED;
         return (
             <Nav theme="dark">
                 <NavList>
@@ -22,9 +23,12 @@ export default class NavDefaultList extends React.Component {
                     <NavItem id="shelters" isActive={pathname.endsWith("/shelters")}>
                         <Link to="/shelters" >Shelters</Link>
                     </NavItem>
-                    <NavItem id="your-animals" isActive={pathname.endsWith("/your-animals")}>
-                        <Link to="/your-animals" >Your Animals</Link>
+                    <NavItem id="animals" isActive={pathname.endsWith("/animals")}>
+                        <Link to="/animals" >Animals</Link>
                     </NavItem>
+                    {enableNews && <NavItem id="news" isActive={pathname.endsWith("/news")}>
+                        <Link to="/news" >News</Link>
+                    </NavItem>}
                 </NavList>
             </Nav>
         );

@@ -1,5 +1,5 @@
 import React from "react";
-import { Brand, Page, PageHeader, PageSidebar, PageSection } from "@patternfly/react-core";
+import { Brand, Page, PageHeader, PageSidebar } from "@patternfly/react-core";
 import imgBrand from "./training_white.png";
 import NavList from "./Components/NavList";
 
@@ -32,7 +32,7 @@ export default class Layout extends React.Component<LayoutProps, LayoutState> {
 
         const Header = (
             <PageHeader
-                logo={<Brand src={imgBrand} alt="Patternfly Logo" />}
+                logo={<Brand src={imgBrand} alt="Red Hat Training Logo" className="logo"/>}
                 logoProps={logoProps}
                 showNavToggle
                 isNavOpen={isNavOpen}
@@ -45,9 +45,7 @@ export default class Layout extends React.Component<LayoutProps, LayoutState> {
 
         return (
             <Page header={Header} sidebar={Sidebar} style={{minHeight: 800}}>
-                <PageSection >
-                    {this.props.children}
-                </PageSection>
+                {this.props.children}
             </Page>
         );
     }

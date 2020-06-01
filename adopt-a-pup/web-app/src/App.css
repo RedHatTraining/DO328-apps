@@ -12,8 +12,10 @@ code {
     monospace;
 }
 
+.logo {
+  height: 2rem;
+}
 
-/*
 .centered {
   text-align: center;
 }
@@ -51,4 +53,3 @@ code {
   animation-name: popupFadeIn;
   animation-duration: .3s;
 }
-*/
