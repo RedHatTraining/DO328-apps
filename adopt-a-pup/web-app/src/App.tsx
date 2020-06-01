@@ -14,6 +14,7 @@ import NewsFakeService from "./Services/NewsFakeService";
 import AnimalFakeService from "./Services/AnimalFakeService";
 import AnimalsView from "./Views/AnimalsView";
 import HomeView from "./Views/HomeView";
+import AdoptionFakeService from "./Services/AdoptionFakeService";
 // import ShelterRESTService from "./Services/ShelterRESTService";
 
 // Services to connect to backends
@@ -23,6 +24,7 @@ const shelterService = new ShelterFakeService();
 
 const newsService = new NewsFakeService();
 const animalService = new AnimalFakeService();
+const adoptionService = new AdoptionFakeService();
 
 
 // The main React component that runs the whole webapp
@@ -39,8 +41,8 @@ export default class App extends Component {
                         <Route path="/shelters" exact>
                             <SheltersView shelterService={shelterService} />
                         </Route>
-                        <Route path="/your-animals" exact>
-                            <AnimalsView animalService={animalService} />
+                        <Route path="/animals" exact>
+                            <AnimalsView animalService={animalService} adoptionService={adoptionService} />
                         </Route>
                         {enableNews &&
                         <Route path="/news" exact>
