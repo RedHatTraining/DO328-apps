@@ -1,4 +1,5 @@
-import { AnimalService, Animal } from "./AnimalService";
+import { AnimalService } from "./AnimalService";
+import { Animal } from "../Models/Animal";
 
 
 export default class AnimalFakeService implements AnimalService {
@@ -10,8 +11,8 @@ export default class AnimalFakeService implements AnimalService {
     public async getAllAdoptable(): Promise<Animal[]> {
         return [
             {
-                animalId: "a1",
-                animalName: "Dog 1",
+                id: "a1",
+                name: "Dog 1",
                 breed: "Shepherd",
                 shelterId: "s1",
                 adoptable: true
@@ -21,8 +22,8 @@ export default class AnimalFakeService implements AnimalService {
 
     public async getById(id: string): Promise<Animal> {
         return {
-            animalId: id,
-            animalName: "Dog 1",
+            id: id,
+            name: "Dog 1",
             breed: "Shepherd",
             shelterId: "s1",
             adoptable: true

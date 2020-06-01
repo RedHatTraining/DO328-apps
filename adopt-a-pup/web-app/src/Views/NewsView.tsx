@@ -2,7 +2,8 @@ import React from "react";
 import { Table, TableHeader, TableBody } from "@patternfly/react-table";
 import { EmptyState, EmptyStateIcon, EmptyStateBody, EmptyStateVariant, Bullseye, Title } from "@patternfly/react-core";
 import { ErrorCircleOIcon } from "@patternfly/react-icons";
-import { NewsService, News } from "../Services/NewsService";
+import { NewsService } from "../Services/NewsService";
+import { News } from "../Models/News";
 
 
 type NewsViewProps = {

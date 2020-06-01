@@ -1,4 +1,5 @@
-import { NewsService, News } from "./NewsService";
+import { NewsService } from "./NewsService";
+import { News } from "../Models/News";
 
 
 export default class NewsFakeService implements NewsService {

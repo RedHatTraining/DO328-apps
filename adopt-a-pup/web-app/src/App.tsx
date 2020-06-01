@@ -7,11 +7,13 @@ import {
     Route,
 } from "react-router-dom";
 // import ShelterRESTService from "./Services/ShelterRESTService";
-import AnimalList from "./Components/AnimalList";
 import SheltersView from "./Views/SheltersView";
 import NewsView from "./Views/NewsView";
 import ShelterFakeService from "./Services/ShelterFakeService";
 import NewsFakeService from "./Services/NewsFakeService";
+import AnimalFakeService from "./Services/AnimalFakeService";
+import AnimalsView from "./Views/AnimalsView";
+import HomeView from "./Views/HomeView";
 // import ShelterRESTService from "./Services/ShelterRESTService";
 
 // Services to connect to backends
@@ -20,8 +22,7 @@ const shelterService = new ShelterFakeService();
 // const shelterService = new ShelterRESTService(SERVICE_BASE_URL);
 
 const newsService = new NewsFakeService();
-
-
+const animalService = new AnimalFakeService();
 
 
 // The main React component that runs the whole webapp
@@ -33,13 +34,13 @@ export default class App extends Component {
                 <Switch>
                     <Structure>
                         <Route path="/" exact >
-                            Adopt a pup
+                            <HomeView />
                         </Route>
                         <Route path="/shelters" exact>
                             <SheltersView shelterService={shelterService} />
                         </Route>
                         <Route path="/your-animals" exact>
-                            <AnimalList />
+                            <AnimalsView animalService={animalService} />
                         </Route>
                         {enableNews &&
                         <Route path="/news" exact>
