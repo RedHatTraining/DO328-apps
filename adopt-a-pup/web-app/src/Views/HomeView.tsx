@@ -11,7 +11,7 @@ export default class HomeView extends React.Component {
                 <TextContent>
                     <Text component="h1">Hello!</Text>
                     <Text component="p">
-                        This is the main page.
+                        This is the main page to adopt a pup.
                     </Text>
                 </TextContent>
             </PageSection>
