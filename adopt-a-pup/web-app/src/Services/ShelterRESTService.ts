@@ -1,5 +1,6 @@
 import { ShelterService, ShelterParams } from "./ShelterService";
 import { RESTService } from "./RESTService";
+import { Shelter } from "../Models/Shelter";
 
 
 export default class ShelterRESTService extends RESTService implements ShelterService {
@@ -12,7 +13,7 @@ export default class ShelterRESTService extends RESTService implements ShelterSe
         return this.post("/create", params);
     }
 
-    public getAll(): Promise<Array<any>> {
-        return this.get<Array<any>>("/getAll");
+    public getAll(): Promise<Array<Shelter>> {
+        return this.get<Array<Shelter>>("/shelters/getAll");
     }
 }

@@ -22,6 +22,8 @@ import { NewsService } from "./Services/NewsService";
 import { AnimalService } from "./Services/AnimalService";
 import { AdoptionService } from "./Services/AdoptionService";
 import { ShelterService } from "./Services/ShelterService";
+import AnimalDetailsView from "./Views/AnimalDetailsView";
+import AnimalDetails from "./Components/AnimalDetails";
 // import ShelterRESTService from "./Services/ShelterRESTService";
 
 // Services to connect to backends
@@ -31,15 +33,15 @@ let shelterService: ShelterService;
 let newsService: NewsService;
 
 // Fake services for frontend-isolated developemtn
-shelterService = new ShelterFakeService();
-newsService = new NewsFakeService();
-animalService = new AnimalFakeService();
-adoptionService = new AdoptionFakeService();
+// shelterService = new ShelterFakeService();
+// newsService = new NewsFakeService();
+// animalService = new AnimalFakeService();
+// adoptionService = new AdoptionFakeService();
 
 // Uncomment to use Real services
-// adoptionService = new AdoptionRESTService(process.env.REACT_APP_ADOPTION_SERVICE_URL || "");
-// animalService = new AnimalRESTService(process.env.REACT_APP_ANIMAL_SERVICE_URL || "");
-// shelterService = new ShelterRESTService(process.env.REACT_APP_SHELTER_SERVICE_URL || "");
+adoptionService = new AdoptionRESTService(process.env.REACT_APP_ADOPTION_SERVICE_URL || "");
+animalService = new AnimalRESTService(process.env.REACT_APP_ANIMAL_SERVICE_URL || "");
+shelterService = new ShelterRESTService(process.env.REACT_APP_SHELTER_SERVICE_URL || "");
 
 // The main React component that runs the whole webapp
 export default class App extends Component {
@@ -66,6 +68,12 @@ export default class App extends Component {
                             <NewsView newsService={newsService} />
                         </Route>
                         }
+                        <Route path={`/animals/:animalId`} component={AnimalDetails}>
+                            {/* <AnimalDetailsView 
+                                // animalId={this.pro}
+                                animalService={animalService}
+                                adoptionService={adoptionService}/> */}
+                        </Route>
                     </Structure>
                 </Switch>
             </Router>

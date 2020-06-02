@@ -11,22 +11,34 @@ export default class AnimalFakeService implements AnimalService {
     public async getAllAdoptable(): Promise<Animal[]> {
         return [
             {
-                id: "a1",
-                name: "Dog 1",
+                animalId: "a1",
+                animalName: "Dog 1",
                 breed: "Shepherd",
                 shelterId: "s1",
-                adoptable: true
+                adoptable: true,
+                weight: 100,
+                approximateSize: "L",
+                residencyRequired: "HOUSE",
+                squareFootageOfHome: 800,
+                childSafe: true,
+                otherDogSafe: true
             }
         ];
     }
 
     public async getById(id: string): Promise<Animal> {
-        return {
-            id: id,
-            name: "Dog 1",
+        return             {
+            animalId: "a1",
+            animalName: "Dog 1",
             breed: "Shepherd",
             shelterId: "s1",
-            adoptable: true
+            adoptable: true,
+            weight: 100,
+            approximateSize: "L",
+            residencyRequired: "HOUSE",
+            squareFootageOfHome: 800,
+            childSafe: true,
+            otherDogSafe: true
         };
     }
 
