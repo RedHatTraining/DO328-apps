@@ -1,6 +1,8 @@
 import React from "react";
-import { List, ListItem } from "@patternfly/react-core";
+import { List, ListItem, Button, Level, LevelItem } from "@patternfly/react-core";
 import { ShelterService } from "../Services/ShelterService";
+import { Shelter } from "../Models/Shelter";
+import { Link } from "react-router-dom";
 
 
 type ShelterListProps = {
@@ -32,8 +34,30 @@ export default class ShelterList extends React.Component<ShelterListProps, Shelt
 
         return (
             <List>
-                {shelters.map(shelter => <ListItem key={shelter.shelterId}>{shelter.shelterName}</ListItem>)}
+                {shelters.map(shelter => <ListItem key={shelter.shelterId}>
+                    {this.renderShelter(shelter)}
+                </ListItem>)}
             </List>
+
+        );
+    }
+
+    private renderShelter(shelter: Shelter) {
+        return (
+            <React.Fragment>
+                <Level>
+                    <LevelItem>
+                        {shelter.shelterName}
+                    </LevelItem>
+                    <LevelItem>
+                        <Link to={`/shelters/${shelter.shelterId}`}>
+                            <Button>
+                                Details
+                            </Button>
+                        </Link>
+                    </LevelItem>
+                </Level>
+            </React.Fragment>
         );
     }
 

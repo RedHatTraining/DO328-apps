@@ -10,8 +10,17 @@ export default class AdoptionRESTService extends RESTService implements Adoption
         super(baseUrl, "adoption-service");
     }
 
-    public getAdoptableByShelter(): Promise<Animal[]> {
-        return this.get("/adoption/getAllAdoptableByShelter");
+    public async getAdoptableByShelter(shelterId: string): Promise<Animal[]> {
+        const animalsByShelter = await this.get<Record<string,Animal[]>>(
+            "/adoption/getAllAdoptableByShelter"
+        );
+
+        for(const key of Object.keys(animalsByShelter)) {
+            if (key.includes(`shelterId=${shelterId}`)) {
+                return animalsByShelter[key];
+            }
+        }
+        return [];
     }
 
     public async applyForAdoption(adoptionApplication: AdoptionApplication): Promise<void> {

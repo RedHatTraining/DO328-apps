@@ -1,3 +1,5 @@
+import { Shelter } from "../Models/Shelter";
+
 export type ShelterParams = {
     name: string
 }
@@ -5,6 +7,7 @@ export type ShelterParams = {
 
 export interface ShelterService {
     create(params: ShelterParams): Promise<void>;
-    getAll(): Promise<any[]>;
+    getById(id: string): Promise<Shelter>
+    getAll(): Promise<Shelter[]>;
 }
 

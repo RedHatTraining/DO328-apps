@@ -3,6 +3,7 @@ import { AnimalService } from "../Services/AnimalService";
 import { PageSection, PageSectionVariants, Text, TextContent } from "@patternfly/react-core";
 import AdoptableAnimalList from "../Components/AdoptableAnimalList";
 import { AdoptionService } from "../Services/AdoptionService";
+import { Animal } from "../Models/Animal";
 
 
 type AnimalsViewProps = {
@@ -10,8 +11,26 @@ type AnimalsViewProps = {
     adoptionService: AdoptionService;
 }
 
+type AnimalsViewState = {
+    animals: Animal[]
+}
 
-export default class AnimalsView extends React.Component<AnimalsViewProps> {
+
+export default class AnimalsView extends React.Component<AnimalsViewProps, AnimalsViewState> {
+
+    constructor(props: AnimalsViewProps) {
+        super(props);
+        this.state = {
+            animals: []
+        };
+    }
+
+    public async componentDidMount() {
+        const animals = await this.props.animalService.getAllAdoptable();
+        this.setState({
+            animals
+        });
+    }
 
     public render() {
         return (
@@ -25,11 +44,8 @@ export default class AnimalsView extends React.Component<AnimalsViewProps> {
                     </TextContent>
                 </PageSection>
                 <PageSection>
-                    <Text component="h2">Create a Shelter</Text>
-                    <AdoptableAnimalList
-                        animalService={this.props.animalService}
-                        adoptionService={this.props.adoptionService}
-                    />
+                    <Text component="h2">Adoptable Animals</Text>
+                    <AdoptableAnimalList animals={this.state.animals} />
                 </PageSection>
             </React.Fragment>
         );

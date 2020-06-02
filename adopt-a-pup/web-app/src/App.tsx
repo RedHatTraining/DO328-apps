@@ -23,6 +23,7 @@ import { AdoptionService } from "./Services/AdoptionService";
 import { ShelterService } from "./Services/ShelterService";
 import AnimalDetails from "./Components/AnimalDetails";
 import AnimalDetailsView from "./Views/AnimalDetailsView";
+import ShelterDetailsView from "./Views/ShelterDetailsView";
 
 
 // Backend SERVICES
@@ -34,28 +35,28 @@ let newsService: NewsService;
 if (process.env.REACT_APP_ADOPTION_SERVICE_URL) {
     adoptionService = new AdoptionRESTService(process.env.REACT_APP_ADOPTION_SERVICE_URL || "");
 } else {
-    console.log("Using AdoptionFakeService");
+    console.log("Warning: No service url provided. Using AdoptionFakeService");
     adoptionService = new AdoptionFakeService();
 }
 
 if (process.env.REACT_APP_ANIMAL_SERVICE_URL) {
     animalService = new AnimalRESTService(process.env.REACT_APP_ANIMAL_SERVICE_URL || "");
 } else {
-    console.log("Using AnimalFakeService");
+    console.log("Warning: No service url provided. Using AnimalFakeService");
     animalService = new AnimalFakeService();
 }
 
 if (process.env.REACT_APP_SHELTER_SERVICE_URL) {
     shelterService = new ShelterRESTService(process.env.REACT_APP_SHELTER_SERVICE_URL || "");
 } else {
-    console.log("Using ShelterFakeService");
+    console.log("Warning: No service url provided. Using ShelterFakeService");
     shelterService = new ShelterFakeService();
 }
 
 if (process.env.REACT_APP_SHELTER_SERVICE_URL) {
     shelterService = new ShelterRESTService(process.env.REACT_APP_SHELTER_SERVICE_URL || "");
 } else {
-    console.log("Using ShelterFakeService");
+    console.log("Warning: No service url provided. Using ShelterFakeService");
     shelterService = new ShelterFakeService();
 }
 
@@ -92,6 +93,12 @@ export default class App extends Component {
                         <Route path={"/animals/:animalId"} render={ (props) =>
                             <AnimalDetailsView {...props}
                                 animalService={animalService}
+                                adoptionService={adoptionService}
+                            /> } >
+                        </Route>
+                        <Route path={"/shelters/:shelterId"} render={ (props) =>
+                            <ShelterDetailsView {...props}
+                                shelterService={shelterService}
                                 adoptionService={adoptionService}
                             /> } >
                         </Route>

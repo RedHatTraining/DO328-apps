@@ -13,7 +13,11 @@ export default class ShelterRESTService extends RESTService implements ShelterSe
         return this.post("/shelters/create", params);
     }
 
-    public getAll(): Promise<Array<Shelter>> {
-        return this.get<Array<Shelter>>("/shelters/getAll");
+    public async getById(id: string): Promise<Shelter> {
+        return this.get<Shelter>(`/shelters/${id}/getShelter`);
+    }
+
+    public getAll(): Promise<Shelter[]> {
+        return this.get<Shelter[]>("/shelters/getAll");
     }
 }
