@@ -26,7 +26,7 @@ export abstract class RESTService {
             const r = await this.axiosInstance.post<T>(url, body);
             return r.data;
         } catch (e) {
-            throw new RESTConnectionError(e, this.remoteServiceName, e.response.status);
+            throw new RESTConnectionError(e, this.remoteServiceName, e.response?.status);
         }
     }
 

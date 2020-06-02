@@ -7,14 +7,14 @@ import { AnimalService } from "./AnimalService";
 export default class AnimalRESTService extends RESTService implements AnimalService {
 
     constructor(baseUrl: string) {
-        super(baseUrl, "shelter-service");
+        super(baseUrl, "animal-service");
     }
     public async create(animal: Animal): Promise<void> {
         await this.post(`/animals/${animal.shelterId}/create`, animal);
     }
 
     public getAllAdoptable(): Promise<Animal[]> {
-        return this.get("/animals/getAllAdoptable")
+        return this.get("/animals/getAllAdoptable");
     }
 
     public getById(id: string): Promise<Animal> {

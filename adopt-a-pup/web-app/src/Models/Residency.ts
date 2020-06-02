@@ -1,4 +1,4 @@
 export enum Residency {
-    APARTMENT,
-    HOUSE
+    APARTMENT = "APARTMENT",
+    HOUSE = "HOUSE"
 }
