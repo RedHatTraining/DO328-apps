@@ -228,7 +228,10 @@ export default class AdoptionForm extends React.Component<AdoptionFormProps, Ado
 
     private renderAdoptSuccessAlert(): React.ReactNode | null {
         if (this.state.showAdoptSucessAlert) {
-            return <Alert variant="success" title="Congratulations! The Adoption application was sent." />;
+            return <Alert
+                variant="success"
+                title="Congratulations! The Adoption application was sent."
+            />;
         }
         return null;
     }

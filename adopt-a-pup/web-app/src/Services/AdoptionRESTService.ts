@@ -7,15 +7,15 @@ import { AdoptionApplication } from "../Models/AdoptionApplication";
 export default class AdoptionRESTService extends RESTService implements AdoptionService {
 
     constructor(baseUrl: string) {
-        super(baseUrl, "shelter-service");
+        super(baseUrl, "adoption-service");
     }
 
     public getAdoptableByShelter(): Promise<Animal[]> {
-        return this.get("/getAllAdoptableByShelter");
+        return this.get("/adoption/getAllAdoptableByShelter");
     }
 
     public async applyForAdoption(adoptionApplication: AdoptionApplication): Promise<void> {
-        await this.post("/applyForAdoption", adoptionApplication);
+        await this.post("/adoption/applyForAdoption", adoptionApplication);
     }
 
 }
