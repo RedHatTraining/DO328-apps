@@ -1,6 +1,6 @@
 #!/bin/bash
 
-oc process -n adopt-a-pup -f ../templates/mongodb-template.yaml \
+oc process -n adopt-a-pup -f ../kubefiles/mongodb-template.yaml \
   -p MONGODB_USER=developer \
   -p MONGODB_PASSWORD=developer \
   -p MONGODB_DATABASE=adopt-a-pup \
