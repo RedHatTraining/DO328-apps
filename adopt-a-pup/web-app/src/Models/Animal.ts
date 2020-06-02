@@ -4,7 +4,7 @@ export interface Animal {
     shelterId: string;
     breed: string;
     adoptable: boolean;
-    approximateSize: string;   
+    approximateSize: string;
     residencyRequired: string;
     weight: number;
     squareFootageOfHome: number;

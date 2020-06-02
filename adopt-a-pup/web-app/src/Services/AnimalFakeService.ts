@@ -22,11 +22,50 @@ export default class AnimalFakeService implements AnimalService {
                 squareFootageOfHome: 800,
                 childSafe: true,
                 otherDogSafe: true
+            },
+            {
+                animalId: "a1",
+                animalName: "Dog 1",
+                breed: "Shepherd",
+                shelterId: "s1",
+                adoptable: true,
+                weight: 100,
+                approximateSize: "L",
+                residencyRequired: "HOUSE",
+                squareFootageOfHome: 800,
+                childSafe: true,
+                otherDogSafe: true
+            },
+            {
+                animalId: "a1",
+                animalName: "Dog 1",
+                breed: "Shepherd",
+                shelterId: "s1",
+                adoptable: true,
+                weight: 100,
+                approximateSize: "L",
+                residencyRequired: "HOUSE",
+                squareFootageOfHome: 800,
+                childSafe: true,
+                otherDogSafe: true
+            },
+            {
+                animalId: "a1",
+                animalName: "Dog 1",
+                breed: "Shepherd",
+                shelterId: "s1",
+                adoptable: true,
+                weight: 100,
+                approximateSize: "L",
+                residencyRequired: "HOUSE",
+                squareFootageOfHome: 800,
+                childSafe: true,
+                otherDogSafe: true
             }
         ];
     }
 
-    public async getById(id: string): Promise<Animal> {
+    public async getById(): Promise<Animal> {
         return             {
             animalId: "a1",
             animalName: "Dog 1",
