@@ -10,7 +10,7 @@ export default class ShelterRESTService extends RESTService implements ShelterSe
     }
 
     public async create(params: ShelterParams): Promise<void> {
-        return this.post("/create", params);
+        return this.post("/shelters/create", params);
     }
 
     public getAll(): Promise<Array<Shelter>> {

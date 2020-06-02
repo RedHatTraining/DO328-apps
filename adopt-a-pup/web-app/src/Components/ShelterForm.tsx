@@ -145,7 +145,7 @@ export default class ShelterForm extends React.Component<ShelterFormProps, Shelt
                         id="simple-form-email"
                         name="simple-form-email"
                         value={email}
-                        onChange={this.handleEmailChange}
+                        onChange={this.handleEmailChange.bind(this)}
                     />
                 </FormGroup>
                 <FormGroup label="Phone number" isRequired fieldId="simple-form-number">
@@ -156,7 +156,7 @@ export default class ShelterForm extends React.Component<ShelterFormProps, Shelt
                         placeholder="555-555-5555"
                         name="simple-form-number"
                         value={phoneNumber}
-                        onChange={this.handlePhoneNumberChange}
+                        onChange={this.handlePhoneNumberChange.bind(this)}
                     />
                 </FormGroup>
                 <ActionGroup>
