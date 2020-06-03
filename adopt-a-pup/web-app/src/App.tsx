@@ -24,6 +24,7 @@ import { ShelterService } from "./Services/ShelterService";
 import AnimalDetailsView from "./Views/AnimalDetailsView";
 import ShelterDetailsView from "./Views/ShelterDetailsView";
 import Environment from "./Services/Environment";
+import NewsRESTService from "./Services/NewsRESTService";
 
 
 // Initialize Backend Services
@@ -34,6 +35,8 @@ let newsService: NewsService;
 const ADOPTION_SERVICE_URL = Environment.get("REACT_APP_ADOPTION_SERVICE_URL");
 const ANIMAL_SERVICE_URL = Environment.get("REACT_APP_ANIMAL_SERVICE_URL");
 const SHELTER_SERVICE_URL = Environment.get("REACT_APP_SHELTER_SERVICE_URL");
+const NEWS_ENABLED = Environment.get("REACT_APP_NEWS_ENABLED");
+const NEWS_SERVICE_URL = Environment.get("REACT_APP_NEWS_SERVICE_URL");
 
 if (ADOPTION_SERVICE_URL) {
     adoptionService = new AdoptionRESTService(ADOPTION_SERVICE_URL);
@@ -56,13 +59,18 @@ if (SHELTER_SERVICE_URL) {
     shelterService = new ShelterFakeService();
 }
 
-newsService = new NewsFakeService();
+if (NEWS_ENABLED && SHELTER_SERVICE_URL) {
+    newsService = new NewsRESTService(NEWS_SERVICE_URL);
+} else {
+    console.log("Warning: No news service url provided. Using NewsFakeService");
+    newsService = new NewsFakeService();
+}
+
 
 
 // Declare the root application component
 export default class App extends Component {
     render() {
-        const enableNews = Environment.get("REACT_APP_NEWS_ENABLED");
         return (
             <Router basename="/frontend">
                 <Switch>
@@ -79,7 +87,7 @@ export default class App extends Component {
                                 adoptionService={adoptionService}
                             />
                         </Route>
-                        {enableNews &&
+                        {NEWS_ENABLED &&
                         <Route path="/news" exact>
                             <NewsView newsService={newsService} />
                         </Route>

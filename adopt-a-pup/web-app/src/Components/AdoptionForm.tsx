@@ -87,17 +87,30 @@ export default class AdoptionForm extends React.Component<AdoptionFormProps, Ado
 
         try {
             await this.props.adoptionService.applyForAdoption(application);
-            this.setState({ showAdoptSucessAlert: true });
+            this.showSuccessAlert();
         } catch {
-            this.setState({ showAdoptErrorAlert: true });
+            this.showErrorAlert();
         }
 
+    }
+
+    private showSuccessAlert() {
+        this.setState({ showAdoptSucessAlert: true });
+        this.hideAlertsAfter(3000);
+    }
+
+    private showErrorAlert() {
+        this.setState({ showAdoptErrorAlert: true });
+        this.hideAlertsAfter(3000);
+    }
+
+    private hideAlertsAfter(millis: number) {
         setTimeout(() => {
             this.setState({
                 showAdoptErrorAlert: false,
                 showAdoptSucessAlert: false,
             });
-        }, 2000);
+        }, millis);
     }
 
     public render() {

@@ -27,6 +27,10 @@ app.get("/*", function (req, res) {
                 process.env.REACT_APP_SHELTER_SERVICE_URL || ""
             )
             .replace(
+                "{{REACT_APP_NEWS_SERVICE_URL}}",
+                process.env.REACT_APP_NEWS_SERVICE_URL || ""
+            )
+            .replace(
                 "{{REACT_APP_NEWS_ENABLED}}",
                 process.env.REACT_APP_NEWS_ENABLED || ""
             );
@@ -35,4 +39,4 @@ app.get("/*", function (req, res) {
     });
 });
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000);

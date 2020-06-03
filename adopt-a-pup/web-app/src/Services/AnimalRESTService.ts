@@ -14,7 +14,7 @@ export default class AnimalRESTService extends RESTService implements AnimalServ
     }
 
     public getAllAdoptable(): Promise<Animal[]> {
-        return this.get("/animals/getAllAdoptable");
+        return this.get("/animal/getAllAdoptable");
     }
 
     public getById(id: string): Promise<Animal> {
