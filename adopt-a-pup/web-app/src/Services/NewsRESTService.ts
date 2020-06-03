@@ -10,7 +10,7 @@ export default class NewsRESTService extends RESTService implements NewsService 
     }
 
     public getAll(): Promise<News[]> {
-        return this.get<News[]>("/news/finance");
+        return this.get<News[]>("/news/puppies");
     }
 
 }

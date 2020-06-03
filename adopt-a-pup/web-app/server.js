@@ -2,7 +2,6 @@
 Code to serve the web app in PRODUCTION.
 Injects environment variables at runtime in build/index.html
 */
-
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
@@ -11,8 +10,14 @@ const app = express();
 app.use(express.static(path.join(__dirname, "build")));
 
 app.get("/*", function (req, res) {
+    console.log(`${(new Date()).toISOString()} - GET ${req.url}`);
+
     const indexFilePath = path.join(__dirname, "build", "index.html");
-    fs.readFile(indexFilePath, (_, content) => {
+    fs.readFile(indexFilePath, (err, content) => {
+        if (err) {
+            return res.status(404).send("Not found");
+        }
+
         const html = content.toString()
             .replace(
                 "{{REACT_APP_ADOPTION_SERVICE_URL}}",
@@ -39,4 +44,9 @@ app.get("/*", function (req, res) {
     });
 });
 
-app.listen(process.env.PORT || 3000);
+console.log(`REACT_APP_ADOPTION_SERVICE_URL: ${process.env.REACT_APP_ADOPTION_SERVICE_URL}`);
+
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+    console.log(`Server listening at ${port}`);
+});

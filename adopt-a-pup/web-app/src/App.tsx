@@ -59,7 +59,7 @@ if (SHELTER_SERVICE_URL) {
     shelterService = new ShelterFakeService();
 }
 
-if (NEWS_ENABLED && SHELTER_SERVICE_URL) {
+if (NEWS_ENABLED && NEWS_SERVICE_URL) {
     newsService = new NewsRESTService(NEWS_SERVICE_URL);
 } else {
     console.log("Warning: No news service url provided. Using NewsFakeService");
