@@ -22,9 +22,6 @@ export default class SheltersView extends React.Component<SheltersViewProps> {
                     </TextContent>
                 </PageSection>
                 <PageSection>
-                    <TextContent>
-                        <Text component="h2">Shelters list</Text>
-                    </TextContent>
                     <ShelterList shelterService={this.props.shelterService}></ShelterList>
                 </PageSection>
                 <PageSection variant={PageSectionVariants.light}>

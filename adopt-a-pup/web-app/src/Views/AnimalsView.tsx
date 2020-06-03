@@ -1,13 +1,13 @@
 import React from "react";
 import { AnimalService } from "../Services/AnimalService";
-import { 
-    PageSection, PageSectionVariants, Text, TextContent, Alert, AlertActionCloseButton 
+import {
+    PageSection, PageSectionVariants, Text, TextContent
 } from "@patternfly/react-core";
 import AdoptableAnimalList from "../Components/AdoptableAnimalList";
 import { AdoptionService } from "../Services/AdoptionService";
 import { Animal } from "../Models/Animal";
 import { RESTConnectionError } from "../Services/RESTService";
-import BullseyeSpinner from "../Components/BullseyeSpinner";
+import LoadingData from "../Components/LoadingData";
 
 
 type AnimalsViewProps = {
@@ -66,7 +66,7 @@ export default class AnimalsView extends React.Component<AnimalsViewProps, Anima
         });
     }
 
-    private closeAlert = () => {
+    private closeErrorAlert = () => {
         this.setState({
             error: {
                 isActive: false,
@@ -90,17 +90,16 @@ export default class AnimalsView extends React.Component<AnimalsViewProps, Anima
                     </TextContent>
                 </PageSection>
                 <PageSection>
-                {error.isActive &&
-                    <Alert
-                        className="popup"
-                        variant="danger"
-                        title={error.header}
-                        action={<AlertActionCloseButton onClose={this.closeAlert} />}>
-                        {error.message}
-                    </Alert>}
-                    <Text component="h2">Adoptable Animals</Text>
-                    { loading && <BullseyeSpinner />}
-                    <AdoptableAnimalList animals={this.state.animals} />
+                    <LoadingData
+                        showLoader={loading}
+                        showError={error.isActive}
+                        errorTitle={error.header}
+                        errorDescription={error.message}
+                        onErrorClosed={this.closeErrorAlert}
+                        title="Adoptable Animals"
+                    >
+                        <AdoptableAnimalList animals={this.state.animals} />
+                    </LoadingData>
                 </PageSection>
             </React.Fragment>
         );

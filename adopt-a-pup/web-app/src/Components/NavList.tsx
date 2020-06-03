@@ -6,7 +6,7 @@ import {
 } from "@patternfly/react-core";
 
 import { Link} from "react-router-dom";
-import Environment from "../Services/Environment";
+import Environment from "../Config";
 
 
 
@@ -14,7 +14,7 @@ export default class NavDefaultList extends React.Component {
 
     public render() {
         const { pathname } = window.location;
-        const enableNews = Environment.get("REACT_APP_NEWS_ENABLED");
+        const enableNews = Environment.getEnv("REACT_APP_NEWS_ENABLED");
         return (
             <Nav theme="dark">
                 <NavList>

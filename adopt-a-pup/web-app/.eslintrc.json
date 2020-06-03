@@ -68,7 +68,8 @@
         },
         {
             "files": [
-                "server.js"
+                "server.js",
+                "src/Config.js"
             ],
             "env": {
                 "node": true

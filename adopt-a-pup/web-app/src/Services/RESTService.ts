@@ -7,11 +7,11 @@ export abstract class RESTService {
     private readonly axiosInstance: AxiosInstance;
 
     constructor(
-        baseUrl: string,
+        baseURL: string,
         private readonly remoteServiceName: string,
         private readonly timeoutMs = 3000
     ) {
-        this.axiosInstance = Axios.create({ baseURL: baseUrl });
+        this.axiosInstance = Axios.create({ baseURL });
     }
 
     protected async get<T>(url: string): Promise<T> {
@@ -19,7 +19,7 @@ export abstract class RESTService {
             const r = await this.axiosInstance.get<T>(url, { timeout: this.timeoutMs });
             return r.data;
         } catch (e) {
-            throw new RESTConnectionError(e, this.remoteServiceName);
+            throw new RESTConnectionError(e, this.remoteServiceName, e.response?.status);
         }
     }
 

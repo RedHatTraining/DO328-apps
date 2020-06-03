@@ -23,7 +23,7 @@ import { AdoptionService } from "./Services/AdoptionService";
 import { ShelterService } from "./Services/ShelterService";
 import AnimalDetailsView from "./Views/AnimalDetailsView";
 import ShelterDetailsView from "./Views/ShelterDetailsView";
-import Environment from "./Services/Environment";
+import Config from "./Config";
 import NewsRESTService from "./Services/NewsRESTService";
 
 
@@ -32,35 +32,30 @@ let animalService: AnimalService;
 let adoptionService: AdoptionService;
 let shelterService: ShelterService;
 let newsService: NewsService;
-const ADOPTION_SERVICE_URL = Environment.get("REACT_APP_ADOPTION_SERVICE_URL");
-const ANIMAL_SERVICE_URL = Environment.get("REACT_APP_ANIMAL_SERVICE_URL");
-const SHELTER_SERVICE_URL = Environment.get("REACT_APP_SHELTER_SERVICE_URL");
-const NEWS_ENABLED = Environment.get("REACT_APP_NEWS_ENABLED");
-const NEWS_SERVICE_URL = Environment.get("REACT_APP_NEWS_SERVICE_URL");
 
-if (ADOPTION_SERVICE_URL) {
-    adoptionService = new AdoptionRESTService(ADOPTION_SERVICE_URL);
+if (Config.ADOPTION_SERVICE_URL) {
+    adoptionService = new AdoptionRESTService(Config.ADOPTION_SERVICE_URL);
 } else {
     console.log("Warning: No adoption service url provided. Using AdoptionFakeService");
     adoptionService = new AdoptionFakeService();
 }
 
-if (ANIMAL_SERVICE_URL) {
-    animalService = new AnimalRESTService(ANIMAL_SERVICE_URL);
+if (Config.ANIMAL_SERVICE_URL) {
+    animalService = new AnimalRESTService(Config.ANIMAL_SERVICE_URL);
 } else {
     console.log("Warning: No animal service url provided. Using AnimalFakeService");
     animalService = new AnimalFakeService();
 }
 
-if (SHELTER_SERVICE_URL) {
-    shelterService = new ShelterRESTService(SHELTER_SERVICE_URL);
+if (Config.SHELTER_SERVICE_URL) {
+    shelterService = new ShelterRESTService(Config.SHELTER_SERVICE_URL);
 } else {
     console.log("Warning: No shelter service url provided. Using ShelterFakeService");
     shelterService = new ShelterFakeService();
 }
 
-if (NEWS_ENABLED && NEWS_SERVICE_URL) {
-    newsService = new NewsRESTService(NEWS_SERVICE_URL);
+if (Config.NEWS_ENABLED && Config.NEWS_SERVICE_URL) {
+    newsService = new NewsRESTService(Config.NEWS_SERVICE_URL);
 } else {
     console.log("Warning: No news service url provided. Using NewsFakeService");
     newsService = new NewsFakeService();
@@ -87,7 +82,7 @@ export default class App extends Component {
                                 adoptionService={adoptionService}
                             />
                         </Route>
-                        {NEWS_ENABLED &&
+                        {Config.NEWS_ENABLED &&
                         <Route path="/news" exact>
                             <NewsView newsService={newsService} />
                         </Route>
