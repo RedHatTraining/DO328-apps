@@ -23,51 +23,46 @@ import { AdoptionService } from "./Services/AdoptionService";
 import { ShelterService } from "./Services/ShelterService";
 import AnimalDetailsView from "./Views/AnimalDetailsView";
 import ShelterDetailsView from "./Views/ShelterDetailsView";
+import Environment from "./Services/Environment";
 
 
-// Backend SERVICES
+// Initialize Backend Services
 let animalService: AnimalService;
 let adoptionService: AdoptionService;
 let shelterService: ShelterService;
 let newsService: NewsService;
+const ADOPTION_SERVICE_URL = Environment.get("REACT_APP_ADOPTION_SERVICE_URL");
+const ANIMAL_SERVICE_URL = Environment.get("REACT_APP_ANIMAL_SERVICE_URL");
+const SHELTER_SERVICE_URL = Environment.get("REACT_APP_SHELTER_SERVICE_URL");
 
-if (process.env.REACT_APP_ADOPTION_SERVICE_URL) {
-    adoptionService = new AdoptionRESTService(process.env.REACT_APP_ADOPTION_SERVICE_URL || "");
+if (ADOPTION_SERVICE_URL) {
+    adoptionService = new AdoptionRESTService(ADOPTION_SERVICE_URL);
 } else {
-    console.log("Warning: No service url provided. Using AdoptionFakeService");
+    console.log("Warning: No adoption service url provided. Using AdoptionFakeService");
     adoptionService = new AdoptionFakeService();
 }
 
-if (process.env.REACT_APP_ANIMAL_SERVICE_URL) {
-    animalService = new AnimalRESTService(process.env.REACT_APP_ANIMAL_SERVICE_URL || "");
+if (ANIMAL_SERVICE_URL) {
+    animalService = new AnimalRESTService(ANIMAL_SERVICE_URL);
 } else {
-    console.log("Warning: No service url provided. Using AnimalFakeService");
+    console.log("Warning: No animal service url provided. Using AnimalFakeService");
     animalService = new AnimalFakeService();
 }
 
-if (process.env.REACT_APP_SHELTER_SERVICE_URL) {
-    shelterService = new ShelterRESTService(process.env.REACT_APP_SHELTER_SERVICE_URL || "");
+if (SHELTER_SERVICE_URL) {
+    shelterService = new ShelterRESTService(SHELTER_SERVICE_URL);
 } else {
-    console.log("Warning: No service url provided. Using ShelterFakeService");
+    console.log("Warning: No shelter service url provided. Using ShelterFakeService");
     shelterService = new ShelterFakeService();
 }
 
-if (process.env.REACT_APP_SHELTER_SERVICE_URL) {
-    shelterService = new ShelterRESTService(process.env.REACT_APP_SHELTER_SERVICE_URL || "");
-} else {
-    console.log("Warning: No service url provided. Using ShelterFakeService");
-    shelterService = new ShelterFakeService();
-}
-
-// TODO: Create REST News service
 newsService = new NewsFakeService();
 
 
-// MAIN APP
-// The main React component that runs the whole webapp
+// Declare the root application component
 export default class App extends Component {
     render() {
-        const enableNews = process.env.REACT_APP_NEWS_ENABLED;
+        const enableNews = Environment.get("REACT_APP_NEWS_ENABLED");
         return (
             <Router basename="/frontend">
                 <Switch>

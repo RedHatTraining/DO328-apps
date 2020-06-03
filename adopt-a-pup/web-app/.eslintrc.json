@@ -65,6 +65,14 @@
                     }
                 ]
             }
+        },
+        {
+            "files": [
+                "server.js"
+            ],
+            "env": {
+                "node": true
+            }
         }
     ]
 }
