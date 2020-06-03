@@ -1,5 +1,7 @@
 import React from "react";
-import { PageSection, PageSectionVariants, Text, TextContent, GridItem, Grid } from "@patternfly/react-core";
+import {
+    PageSection, PageSectionVariants, Text, TextContent, GridItem, Grid 
+} from "@patternfly/react-core";
 import { AdoptionService } from "../Services/AdoptionService";
 import { AnimalService } from "../Services/AnimalService";
 import { Animal } from "../Models/Animal";
@@ -8,6 +10,11 @@ import AdoptionForm from "../Components/AdoptionForm";
 type AnimalDetailsViewProps = {
     adoptionService: AdoptionService;
     animalService: AnimalService;
+    match: {
+        params: {
+            animalId: string
+        }
+    }
 }
 
 type AnimalDetailsViewState = {
@@ -47,7 +54,7 @@ export default class AnimalDetailsView
                     </TextContent>
                     <Grid>
                         <GridItem span={4}>
-                            <img src={`/photos/${animal.animalId}.jpeg`}  />
+                            <img src={`/photos/${animal.animalId}.jpeg`} alt={animal.animalName} />
                         </GridItem>
                         <GridItem span={8}>
                             <TextContent>

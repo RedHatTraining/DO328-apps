@@ -21,7 +21,6 @@ import { NewsService } from "./Services/NewsService";
 import { AnimalService } from "./Services/AnimalService";
 import { AdoptionService } from "./Services/AdoptionService";
 import { ShelterService } from "./Services/ShelterService";
-import AnimalDetails from "./Components/AnimalDetails";
 import AnimalDetailsView from "./Views/AnimalDetailsView";
 import ShelterDetailsView from "./Views/ShelterDetailsView";
 
