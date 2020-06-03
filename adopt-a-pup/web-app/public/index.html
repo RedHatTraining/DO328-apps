@@ -40,11 +40,11 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
     <script>
-      window.REACT_APP_ADOPTION_SERVICE_URL ="{{REACT_APP_ADOPTION_SERVICE_URL}}";
-      window.REACT_APP_ANIMAL_SERVICE_URL = "{{REACT_APP_ANIMAL_SERVICE_URL}}";
-      window.REACT_APP_SHELTER_SERVICE_URL = "{{REACT_APP_SHELTER_SERVICE_URL}}";
-      window.REACT_APP_NEWS_ENABLED = "{{REACT_APP_NEWS_ENABLED}}";
-      window.REACT_APP_NEWS_SERVICE_URL = "{{REACT_APP_NEWS_SERVICE_URL}}";
+      /*
+        This variable is used to inject env variables at run time in production.
+        server.js replaces __PRODUCTION_ENV__ with an object containing these variables.
+      */
+      window.env = __PRODUCTION_ENV__
     </script>
   </body>
 </html>
