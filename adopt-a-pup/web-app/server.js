@@ -15,9 +15,9 @@ app.use(express.static(BUILD_PATH));
 // Return index.html, with injected env variables
 const indexFilePath = path.join(__dirname, "build", "index.html");
 app.get("/*", async(request, response) => {
+    log(request);
     const content = await injectEnvironmentInHTml(indexFilePath);
     response.send(content);
-    log(request);
 });
 
 
