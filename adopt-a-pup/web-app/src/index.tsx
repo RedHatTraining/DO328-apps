@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "@patternfly/react-core/dist/styles/base.css";
-import "./App.css";
 import App from "./App";
+import "./App.css";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(

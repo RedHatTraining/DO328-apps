@@ -1,42 +1,12 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+/* .pf-c-page__sidebar.pf-m-dark {
+  color: var(--pf-global--Color--100);
+  --pf-c-page__sidebar--BackgroundColor: #882222;
+} */
 
 .logo {
   height: 2rem;
 }
 
-.centered {
-  text-align: center;
-}
-
-.margin-separator {
-  margin-top: 20px;
-}
-
-.text-container {
-  text-align: center;
-  font-size: 3em;
-  max-width: 300px;
-  border-bottom-style: solid;
-  border-color: #2b9af3;
-  word-wrap: break-word;
-}
-
-.currency-text {
-  font-size: 0.6em;
-  vertical-align: top;
-}
 
 @keyframes popupFadeIn {
   from {
