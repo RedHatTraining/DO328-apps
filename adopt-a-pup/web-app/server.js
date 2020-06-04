@@ -10,7 +10,7 @@ const app = express();
 
 const BUILD_PATH = path.join(__dirname, "build");
 
-app.use(express.static(BUILD_PATH));
+app.use("/frontend", express.static(BUILD_PATH));
 
 // Return index.html, with injected env variables
 const indexFilePath = path.join(__dirname, "build", "index.html");
