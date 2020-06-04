@@ -9,8 +9,8 @@ export default class AnimalRESTService extends RESTService implements AnimalServ
     constructor(baseUrl: string) {
         super(baseUrl, "animal-service");
     }
-    public async create(animal: Animal): Promise<void> {
-        await this.post(`/animals/${animal.shelterId}/create`, animal);
+    public async create(animal: Animal): Promise<string> {
+        return await this.post(`/animals/${animal.shelterId}/create`, animal);
     }
 
     public getAllAdoptable(): Promise<Animal[]> {

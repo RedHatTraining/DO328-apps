@@ -23,8 +23,14 @@ export default class AdoptableAnimalList extends React.Component<AnimalListProps
             <React.Fragment>
                 <Gallery>
                     {this.props.animals.map(animal => this.renderAnimalCard(animal))}
+                    <GalleryItem>
+                        <Link to="/animals/create">
+                            <Button>Add</Button>
+                        </Link>
+                    </GalleryItem>
                 </Gallery>
             </React.Fragment>
+
         );
     }
 
@@ -41,7 +47,7 @@ export default class AdoptableAnimalList extends React.Component<AnimalListProps
                     <CardBody>
                         <img src={pictureSrc} alt={animal.animalName}></img>
                         <CardActions>
-                            <Link to={`/animals/${animal.animalId}`}>
+                            <Link to={`/animals/details/${animal.animalId}`}>
                                 <Button>
                                     Details
                                 </Button>

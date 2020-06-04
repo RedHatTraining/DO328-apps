@@ -23,6 +23,7 @@ import { AdoptionService } from "./Services/AdoptionService";
 import { ShelterService } from "./Services/ShelterService";
 import AnimalDetailsView from "./Views/AnimalDetailsView";
 import ShelterDetailsView from "./Views/ShelterDetailsView";
+import AnimalCreateView from "./Views/AnimalCreateView";
 import Config from "./Config";
 import NewsRESTService from "./Services/NewsRESTService";
 
@@ -87,11 +88,17 @@ export default class App extends Component {
                             <NewsView newsService={newsService} />
                         </Route>
                         }
-                        <Route path={"/animals/:animalId"} render={ (props) =>
+                        <Route path={"/animals/details/:animalId"} render={ (props) =>
                             <AnimalDetailsView {...props}
                                 animalService={animalService}
                                 adoptionService={adoptionService}
                             /> } >
+                        </Route>
+                        <Route path="/animals/create" render={ (props) =>
+                            <AnimalCreateView {...props}
+                              animalService={animalService}
+                        
+                        /> }>                            
                         </Route>
                         <Route path={"/shelters/:shelterId"} render={ (props) =>
                             <ShelterDetailsView {...props}

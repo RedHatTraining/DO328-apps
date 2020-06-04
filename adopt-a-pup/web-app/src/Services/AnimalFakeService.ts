@@ -4,7 +4,7 @@ import { Animal } from "../Models/Animal";
 
 export default class AnimalFakeService implements AnimalService {
 
-    public async create(): Promise<void> {
+    public async create(animal: Animal): Promise<string> {
         throw new Error("Method not implemented.");
     }
 
