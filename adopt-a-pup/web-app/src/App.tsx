@@ -29,31 +29,31 @@ import NewsRESTService from "./Services/NewsRESTService";
 
 
 // Initialize Backend Services
-let animalService: AnimalService = new AnimalRESTService("http://envoy-gateway-adopt-a-pup.apps-crc.testing");
-let adoptionService: AdoptionService = new AdoptionRESTService("http://envoy-gateway-adopt-a-pup.apps-crc.testing");
-let shelterService: ShelterService = new ShelterRESTService("http://envoy-gateway-adopt-a-pup.apps-crc.testing");
+let animalService: AnimalService;
+let adoptionService: AdoptionService;
+let shelterService: ShelterService;
 let newsService: NewsService;
 
-// if (Config.ADOPTION_SERVICE_URL) {
-//     adoptionService = new AdoptionRESTService(Config.ADOPTION_SERVICE_URL);
-// } else {
-//     console.log("Warning: No adoption service url provided. Using AdoptionFakeService");
-//     adoptionService = new AdoptionFakeService();
-// }
+if (Config.ADOPTION_SERVICE_URL) {
+    adoptionService = new AdoptionRESTService(Config.ADOPTION_SERVICE_URL);
+} else {
+    console.log("Warning: No adoption service url provided. Using AdoptionFakeService");
+    adoptionService = new AdoptionFakeService();
+}
 
-// if (Config.ANIMAL_SERVICE_URL) {
-//     animalService = new AnimalRESTService(Config.ANIMAL_SERVICE_URL);
-// } else {
-//     console.log("Warning: No animal service url provided. Using AnimalFakeService");
-//     animalService = new AnimalFakeService();
-// }
+if (Config.ANIMAL_SERVICE_URL) {
+    animalService = new AnimalRESTService(Config.ANIMAL_SERVICE_URL);
+} else {
+    console.log("Warning: No animal service url provided. Using AnimalFakeService");
+    animalService = new AnimalFakeService();
+}
 
-// if (Config.SHELTER_SERVICE_URL) {
-//     shelterService = new ShelterRESTService(Config.SHELTER_SERVICE_URL);
-// } else {
-//     console.log("Warning: No shelter service url provided. Using ShelterFakeService");
-//     shelterService = new ShelterFakeService();
-// }
+if (Config.SHELTER_SERVICE_URL) {
+    shelterService = new ShelterRESTService(Config.SHELTER_SERVICE_URL);
+} else {
+    console.log("Warning: No shelter service url provided. Using ShelterFakeService");
+    shelterService = new ShelterFakeService();
+}
 
 if (Config.NEWS_ENABLED && Config.NEWS_SERVICE_URL) {
     newsService = new NewsRESTService(Config.NEWS_SERVICE_URL);
