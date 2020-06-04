@@ -9,10 +9,13 @@ import {
     FormSelect,
     FormSelectOption,
     Checkbox,
-    Alert
+    Alert,
+    AlertActionCloseButton
 } from "@patternfly/react-core";
 import { AdoptionService } from "../Services/AdoptionService";
 import { Residency } from "../Models/Residency";
+import BullseyeSpinner from "./BullseyeSpinner";
+import { RESTConnectionError } from "../Services/RESTService";
 
 
 type AdoptionFormProps = {
@@ -29,7 +32,13 @@ type AdoptionFormState = {
     occupation: string,
     ownOtherAnimals: boolean,
     showAdoptSucessAlert: boolean,
-    showAdoptErrorAlert: boolean
+    showAdoptErrorAlert: boolean,
+    showInvalidFormAlert: boolean,
+    adoptionError: {
+        title: string,
+        description: string
+    },
+    isSubmitting: boolean;
 };
 
 export default class AdoptionForm extends React.Component<AdoptionFormProps, AdoptionFormState> {
@@ -45,7 +54,13 @@ export default class AdoptionForm extends React.Component<AdoptionFormProps, Ado
             kidsUnder16: false,
             ownOtherAnimals: false,
             showAdoptErrorAlert: false,
-            showAdoptSucessAlert: false
+            showAdoptSucessAlert: false,
+            showInvalidFormAlert: false,
+            adoptionError: {
+                title: "",
+                description: ""
+            },
+            isSubmitting: false
         };
     }
 
@@ -78,20 +93,36 @@ export default class AdoptionForm extends React.Component<AdoptionFormProps, Ado
     }
 
     private async handleFormSubmit(event: FormEvent) {
-        const application = {
-            animalId: this.props.animalId,
-            ...this.state
-        };
-
         event.preventDefault();
 
-        try {
-            await this.props.adoptionService.applyForAdoption(application);
-            this.showSuccessAlert();
-        } catch {
-            this.showErrorAlert();
+        if (this.isFormValid()) {
+            const { animalId } = this.props;
+            const application = {
+                animalId,
+                username: this.state.username,
+                email: this.state.email,
+                occupation: this.state.occupation,
+                residency: this.state.residency,
+                squareFootageOfHome: this.state.squareFootageOfHome,
+                kidsUnder16: this.state.kidsUnder16,
+                ownOtherAnimals: this.state.ownOtherAnimals,
+            };
+            try {
+                await this.props.adoptionService.applyForAdoption(application);
+                this.showSuccessAlert();
+            } catch (error) {
+                this.showErrorAlert(error);
+            }
+        } else {
+            this.setState({ showInvalidFormAlert: true });
         }
+    }
 
+    private isFormValid() {
+        return this.state.username &&
+            this.state.email &&
+            this.state.residency &&
+            this.state.occupation;
     }
 
     private showSuccessAlert() {
@@ -99,8 +130,20 @@ export default class AdoptionForm extends React.Component<AdoptionFormProps, Ado
         this.hideAlertsAfter(3000);
     }
 
-    private showErrorAlert() {
-        this.setState({ showAdoptErrorAlert: true });
+    private showErrorAlert(error: Error) {
+        let adoptionError = {
+            title: error.name,
+            description: error.message
+        };
+        if (error instanceof RESTConnectionError) {
+            adoptionError.description = error.description;
+        }
+        this.setState({
+            showAdoptErrorAlert: true,
+            adoptionError,
+            showAdoptSucessAlert: false,
+            showInvalidFormAlert: false
+        });
         this.hideAlertsAfter(3000);
     }
 
@@ -113,7 +156,23 @@ export default class AdoptionForm extends React.Component<AdoptionFormProps, Ado
         }, millis);
     }
 
+    private handleCloseInvalidFormAlert() {
+        this.setState({ showInvalidFormAlert: false });
+    }
+
     public render() {
+        return (
+            <React.Fragment>
+                {this.state.isSubmitting ? this.renderLoader() : this.renderForm()}
+            </React.Fragment>
+        );
+    }
+
+    public renderLoader() {
+        return <BullseyeSpinner />;
+    }
+
+    public renderForm() {
         const {
             username,
             email,
@@ -128,28 +187,29 @@ export default class AdoptionForm extends React.Component<AdoptionFormProps, Ado
             <Form onSubmit={this.handleFormSubmit.bind(this)}>
                 {this.renderAdoptSuccessAlert()}
                 {this.renderAdoptErrorAlert()}
+                {this.renderInvalidFormAlert()}
                 <FormGroup
                     label="Name"
                     isRequired
-                    fieldId="simple-form-username"
+                    fieldId="adoption-form-username"
                     helperText="Please provide your name"
                 >
                     <TextInput
                         isRequired
                         type="text"
-                        id="simple-form-username"
-                        name="simple-form-username"
-                        aria-describedby="simple-form-name-helper"
+                        id="adoption-form-username"
+                        name="adoption-form-username"
+                        aria-describedby="adoption-form-name-helper"
                         value={username}
                         onChange={this.handleNameChange.bind(this)}
                     />
                 </FormGroup>
-                <FormGroup label="Email" isRequired fieldId="simple-form-email">
+                <FormGroup label="Email" isRequired fieldId="adoption-form-email">
                     <TextInput
                         isRequired
                         type="email"
-                        id="simple-form-email"
-                        name="simple-form-email"
+                        id="adoption-form-email"
+                        name="adoption-form-email"
                         value={email}
                         onChange={this.handleEmailChange.bind(this)}
                     />
@@ -157,15 +217,15 @@ export default class AdoptionForm extends React.Component<AdoptionFormProps, Ado
                 <FormGroup
                     label="Occupation"
                     isRequired
-                    fieldId="simple-form-occupation"
+                    fieldId="adoption-form-occupation"
                     helperText="Please provide your occupation"
                 >
                     <TextInput
                         isRequired
                         type="text"
-                        id="simple-form-occupation"
-                        name="simple-form-occupation"
-                        aria-describedby="simple-form-name-helper"
+                        id="adoption-form-occupation"
+                        name="adoption-form-occupation"
+                        aria-describedby="adoption-form-name-helper"
                         value={occupation}
                         onChange={this.handleOccupationChange.bind(this)}
                     />
@@ -173,7 +233,7 @@ export default class AdoptionForm extends React.Component<AdoptionFormProps, Ado
                 <FormGroup
                     label="Residency"
                     isRequired
-                    fieldId="simple-form-residency"
+                    fieldId="adoption-form-residency"
                     helperText="Please provide the address"
                 >
                     <FormSelect
@@ -193,32 +253,36 @@ export default class AdoptionForm extends React.Component<AdoptionFormProps, Ado
                     </FormSelect>
                 </FormGroup>
 
-                <FormGroup label="Square Footage of Home" isRequired fieldId="simple-form-footage">
+                <FormGroup
+                    label="Square Footage of Home"
+                    isRequired
+                    fieldId="adoption-form-footage"
+                >
                     <TextInput
                         isRequired
                         type="number"
-                        id="simple-form-footage"
-                        name="simple-form-footage"
+                        id="adoption-form-footage"
+                        name="adoption-form-footage"
                         value={squareFootageOfHome}
                         onChange={this.handleSquareFootageChange.bind(this)}
                     />
                 </FormGroup>
 
-                <FormGroup fieldId="simple-form-kids">
+                <FormGroup fieldId="adoption-form-kids">
                     <Checkbox
                         label="I have kids under 16"
-                        id="simple-form-kids"
-                        name="simple-form-kids"
+                        id="adoption-form-kids"
+                        name="adoption-form-kids"
                         aria-label="I have kids under 16"
                         isChecked={kidsUnder16}
                         onChange={this.handleKidsUnder16Change.bind(this)} />
                 </FormGroup>
 
-                <FormGroup fieldId="simple-form-other-animals">
+                <FormGroup fieldId="adoption-form-other-animals">
                     <Checkbox
                         label="I own other animals"
-                        id="simple-form-other-animals"
-                        name="simple-form-other-animals"
+                        id="adoption-form-other-animals"
+                        name="adoption-form-other-animals"
                         aria-label="I own other animals"
                         isChecked={ownOtherAnimals}
                         onChange={this.handleOwnOtherAnimalsChange.bind(this)} />
@@ -234,7 +298,15 @@ export default class AdoptionForm extends React.Component<AdoptionFormProps, Ado
 
     private renderAdoptErrorAlert(): React.ReactNode | null {
         if (this.state.showAdoptErrorAlert) {
-            return <Alert variant="danger" title="The adoption application failed" />;
+            return (
+                <Alert
+                    variant="danger"
+                    className="popup"
+                    title={`The application failed: ${this.state.adoptionError.title}`}
+                >
+                    {this.state.adoptionError.description}
+                </Alert>
+            );
         }
         return null;
     }
@@ -243,10 +315,25 @@ export default class AdoptionForm extends React.Component<AdoptionFormProps, Ado
         if (this.state.showAdoptSucessAlert) {
             return <Alert
                 variant="success"
+                className="popup"
                 title="Congratulations! The Adoption application was sent."
             />;
         }
         return null;
+    }
+
+    private renderInvalidFormAlert(): React.ReactNode {
+        return this.state.showInvalidFormAlert &&
+            <Alert
+                className="popup"
+                variant="danger"
+                title="Invalid form"
+                action={<AlertActionCloseButton
+                    onClose={this.handleCloseInvalidFormAlert.bind(this)}
+                />}
+            >
+                Please complete required fields
+            </Alert>;
     }
 
 }

@@ -22,6 +22,10 @@ export type ShelterFormState = {
     showInvalidFormAlert: boolean;
     showSubmitSucessAlert: boolean;
     showSubmitErrorAlert: boolean;
+    submitError: {
+        title: string,
+        description: string
+    },
     isSubmitting: boolean;
     shelter: Shelter;
 };
@@ -34,6 +38,10 @@ export default class ShelterCreateForm extends React.Component<ShelterFormProps,
             showInvalidFormAlert: false,
             showSubmitSucessAlert: false,
             showSubmitErrorAlert: false,
+            submitError: {
+                title: "",
+                description: ""
+            },
             isSubmitting: false,
             shelter: this.getEmptyFields()
         };
@@ -189,22 +197,12 @@ export default class ShelterCreateForm extends React.Component<ShelterFormProps,
     }
 
     public renderForm() {
-        const { shelter, showInvalidFormAlert } = this.state;
+        const { shelter } = this.state;
         return (
             <Form onSubmit={this.handleFormSubmit.bind(this)}>
                 {this.renderCreationSuccessAlert()}
                 {this.renderCreationErrorAlert()}
-                {showInvalidFormAlert &&
-                    <Alert
-                        id="myalert"
-                        className="popup"
-                        variant="danger"
-                        title="Invalid form"
-                        action={<AlertActionCloseButton
-                            onClose={this.handleCloseInvalidFormAlert.bind(this)}
-                        />}>
-                        Please complete all required fields
-                    </Alert>}
+                {this.renderInvalidFormAlert()}
                 <FormGroup
                     label="Name"
                     isRequired
@@ -297,10 +295,30 @@ export default class ShelterCreateForm extends React.Component<ShelterFormProps,
         );
     }
 
+    private renderInvalidFormAlert(): React.ReactNode {
+        return this.state.showInvalidFormAlert &&
+            <Alert
+                className="popup"
+                variant="danger"
+                title="Invalid form"
+                action={<AlertActionCloseButton
+                    onClose={this.handleCloseInvalidFormAlert.bind(this)}
+                />}
+            >
+                Please complete required fields
+            </Alert>;
+    }
 
     private renderCreationErrorAlert(): React.ReactNode | null {
         if (this.state.showSubmitErrorAlert) {
-            return <Alert variant="danger" title="Shelter creation failed" />;
+            return (
+                <Alert
+                    variant="danger"
+                    title={`Shelter creating animal: ${this.state.submitError.title}`}
+                >
+                    {this.state.submitError.description}
+                </Alert>
+            );
         }
         return null;
     }
