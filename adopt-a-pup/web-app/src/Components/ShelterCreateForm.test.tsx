@@ -88,7 +88,6 @@ describe("ShelterForm", () => {
         expect(component.state("showSubmitSucessAlert")).toBe(true);
     });
 
-
     test("Does not call shelterService.create when empty form is submitted", () => {
         shelterService.create = jest.fn();
 

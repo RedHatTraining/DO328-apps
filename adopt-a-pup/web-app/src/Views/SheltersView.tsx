@@ -24,12 +24,6 @@ export default class SheltersView extends React.Component<SheltersViewProps> {
                 <PageSection>
                     <ShelterList shelterService={this.props.shelterService}></ShelterList>
                 </PageSection>
-                <PageSection variant={PageSectionVariants.light}>
-                    <Card>
-                        <Text component="h2">Create a Shelter</Text>
-                        <ShelterCreateForm shelterService={this.props.shelterService}></ShelterCreateForm>
-                    </Card>
-                </PageSection>
             </React.Fragment>
         );
     }
