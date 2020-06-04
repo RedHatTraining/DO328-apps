@@ -65,6 +65,29 @@ describe("ShelterForm", () => {
         });
     });
 
+    test("Changes state to show success alert when form is submitted", async() => {
+        shelterService.create = jest.fn();
+
+        const component = shallow(<ShelterCreateForm shelterService={shelterService} />);
+        component.setState({
+            shelter: {
+                shelterName: "My Shelter 1",
+                state: "Tennessee",
+                address: "Av. 123",
+                country: "US",
+                email: "contact@shelter123.com",
+                phoneNumber: "123456"
+            }
+        });
+
+        simulateSubmit(component.find("Form"));
+
+        // Wait until all promises all resolved
+        await Promise.resolve();
+
+        expect(component.state("showSubmitSucessAlert")).toBe(true);
+    });
+
 
     test("Does not call shelterService.create when empty form is submitted", () => {
         shelterService.create = jest.fn();
@@ -76,7 +99,7 @@ describe("ShelterForm", () => {
         expect(shelterService.create).not.toHaveBeenCalled();
     });
 
-    test("Shows alert when empty form is submitted", () => {
+    test("Changes state to show invalid form alert when empty form is submitted", () => {
         shelterService.create = jest.fn();
 
         const component = shallow(<ShelterCreateForm shelterService={shelterService} />);

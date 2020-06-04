@@ -19,6 +19,8 @@ type ShelterFormProps = {
 
 export type ShelterFormState = {
     showInvalidFormAlert: boolean;
+    showSubmitSucessAlert: boolean;
+    showSubmitErrorAlert: boolean;
     shelter: Shelter;
 };
 
@@ -28,6 +30,8 @@ export default class ShelterCreateForm extends React.Component<ShelterFormProps,
         super(props);
         this.state = {
             showInvalidFormAlert: false,
+            showSubmitSucessAlert: false,
+            showSubmitErrorAlert: false,
             shelter: {
                 shelterName: "",
                 state: "",
@@ -101,16 +105,39 @@ export default class ShelterCreateForm extends React.Component<ShelterFormProps,
 
     private async handleFormSubmit(event: FormEvent) {
         if (this.isFormValid()) {
-            this.props.shelterService.create(this.state.shelter);
+            try {
+                await this.props.shelterService.create(this.state.shelter);
+                this.showSuccessAlert();
+            } catch (error) {
+                this.showErrorAlert();
+            }
         } else {
             this.setState({ showInvalidFormAlert: true });
         }
         event.preventDefault();
     }
 
-
     private isFormValid() {
         return this.state.shelter.shelterName;
+    }
+
+    private showSuccessAlert() {
+        this.setState({ showSubmitSucessAlert: true });
+        this.hideAlertsAfter(3000);
+    }
+
+    private showErrorAlert() {
+        this.setState({ showSubmitErrorAlert: true });
+        this.hideAlertsAfter(3000);
+    }
+
+    private hideAlertsAfter(millis: number) {
+        setTimeout(() => {
+            this.setState({
+                showSubmitSucessAlert: false,
+                showSubmitErrorAlert: false,
+            });
+        }, millis);
     }
 
     private handleCloseInvalidFormAlert() {
@@ -121,13 +148,17 @@ export default class ShelterCreateForm extends React.Component<ShelterFormProps,
         const { shelter, showInvalidFormAlert } = this.state;
         return (
             <Form onSubmit={this.handleFormSubmit.bind(this)}>
+                {this.renderCreationSuccessAlert()}
+                {this.renderCreationErrorAlert()}
                 {showInvalidFormAlert &&
                     <Alert
                         id="myalert"
                         className="popup"
                         variant="danger"
                         title="Invalid form"
-                        action={<AlertActionCloseButton onClose={this.handleCloseInvalidFormAlert.bind(this)} />}>
+                        action={<AlertActionCloseButton
+                            onClose={this.handleCloseInvalidFormAlert.bind(this)}
+                        />}>
                         Please complete all required fields
                     </Alert>}
                 <FormGroup
@@ -220,6 +251,24 @@ export default class ShelterCreateForm extends React.Component<ShelterFormProps,
                 </ActionGroup>
             </Form>
         );
+    }
+
+
+    private renderCreationErrorAlert(): React.ReactNode | null {
+        if (this.state.showSubmitErrorAlert) {
+            return <Alert variant="danger" title="Shelter creation failed" />;
+        }
+        return null;
+    }
+
+    private renderCreationSuccessAlert(): React.ReactNode | null {
+        if (this.state.showSubmitSucessAlert) {
+            return <Alert
+                variant="success"
+                title="Shelter created"
+            />;
+        }
+        return null;
     }
 
 }

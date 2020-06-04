@@ -17,7 +17,7 @@ export default class ShelterFakeService implements ShelterService {
     }
 
     public async create(): Promise<string> {
-        alert("ShelterFakeService: create() was called!");
+        console.log("ShelterFakeService: create() was called!");
         Promise.resolve();
         return "fake-shelter-id";
     }

@@ -19,31 +19,41 @@ type LoadingDataProps = {
 export default class LoadingData extends React.Component<LoadingDataProps> {
 
     public render() {
+        return (
+            <React.Fragment>
+                {this.renderTitle()}
+                {this.renderError()}
+                {this.renderSpinner()}
+                {this.props.children}
+            </React.Fragment>
+        );
+    }
+
+    private renderTitle(): React.ReactNode {
+        return this.props.title && <TextContent>
+            <Text component="h2">{this.props.title}</Text>
+        </TextContent>;
+    }
+
+    private renderError(): React.ReactNode {
         const {
-            title,
-            showLoader,
             showError,
             errorTitle,
             errorDescription,
-            onErrorClosed,
-            children
+            onErrorClosed
         } = this.props;
-        return (
-            <React.Fragment>
-                {showError &&
-                    <Alert
-                        className="popup"
-                        variant="danger"
-                        title={errorTitle}
-                        action={<AlertActionCloseButton onClose={onErrorClosed} />}>
-                        {errorDescription}
-                    </Alert>}
-                {title &&<TextContent>
-                    <Text component="h2">{title}</Text>
-                </TextContent>}
-                {showLoader && <BullseyeSpinner />}
-                {children}
-            </React.Fragment>
-        );
+        return showError &&
+            <Alert
+                className="popup"
+                variant="danger"
+                title={errorTitle}
+                action={<AlertActionCloseButton onClose={onErrorClosed} />}
+            >
+                {errorDescription}
+            </Alert>;
+    }
+
+    private renderSpinner(): React.ReactNode {
+        return this.props.showLoader && <BullseyeSpinner />;
     }
 }
