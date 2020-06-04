@@ -9,16 +9,25 @@ const fs = require("fs").promises;
 const app = express();
 
 const BUILD_PATH = path.join(__dirname, "build");
+const INDEX_FILEPATH = path.join(__dirname, "build", "index.html");
 
+
+app.use(log);
+
+// First, if route is /frontend, we serve index.html with env variables
+app.use(async(req, res, next) => {
+    if (req.url === "/frontend" || req.url === "/frontend/") {
+        sendIndexWithEnv(req, res);
+    } else {
+        next();
+    }
+});
+
+// If the route is a static file...
 app.use("/frontend", express.static(BUILD_PATH));
 
-// Return index.html, with injected env variables
-const indexFilePath = path.join(__dirname, "build", "index.html");
-app.get("/*", async(request, response) => {
-    log(request);
-    const content = await injectEnvironmentInHTml(indexFilePath);
-    response.send(content);
-});
+// For the rest of paths we also serve index.html with env variables
+app.get("/*", sendIndexWithEnv);
 
 
 const PORT = process.env.PORT || 8080;
@@ -27,12 +36,13 @@ app.listen(PORT, () => {
 });
 
 
-function log(req) {
+function log(req, res, next) {
     console.log(`${(new Date()).toISOString()} - GET ${req.url}`);
+    next();
 }
 
 
-async function injectEnvironmentInHTml(filePath) {
+async function sendIndexWithEnv(request, response) {
     // Only consider variables starting with REACT_APP
     const environment = {};
     Object.keys(process.env)
@@ -41,11 +51,12 @@ async function injectEnvironmentInHTml(filePath) {
             environment[key] = process.env[key];
         });
 
-    const content = await fs.readFile(filePath);
-    return content
+    const content = (await fs.readFile(INDEX_FILEPATH))
         .toString()
         .replace(
             "__PRODUCTION_ENV__",
             JSON.stringify(environment)
         );
+
+    response.send(content);
 }

@@ -129,12 +129,20 @@ export default class ShelterCreateForm extends React.Component<ShelterFormProps,
     }
 
     private showSuccessAlert() {
-        this.setState({ showSubmitSucessAlert: true });
+        this.setState({
+            showSubmitSucessAlert: true,
+            showSubmitErrorAlert: false,
+            showInvalidFormAlert: false
+        });
         this.hideAlertsAfter(3000);
     }
 
     private showErrorAlert() {
-        this.setState({ showSubmitErrorAlert: true });
+        this.setState({
+            showSubmitErrorAlert: true,
+            showSubmitSucessAlert: false,
+            showInvalidFormAlert: false
+        });
         this.hideAlertsAfter(3000);
     }
 
