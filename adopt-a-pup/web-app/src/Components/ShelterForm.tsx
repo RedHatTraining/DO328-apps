@@ -23,14 +23,16 @@ export default class ShelterForm extends React.Component<ShelterFormProps, Shelt
 
     constructor(props: ShelterFormProps) {
         super(props);
-        this.state = { shelter: {
+        this.state = {
+            shelter: {
                 shelterName: "",
                 state: "",
                 country: "",
                 address: "",
                 email: "",
                 phoneNumber: ""
-            }};
+            }
+        };
     }
 
     private handleNameChange(shelterName: string) {
