@@ -100,6 +100,7 @@ export default class App extends Component {
                         </Route>
                         <Route path="/manage/animals/create" render={(props) =>
                             <AnimalCreateView {...props}
+                                shelterService={shelterService}
                                 animalService={animalService}
 
                             />}>
