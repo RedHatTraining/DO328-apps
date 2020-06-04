@@ -12,6 +12,8 @@ const BUILD_PATH = path.join(__dirname, "build");
 const INDEX_FILEPATH = path.join(__dirname, "build", "index.html");
 
 
+// Setup server (Middlewares are evaluated in order)
+
 app.use(log);
 
 // First, if route is /frontend, we serve index.html with env variables
