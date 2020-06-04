@@ -17,6 +17,7 @@ spec:
       containers:
         - name: shelter-service
           image: quay.io/psolarvi/ossm-shelter-service:1.0
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
 ---

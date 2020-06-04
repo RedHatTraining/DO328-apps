@@ -1,3 +1,30 @@
+# Adopt a Pup Application
+
+## Deploying the application in Red&nbsp;Hat OpenShift 
+Create a project.
+```
+oc new-project adopt-a-pup
+```
+
+Deploy the MongoDB container
+```
+sh scripts/deploy-mongo.sh
+```
+
+Populate the MongoDB database
+```
+sh scripts/populate-mongo.sh
+```
+
+Deploy the required services.
+```
+oc apply -f kubefiles/adoption-service.yaml
+oc apply -f kubefiles/animal-service.yaml
+oc apply -f kubefiles/notification-service.yaml 
+oc apply -f kubefiles/shelter-service.yaml
+oc apply -f kubefiles/frontend-service.yaml
+```
+-----
 The `oc` commands in this script can be run to create the adopt-a-pup application. This will deploy the backend services including adoption, shelter, animal, and notification services. It will also build a fake smtp service which can be used to test email delivery.
 
 # Deploy the microservices. Start with a clean project.

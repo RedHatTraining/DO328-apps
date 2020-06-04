@@ -17,6 +17,7 @@ spec:
       containers:
         - name: notification-service
           image: quay.io/psolarvi/ossm-notification-service:1.0
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
 ---
