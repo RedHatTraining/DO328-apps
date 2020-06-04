@@ -1,6 +1,6 @@
 import React, {FormEvent} from "react";
 import {Animal} from "../Models/Animal";
-import {AnimalService} from "../Services/AnimalService"
+import {AnimalService} from "../Services/AnimalService";
 import {
     Form,
     FormGroup,
@@ -36,7 +36,7 @@ export default class AnimalCreateForm extends React.Component<AnimalCreateViewPr
                 childSafe: false,
                 otherDogSafe: false
             }
-        }
+        };
     }
 
     private async handleFormSubmit(event: FormEvent) {
@@ -84,7 +84,7 @@ export default class AnimalCreateForm extends React.Component<AnimalCreateViewPr
     }
 
     private handleAdoptableChange(adoptable: boolean) {
-        this.state.animal.adoptable = adoptable
+        this.state.animal.adoptable = adoptable;
     }
 
     public render() {
@@ -250,6 +250,6 @@ export default class AnimalCreateForm extends React.Component<AnimalCreateViewPr
                         onChange={this.handleOtherDogSafeChange.bind(this)}/>
                 </FormGroup>
             </Form>
-        )
+        );
     }
 }

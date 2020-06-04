@@ -23,7 +23,7 @@ app.use(async(req, res, next) => {
     }
 });
 
-// If the route is a static file...
+// Serve the file if the route is a static file (css, js...)
 app.use("/frontend", express.static(BUILD_PATH));
 
 // For the rest of paths we also serve index.html with env variables

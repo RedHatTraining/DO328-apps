@@ -1,6 +1,8 @@
 import React from "react";
 import { AnimalService } from "../Services/AnimalService";
-import { PageSection, PageSectionVariants, Text, TextContent, Card, CardBody } from "@patternfly/react-core";
+import {
+    PageSection, PageSectionVariants, Text, TextContent, Card, CardBody
+} from "@patternfly/react-core";
 import AnimalCreateForm from "../Components/AnimalCreateForm";
 
 

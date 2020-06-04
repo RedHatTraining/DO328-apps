@@ -84,7 +84,7 @@ export default class ShelterDetailsView
                             Adoptable Animals
                         </Text>
                     </TextContent>
-                    <AdoptableAnimalList animals={this.state.adoptableAnimals}></AdoptableAnimalList>
+                    <AdoptableAnimalList animals={this.state.adoptableAnimals} />
                 </PageSection>
             </React.Fragment>
         );
