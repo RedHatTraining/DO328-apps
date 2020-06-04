@@ -19,6 +19,8 @@ The project where you deploy this application should be managed by OSSM
     ```
     oc new-project comprehensive-review
     ```
+    
+    Please be sure that the project is defined as member in the SMMR.
 
 2. Deploy the MongoDB container.
     ```
@@ -39,7 +41,6 @@ The project where you deploy this application should be managed by OSSM
     oc apply -f kubefiles/animal-service.yaml
     oc apply -f kubefiles/notification-service.yaml 
     oc apply -f kubefiles/shelter-service.yaml
-    oc apply -f kubefiles/frontend-service.yaml
     ```
 
 5. Deploy the frontend.
