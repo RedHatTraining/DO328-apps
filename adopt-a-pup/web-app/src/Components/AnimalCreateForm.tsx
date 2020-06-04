@@ -1,108 +1,302 @@
-import React, {FormEvent} from "react";
-import {Animal} from "../Models/Animal";
-import {AnimalService} from "../Services/AnimalService"
+import React, { FormEvent } from "react";
+import { Animal } from "../Models/Animal";
+import { AnimalService } from "../Services/AnimalService";
 import {
     Form,
     FormGroup,
     TextInput,
     FormSelect,
     Checkbox,
-    FormSelectOption
+    FormSelectOption,
+    ActionGroup,
+    Button,
+    ButtonType,
+    Alert,
+    AlertActionCloseButton
 } from "@patternfly/react-core";
-import {Residency} from "../Models/Residency";
-import {ApproximateSize} from "../Models/ApproximateSize";
+import { Residency } from "../Models/Residency";
+import { ApproximateSize } from "../Models/ApproximateSize";
+import BullseyeSpinner from "./BullseyeSpinner";
+import { RESTConnectionError } from "../Services/RESTService";
 
 type AnimalCreateViewProps = {
     animalService: AnimalService;
 }
 
 type AnimalCreateFormState = {
+    showInvalidFormAlert: boolean;
+    showSubmitSucessAlert: boolean;
+    showSubmitErrorAlert: boolean;
+    submitError: {
+        title: string,
+        description: string
+    }
+    isSubmitting: boolean;
     animal: Animal
 }
 
-export default class AnimalCreateForm extends React.Component<AnimalCreateViewProps, AnimalCreateFormState> {
+export default class AnimalCreateForm
+    extends React.Component<AnimalCreateViewProps, AnimalCreateFormState> {
+
     constructor(props: AnimalCreateViewProps) {
         super(props);
         this.state = {
-            animal: {
-                animalName: "",
-                shelterId: "",
-                breed: "",
-                approximateSize: "",
-                residencyRequired: "APARTMENT",
-                weight: 0,
-                adoptable: true,
-                squareFootageOfHome: 0,
-                childSafe: false,
-                otherDogSafe: false
-            }
-        }
+            showInvalidFormAlert: false,
+            showSubmitSucessAlert: false,
+            showSubmitErrorAlert: false,
+            submitError: {
+                title: "",
+                description: ""
+            },
+            isSubmitting: false,
+            animal: this.getEmptyFields()
+        };
     }
 
-    private async handleFormSubmit(event: FormEvent) {
-        const {animal} = this.state;
-        const animalId = this.props.animalService.create(animal);
-        // TODO photo input and then write file to server 
-        // Maybe have some embedded database like SQLite?
-        event.preventDefault();
-    }
-
-    private handleNameChange(name: string) {
-        this.state.animal.animalName = name;
+    private handleNameChange(animalName: string) {
+        // Inmutability: instead of modifying the state,
+        // we make a copy with the new value, and then
+        // set the new state
+        const animal = { ...this.state.animal, animalName };
+        this.setState({
+            animal
+        });
     }
 
     private handleShelterIdChange(shelterId: string) {
-        this.state.animal.shelterId = shelterId;
+        // Inmutability: instead of modifying the state,
+        // we make a copy with the new value, and then
+        // set the new state
+        const animal = { ...this.state.animal, shelterId };
+        this.setState({
+            animal
+        });
     }
 
     private handleBreedChange(breed: string) {
-        this.state.animal.breed = breed;
+        // Inmutability: instead of modifying the state,
+        // we make a copy with the new value, and then
+        // set the new state
+        const animal = { ...this.state.animal, breed };
+        this.setState({
+            animal
+        });
     }
 
     private handleApproximateSizeChange(approximateSize: string) {
-        this.state.animal.approximateSize = approximateSize;
+        // Inmutability: instead of modifying the state,
+        // we make a copy with the new value, and then
+        // set the new state
+        const animal = { ...this.state.animal, approximateSize };
+        this.setState({
+            animal
+        });
     }
 
     private handleResidencyRequiredChange(residencyRequired: string) {
-        this.state.animal.residencyRequired = residencyRequired;
+        // Inmutability: instead of modifying the state,
+        // we make a copy with the new value, and then
+        // set the new state
+        const animal = { ...this.state.animal, residencyRequired };
+        this.setState({
+            animal
+        });
     }
 
-    private handleWeightChange(weight: number) {
-        this.state.animal.weight = weight;
+    private handleWeightChange(weight: string) {
+        // Inmutability: instead of modifying the state,
+        // we make a copy with the new value, and then
+        // set the new state
+        const animal = {
+            ...this.state.animal,
+            weight: parseInt(weight)
+        };
+        this.setState({
+            animal
+        });
     }
 
-    private handleSquareFootageOfHomeChange(squareFootageOfHome: number) {
-        this.state.animal.squareFootageOfHome = squareFootageOfHome;
+    private handleSquareFootageOfHomeChange(squareFootageOfHome: string) {
+        // Inmutability: instead of modifying the state,
+        // we make a copy with the new value, and then
+        // set the new state
+        const animal = {
+            ...this.state.animal,
+            squareFootageOfHome: parseInt(squareFootageOfHome)
+        };
+        this.setState({
+            animal
+        });
     }
 
     private handleChildSafeChange(childSafe: boolean) {
-        this.state.animal.childSafe = childSafe;
+        // Inmutability: instead of modifying the state,
+        // we make a copy with the new value, and then
+        // set the new state
+        const animal = { ...this.state.animal, childSafe };
+        this.setState({
+            animal
+        });
     }
 
     private handleOtherDogSafeChange(otherDogSafe: boolean) {
-        this.state.animal.otherDogSafe = otherDogSafe;
+        // Inmutability: instead of modifying the state,
+        // we make a copy with the new value, and then
+        // set the new state
+        const animal = { ...this.state.animal, otherDogSafe };
+        this.setState({
+            animal
+        });
     }
 
     private handleAdoptableChange(adoptable: boolean) {
-        this.state.animal.adoptable = adoptable
+        // Inmutability: instead of modifying the state,
+        // we make a copy with the new value, and then
+        // set the new state
+        const animal = { ...this.state.animal, adoptable };
+        this.setState({
+            animal
+        });
+    }
+
+    private async handleFormSubmit(event: FormEvent) {
+        if (this.isFormValid()) {
+            this.setState({ isSubmitting: true });
+            try {
+                await this.props.animalService.create(this.state.animal);
+                // const animalId = await this.props.animalService.create(this.state.animal);
+                // TODO photo input and then write file to server
+                // Maybe have some embedded database like SQLite?
+
+                this.showSuccessAlert();
+                this.resetFormFields();
+            } catch (error) {
+                this.showErrorAlert(error);
+            } finally {
+                this.setState({ isSubmitting: false });
+            }
+        } else {
+            this.setState({ showInvalidFormAlert: true });
+        }
+        event.preventDefault();
+    }
+
+    private isFormValid() {
+        const { animal } = this.state;
+        const fieldIsEmpty = (field: string) => animal[field as keyof Animal] === "";
+
+        const hasEmptyFields = Object
+            .keys(animal)
+            .some(fieldIsEmpty);
+
+        return !hasEmptyFields;
+    }
+
+    private showSuccessAlert() {
+        this.setState({
+            showSubmitSucessAlert: true,
+            showSubmitErrorAlert: false,
+            showInvalidFormAlert: false
+        });
+        this.hideAlertsAfter(3000);
+    }
+
+    private showErrorAlert(error: Error) {
+        let submitError = {
+            title: error.name,
+            description: error.message
+        };
+        if (error instanceof RESTConnectionError) {
+            submitError.description = error.description;
+        }
+        this.setState({
+            showSubmitErrorAlert: true,
+            submitError,
+            showSubmitSucessAlert: false,
+            showInvalidFormAlert: false
+        });
+        this.hideAlertsAfter(3000);
+    }
+
+    private hideAlertsAfter(millis: number) {
+        setTimeout(() => {
+            this.setState({
+                showSubmitSucessAlert: false,
+                showSubmitErrorAlert: false,
+                submitError: {
+                    title: "",
+                    description: ""
+                }
+            });
+        }, millis);
+    }
+
+    private handleCloseInvalidFormAlert() {
+        this.setState({ showInvalidFormAlert: false });
+    }
+
+    private getEmptyFields(): Animal {
+        return {
+            animalName: "",
+            shelterId: "",
+            breed: "",
+            approximateSize: ApproximateSize.M,
+            residencyRequired: Residency.APARTMENT,
+            weight: 0,
+            adoptable: true,
+            squareFootageOfHome: 0,
+            childSafe: false,
+            otherDogSafe: false
+        };
+    }
+
+    private resetFormFields() {
+        this.setState({
+            animal: this.getEmptyFields()
+        });
     }
 
     public render() {
-        const {animal} = this.state;
+        return (
+            <React.Fragment>
+                {this.state.isSubmitting ? this.renderLoader() : this.renderForm()}
+            </React.Fragment>
+        );
+    }
+
+    public renderLoader() {
+        return <BullseyeSpinner />;
+    }
+
+    public renderForm() {
+        const { animal, showInvalidFormAlert } = this.state;
         return (
             <Form onSubmit={this.handleFormSubmit.bind(this)}>
+                {this.renderCreationSuccessAlert()}
+                {this.renderCreationErrorAlert()}
+                {showInvalidFormAlert &&
+                    <Alert
+                        id="myalert"
+                        className="popup"
+                        variant="danger"
+                        title="Invalid form"
+                        action={<AlertActionCloseButton
+                            onClose={this.handleCloseInvalidFormAlert.bind(this)}
+                        />}>
+                        Please complete required fields
+                    </Alert>}
                 <FormGroup
                     label="Name"
                     isRequired
-                    fieldId="simple-form-name"
+                    fieldId="animal-form-name"
                     helperText="Please provide the animal name"
                 >
                     <TextInput
                         isRequired
                         type="text"
-                        id="simple-form-name"
-                        name="simple-form-name"
-                        aria-describedby="simple-form-name-helper"
+                        id="animal-form-name"
+                        name="animal-form-name"
+                        aria-describedby="animal-form-name-helper"
                         value={animal.animalName}
                         onChange={this.handleNameChange.bind(this)}
                     />
@@ -110,15 +304,15 @@ export default class AnimalCreateForm extends React.Component<AnimalCreateViewPr
                 <FormGroup
                     label="Shelter ID"
                     isRequired
-                    fieldId="simple-form-shelter-id"
+                    fieldId="animal-form-shelter-id"
                     helperText="Please provide the shelter ID"
                 >
                     <TextInput
                         isRequired
                         type="text"
-                        id="simple-form-name"
-                        name="simple-form-shelter-id"
-                        aria-describedby="simple-form-shelter-id-helper"
+                        id="animal-form-shelter-id"
+                        name="animal-form-shelter-id"
+                        aria-describedby="animal-form-shelter-id-helper"
                         value={animal.shelterId}
                         onChange={this.handleShelterIdChange.bind(this)}
                     />
@@ -126,15 +320,15 @@ export default class AnimalCreateForm extends React.Component<AnimalCreateViewPr
                 <FormGroup
                     label="Breed"
                     isRequired
-                    fieldId="simple-form-breed"
+                    fieldId="animal-form-breed"
                     helperText="Please provide the breed"
                 >
                     <TextInput
                         isRequired
                         type="text"
-                        id="simple-form-breed"
-                        name="simple-form-breed"
-                        aria-describedby="simple-form-breed-helper"
+                        id="animal-form-breed"
+                        name="animal-form-breed"
+                        aria-describedby="animal-form-breed-helper"
                         value={animal.breed}
                         onChange={this.handleBreedChange.bind(this)}
                     />
@@ -142,25 +336,25 @@ export default class AnimalCreateForm extends React.Component<AnimalCreateViewPr
                 <FormGroup
                     label="Adoptable"
                     isRequired
-                    fieldId="simple-form-adoptable"
+                    fieldId="animal-form-adoptable"
                     helperText="Please indicate if animal is adoptable"
                 >
                     <Checkbox
                         label="Adoptable?"
-                        id="simple-form-adoptable"
-                        name="simple-form-adoptable"
+                        id="animal-form-adoptable"
+                        name="animal-form-adoptable"
                         aria-label="Adoptable?"
-                        isChecked={true}
-                        onChange={this.handleAdoptableChange.bind(this)}/>
+                        isChecked={animal.adoptable}
+                        onChange={this.handleAdoptableChange.bind(this)} />
                 </FormGroup>
                 <FormGroup
                     label="Residency"
                     isRequired
-                    fieldId="simple-form-residency"
+                    fieldId="animal-form-residency"
                     helperText="Which type of residency is required">
                     <FormSelect
                         value={animal.residencyRequired}
-                        onChange={(residency) => this.handleResidencyRequiredChange.bind(this)}
+                        onChange={this.handleResidencyRequiredChange.bind(this)}
                         aria-label="Select Residency">
                         <FormSelectOption
                             key={Residency.HOUSE}
@@ -177,12 +371,12 @@ export default class AnimalCreateForm extends React.Component<AnimalCreateViewPr
                 <FormGroup
                     label="Approximate Size"
                     isRequired
-                    fieldId="simple-form-approximate-size"
+                    fieldId="animal-form-approximate-size"
                     helperText="Please provide approximate size"
                 >
                     <FormSelect
                         value={animal.approximateSize}
-                        onChange={(residency) => this.handleApproximateSizeChange.bind(this)}
+                        onChange={this.handleApproximateSizeChange.bind(this)}
                         aria-label="Select approximate size">
                         <FormSelectOption
                             key={ApproximateSize.S}
@@ -201,55 +395,86 @@ export default class AnimalCreateForm extends React.Component<AnimalCreateViewPr
                         />
                     </FormSelect>
                 </FormGroup>
-                <FormGroup label="Square Footage of Home Required" isRequired fieldId="simple-form-footage">
+                <FormGroup
+                    label="Square Footage of Home Required"
+                    isRequired fieldId="animal-form-footage"
+                >
                     <TextInput
                         isRequired
                         type="number"
-                        id="simple-form-footage"
-                        name="simple-form-footage"
+                        id="animal-form-footage"
+                        name="animal-form-footage"
                         value={animal.squareFootageOfHome}
-                        onChange={() => this.handleSquareFootageOfHomeChange.bind(this)}
+                        onChange={this.handleSquareFootageOfHomeChange.bind(this)}
                     />
                 </FormGroup>
-                <FormGroup label="Animal Weight" isRequired fieldId="simple-form-weight">
+                <FormGroup label="Animal Weight" isRequired fieldId="animal-form-weight">
                     <TextInput
                         isRequired
                         type="number"
-                        id="simple-form-weight"
-                        name="simple-form-weight"
+                        id="animal-form-weight"
+                        name="animal-form-weight"
                         value={animal.weight}
-                        onChange={() => this.handleWeightChange.bind(this)}
+                        onChange={this.handleWeightChange.bind(this)}
                     />
                 </FormGroup>
                 <FormGroup
-                    label="safe with kids"
+                    label="Safe with kids"
                     isRequired
-                    fieldId="simple-form-kid-safe"
+                    fieldId="animal-form-kid-safe"
                     helperText="Please indicate if animal is safe with children under 16"
                 >
                     <Checkbox
                         label="Safe with Kids?"
-                        id="simple-form-kid-safe"
-                        name="simple-form-kid-safe"
+                        id="animal-form-kid-safe"
+                        name="animal-form-kid-safe"
                         aria-label="Safe with Kids?"
-                        isChecked={false}
-                        onChange={this.handleChildSafeChange.bind(this)}/>
+                        isChecked={animal.childSafe}
+                        onChange={this.handleChildSafeChange.bind(this)} />
                 </FormGroup>
                 <FormGroup
-                    label="safe with other animals"
+                    label="Safe with other animals"
                     isRequired
-                    fieldId="simple-form-animal-safe"
+                    fieldId="animal-form-animal-safe"
                     helperText="Please indicate if animal is safe with other animals"
                 >
                     <Checkbox
                         label="Safe with other Animals?"
-                        id="simple-form-animal-safe"
-                        name="simple-form-animal-safe"
+                        id="animal-form-animal-safe"
+                        name="animal-form-animal-safe"
                         aria-label="Safe with other Animals?"
-                        isChecked={false}
-                        onChange={this.handleOtherDogSafeChange.bind(this)}/>
+                        isChecked={animal.otherDogSafe}
+                        onChange={this.handleOtherDogSafeChange.bind(this)} />
                 </FormGroup>
+                <ActionGroup>
+                    <Button variant="primary" type={ButtonType.submit}>Create Animal</Button>
+                </ActionGroup>
             </Form>
-        )
+        );
+    }
+
+
+    private renderCreationErrorAlert(): React.ReactNode | null {
+        if (this.state.showSubmitErrorAlert) {
+            return (
+                <Alert
+                    variant="danger"
+                    title={`Error creating animal: ${this.state.submitError.title}`}
+                >
+                    {this.state.submitError.description}
+                </Alert>
+            );
+        }
+        return null;
+    }
+
+    private renderCreationSuccessAlert(): React.ReactNode | null {
+        if (this.state.showSubmitSucessAlert) {
+            return <Alert
+                variant="success"
+                title="Animal created"
+            />;
+        }
+        return null;
     }
 }

@@ -36,7 +36,7 @@ export default class AdoptableAnimalList extends React.Component<AnimalListProps
 
 
     private renderAnimalCard(animal: Animal) {
-        const pictureSrc = `/photos/${animal.animalId}.jpeg`;
+        const pictureSrc = `/frontend/photos/${animal.animalId}.jpeg`;
 
         return (
             <GalleryItem key={animal.animalId}>

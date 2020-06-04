@@ -26,6 +26,7 @@ import ShelterDetailsView from "./Views/ShelterDetailsView";
 import AnimalCreateView from "./Views/AnimalCreateView";
 import Config from "./Config";
 import NewsRESTService from "./Services/NewsRESTService";
+import SheltersCreateView from "./Views/SheltersCreateView";
 
 
 // Initialize Backend Services
@@ -84,27 +85,30 @@ export default class App extends Component {
                             />
                         </Route>
                         {Config.NEWS_ENABLED &&
-                        <Route path="/news" exact>
-                            <NewsView newsService={newsService} />
-                        </Route>
+                            <Route path="/news" exact>
+                                <NewsView newsService={newsService} />
+                            </Route>
                         }
-                        <Route path={"/animals/details/:animalId"} render={ (props) =>
+                        <Route path={"/animals/details/:animalId"} render={(props) =>
                             <AnimalDetailsView {...props}
                                 animalService={animalService}
                                 adoptionService={adoptionService}
-                            /> } >
+                            />} >
                         </Route>
-                        <Route path="/animals/create" render={ (props) =>
+                        <Route path="/manage/shelters/create" exact>
+                            <SheltersCreateView shelterService={shelterService} />
+                        </Route>
+                        <Route path="/manage/animals/create" render={(props) =>
                             <AnimalCreateView {...props}
-                              animalService={animalService}
-                        
-                        /> }>                            
+                                animalService={animalService}
+
+                            />}>
                         </Route>
-                        <Route path={"/shelters/:shelterId"} render={ (props) =>
+                        <Route path={"/shelters/:shelterId"} render={(props) =>
                             <ShelterDetailsView {...props}
                                 shelterService={shelterService}
                                 adoptionService={adoptionService}
-                            /> } >
+                            />} >
                         </Route>
                     </Structure>
                 </Switch>
