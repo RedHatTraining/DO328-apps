@@ -1,5 +1,5 @@
 import React from "react";
-import ShelterForm from "../Components/ShelterForm";
+import ShelterCreateForm from "../Components/ShelterCreateForm";
 import ShelterList from "../Components/SheltersList";
 import { ShelterService } from "../Services/ShelterService";
 import { PageSection, PageSectionVariants, Text, TextContent, Card, CardBody } from "@patternfly/react-core";
@@ -24,7 +24,7 @@ export default class SheltersCreateView extends React.Component<SheltersCreateVi
                 <PageSection>
                     <Card>
                         <CardBody>
-                            <ShelterForm shelterService={this.props.shelterService}></ShelterForm>
+                            <ShelterCreateForm shelterService={this.props.shelterService}></ShelterCreateForm>
                         </CardBody>
                     </Card>
                 </PageSection>
