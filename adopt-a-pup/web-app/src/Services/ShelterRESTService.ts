@@ -1,4 +1,4 @@
-import { ShelterService, ShelterParams } from "./ShelterService";
+import { ShelterService } from "./ShelterService";
 import { RESTService } from "./RESTService";
 import { Shelter } from "../Models/Shelter";
 
@@ -9,11 +9,16 @@ export default class ShelterRESTService extends RESTService implements ShelterSe
         super(baseUrl, "shelter-service");
     }
 
-    public async create(params: ShelterParams): Promise<void> {
-        return this.post("/shelters/create", params);
+    public async create(shelter: Shelter): Promise<string> {
+        return this.post("/shelters/create", shelter);
     }
 
-    public getAll(): Promise<Array<Shelter>> {
-        return this.get<Array<Shelter>>("/shelters/getAll");
+    public async getById(id: string): Promise<Shelter> {
+        return this.get<Shelter>(`/shelters/${id}/getShelter`);
     }
+
+    public getAll(): Promise<Shelter[]> {
+        return this.get<Shelter[]>("/shelters/getAll");
+    }
+
 }

@@ -21,53 +21,53 @@ import { NewsService } from "./Services/NewsService";
 import { AnimalService } from "./Services/AnimalService";
 import { AdoptionService } from "./Services/AdoptionService";
 import { ShelterService } from "./Services/ShelterService";
-import AnimalDetails from "./Components/AnimalDetails";
 import AnimalDetailsView from "./Views/AnimalDetailsView";
+import ShelterDetailsView from "./Views/ShelterDetailsView";
+import AnimalCreateView from "./Views/AnimalCreateView";
+import Config from "./Config";
+import NewsRESTService from "./Services/NewsRESTService";
+import SheltersCreateView from "./Views/SheltersCreateView";
 
 
-// Backend SERVICES
+// Initialize Backend Services
 let animalService: AnimalService;
 let adoptionService: AdoptionService;
 let shelterService: ShelterService;
 let newsService: NewsService;
 
-if (process.env.REACT_APP_ADOPTION_SERVICE_URL) {
-    adoptionService = new AdoptionRESTService(process.env.REACT_APP_ADOPTION_SERVICE_URL || "");
+if (Config.ADOPTION_SERVICE_URL) {
+    adoptionService = new AdoptionRESTService(Config.ADOPTION_SERVICE_URL);
 } else {
-    console.log("Using AdoptionFakeService");
+    console.log("Warning: No adoption service url provided. Using AdoptionFakeService");
     adoptionService = new AdoptionFakeService();
 }
 
-if (process.env.REACT_APP_ANIMAL_SERVICE_URL) {
-    animalService = new AnimalRESTService(process.env.REACT_APP_ANIMAL_SERVICE_URL || "");
+if (Config.ANIMAL_SERVICE_URL) {
+    animalService = new AnimalRESTService(Config.ANIMAL_SERVICE_URL);
 } else {
-    console.log("Using AnimalFakeService");
+    console.log("Warning: No animal service url provided. Using AnimalFakeService");
     animalService = new AnimalFakeService();
 }
 
-if (process.env.REACT_APP_SHELTER_SERVICE_URL) {
-    shelterService = new ShelterRESTService(process.env.REACT_APP_SHELTER_SERVICE_URL || "");
+if (Config.SHELTER_SERVICE_URL) {
+    shelterService = new ShelterRESTService(Config.SHELTER_SERVICE_URL);
 } else {
-    console.log("Using ShelterFakeService");
+    console.log("Warning: No shelter service url provided. Using ShelterFakeService");
     shelterService = new ShelterFakeService();
 }
 
-if (process.env.REACT_APP_SHELTER_SERVICE_URL) {
-    shelterService = new ShelterRESTService(process.env.REACT_APP_SHELTER_SERVICE_URL || "");
+if (Config.NEWS_ENABLED && Config.NEWS_SERVICE_URL) {
+    newsService = new NewsRESTService(Config.NEWS_SERVICE_URL);
 } else {
-    console.log("Using ShelterFakeService");
-    shelterService = new ShelterFakeService();
+    console.log("Warning: No news service url provided. Using NewsFakeService");
+    newsService = new NewsFakeService();
 }
 
-// TODO: Create REST News service
-newsService = new NewsFakeService();
 
 
-// MAIN APP
-// The main React component that runs the whole webapp
+// Declare the root application component
 export default class App extends Component {
     render() {
-        const enableNews = process.env.REACT_APP_NEWS_ENABLED;
         return (
             <Router basename="/frontend">
                 <Switch>
@@ -84,16 +84,31 @@ export default class App extends Component {
                                 adoptionService={adoptionService}
                             />
                         </Route>
-                        {enableNews &&
-                        <Route path="/news" exact>
-                            <NewsView newsService={newsService} />
-                        </Route>
+                        {Config.NEWS_ENABLED &&
+                            <Route path="/news" exact>
+                                <NewsView newsService={newsService} />
+                            </Route>
                         }
-                        <Route path={"/animals/:animalId"} render={ (props) =>
+                        <Route path={"/animals/details/:animalId"} render={(props) =>
                             <AnimalDetailsView {...props}
                                 animalService={animalService}
                                 adoptionService={adoptionService}
-                            /> } >
+                            />} >
+                        </Route>
+                        <Route path="/manage/shelters/create" exact>
+                            <SheltersCreateView shelterService={shelterService} />
+                        </Route>
+                        <Route path="/manage/animals/create" render={(props) =>
+                            <AnimalCreateView {...props}
+                                animalService={animalService}
+
+                            />}>
+                        </Route>
+                        <Route path={"/shelters/:shelterId"} render={(props) =>
+                            <ShelterDetailsView {...props}
+                                shelterService={shelterService}
+                                adoptionService={adoptionService}
+                            />} >
                         </Route>
                     </Structure>
                 </Switch>

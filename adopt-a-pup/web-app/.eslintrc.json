@@ -65,6 +65,15 @@
                     }
                 ]
             }
+        },
+        {
+            "files": [
+                "server.js",
+                "src/Config.js"
+            ],
+            "env": {
+                "node": true
+            }
         }
     ]
 }

@@ -3,6 +3,6 @@ import { AdoptionApplication } from "../Models/AdoptionApplication";
 
 
 export interface AdoptionService {
-    getAdoptableByShelter(): Promise<Animal[]>;
+    getAdoptableByShelter(shelterId: string): Promise<Animal[]>;
     applyForAdoption(adoptionApplication: AdoptionApplication): Promise<void>;
 }

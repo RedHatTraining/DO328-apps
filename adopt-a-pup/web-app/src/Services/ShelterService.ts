@@ -1,10 +1,8 @@
-export type ShelterParams = {
-    name: string
-}
-
+import { Shelter } from "../Models/Shelter";
 
 export interface ShelterService {
-    create(params: ShelterParams): Promise<void>;
-    getAll(): Promise<any[]>;
+    create(shelter: Shelter): Promise<string>;
+    getById(id: string): Promise<Shelter>
+    getAll(): Promise<Shelter[]>;
 }
 

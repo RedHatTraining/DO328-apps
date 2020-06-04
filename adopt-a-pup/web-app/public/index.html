@@ -39,5 +39,12 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script>
+      /*
+        This variable is used to inject env variables at run time in production.
+        server.js replaces __PRODUCTION_ENV__ with an object containing these variables.
+      */
+      window.env = __PRODUCTION_ENV__
+    </script>
   </body>
 </html>
