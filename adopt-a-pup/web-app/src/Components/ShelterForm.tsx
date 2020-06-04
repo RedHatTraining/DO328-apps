@@ -8,6 +8,7 @@ import {
     ButtonType
 } from "@patternfly/react-core";
 import { ShelterService } from "../Services/ShelterService";
+import {Shelter} from "../Models/Shelter";
 
 
 type ShelterFormProps = {
@@ -15,63 +16,54 @@ type ShelterFormProps = {
 };
 
 type ShelterFormState = {
-    name: string,
-    state: string,
-    country: string,
-    address: string,
-    email: string,
-    phoneNumber: string
+    shelter: Shelter;
 };
 
 export default class ShelterForm extends React.Component<ShelterFormProps, ShelterFormState> {
 
     constructor(props: ShelterFormProps) {
         super(props);
-        this.state = {
-            name: "",
-            state: "",
-            country: "",
-            address: "",
-            email: "",
-            phoneNumber: ""
-        };
+        this.state = { shelter: {
+                shelterName: "",
+                state: "",
+                country: "",
+                address: "",
+                email: "",
+                phoneNumber: ""
+            }};
     }
 
-    private handleNameChange(name: string) {
-        this.setState({ name });
+    private handleNameChange(shelterName: string) {
+        this.state.shelter.shelterName = shelterName;
     }
 
     private handleStateChange(state: string) {
-        this.setState({ state });
+        this.state.shelter.state = state;
     }
 
     private handleCountryChange(country: string) {
-        this.setState({ country });
+        this.state.shelter.country = country;
     }
 
     private handleAddressChange(address: string) {
-        this.setState({ address });
+        this.state.shelter.address = address;
     }
 
     private handleEmailChange(email: string) {
-        this.setState({ email });
+        this.state.shelter.email = email;
     }
 
     private handlePhoneNumberChange(phoneNumber: string) {
-        this.setState({ phoneNumber });
+        this.state.shelter.phoneNumber = phoneNumber;
     }
 
     private async handleFormSubmit(event: FormEvent) {
-        const { name } = this.state;
-        this.props.shelterService.create({
-            name
-        });
+        this.props.shelterService.create(this.state.shelter);
         event.preventDefault();
     }
 
     public render() {
-        const { name, country, state, address, email, phoneNumber } = this.state;
-
+        const shelter = this.state.shelter;
         return (
             <Form onSubmit={this.handleFormSubmit.bind(this)}>
                 <FormGroup
@@ -86,7 +78,7 @@ export default class ShelterForm extends React.Component<ShelterFormProps, Shelt
                         id="simple-form-name"
                         name="simple-form-name"
                         aria-describedby="simple-form-name-helper"
-                        value={name}
+                        value={shelter.shelterName}
                         onChange={this.handleNameChange.bind(this)}
                     />
                 </FormGroup>
@@ -102,7 +94,7 @@ export default class ShelterForm extends React.Component<ShelterFormProps, Shelt
                         id="simple-form-state"
                         name="simple-form-state"
                         aria-describedby="simple-form-name-helper"
-                        value={state}
+                        value={shelter.state}
                         onChange={this.handleStateChange.bind(this)}
                     />
                 </FormGroup>
@@ -118,7 +110,7 @@ export default class ShelterForm extends React.Component<ShelterFormProps, Shelt
                         id="simple-form-country"
                         name="simple-form-country"
                         aria-describedby="simple-form-name-helper"
-                        value={country}
+                        value={shelter.country}
                         onChange={this.handleCountryChange.bind(this)}
                     />
                 </FormGroup>
@@ -134,7 +126,7 @@ export default class ShelterForm extends React.Component<ShelterFormProps, Shelt
                         id="simple-form-address"
                         name="simple-form-address"
                         aria-describedby="simple-form-name-helper"
-                        value={address}
+                        value={shelter.address}
                         onChange={this.handleAddressChange.bind(this)}
                     />
                 </FormGroup>
@@ -144,7 +136,7 @@ export default class ShelterForm extends React.Component<ShelterFormProps, Shelt
                         type="email"
                         id="simple-form-email"
                         name="simple-form-email"
-                        value={email}
+                        value={shelter.email}
                         onChange={this.handleEmailChange.bind(this)}
                     />
                 </FormGroup>
@@ -155,7 +147,7 @@ export default class ShelterForm extends React.Component<ShelterFormProps, Shelt
                         id="simple-form-number"
                         placeholder="555-555-5555"
                         name="simple-form-number"
-                        value={phoneNumber}
+                        value={shelter.phoneNumber}
                         onChange={this.handlePhoneNumberChange.bind(this)}
                     />
                 </FormGroup>

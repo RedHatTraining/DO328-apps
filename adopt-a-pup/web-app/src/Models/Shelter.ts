@@ -1,5 +1,5 @@
 export interface Shelter {
-    shelterId: string;
+    shelterId?: string;
     shelterName: string;
     state: string;
     country: string;

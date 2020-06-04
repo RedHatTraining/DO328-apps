@@ -151,9 +151,10 @@ export default class AnimalDetailsView
                     <TextContent>
                         <Text component="h2">Adopt {animal.animalName}!</Text>
                     </TextContent>
+                    {/*TODO do better here*/}
                     <AdoptionForm
                         adoptionService={this.props.adoptionService}
-                        animalId={animal.animalId}
+                        animalId={animal.animalId ? animal.animalId : ""}
                     />
                 </PageSection>
             </React.Fragment>
