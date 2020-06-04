@@ -1,0 +1,40 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewBuild
+  labels:
+    build: animal-service
+  name: animal-service
+spec:
+  failedBuildsHistoryLimit: 5
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: animal-service:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    contextDir: adopt-a-pup/animal-service
+    git:
+      uri: https://github.com/jonahkh/DO328-apps
+    type: Git
+  strategy:
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: java:latest
+        namespace: openshift
+    type: Source
+  successfulBuildsHistoryLimit: 5
+  triggers:
+  - github:
+      secret: TuNUBSqT85PB4_5B-S5P
+    type: GitHub
+  - generic:
+      secret: hQWt0uCbQUOYkq4QuOO0
+    type: Generic
+  - type: ConfigChange
+  - type: ImageChange

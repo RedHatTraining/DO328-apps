@@ -1,7 +1,7 @@
 import React from "react";
 import { AnimalService } from "../Services/AnimalService";
 import {
-    PageSection, PageSectionVariants, Text, TextContent, Button
+    PageSection, PageSectionVariants, Text, TextContent
 } from "@patternfly/react-core";
 import AdoptableAnimalList from "../Components/AdoptableAnimalList";
 import { AdoptionService } from "../Services/AdoptionService";

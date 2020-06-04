@@ -1,8 +1,7 @@
 import React from "react";
-import ShelterCreateForm from "../Components/ShelterCreateForm";
 import ShelterList from "../Components/SheltersList";
 import { ShelterService } from "../Services/ShelterService";
-import { PageSection, PageSectionVariants, Text, TextContent, Card } from "@patternfly/react-core";
+import { PageSection, PageSectionVariants, Text, TextContent } from "@patternfly/react-core";
 
 
 type SheltersViewProps = {

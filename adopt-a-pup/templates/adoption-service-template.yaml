@@ -1,0 +1,154 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+labels:
+  template: adoption-service-template
+metadata:
+  openshift.io/display-name: adoption-service
+  openshift.io/provider-display-name: Red Hat, Inc.
+  name: adoption-service
+objects:
+  - apiVersion: build.openshift.io/v1
+    kind: BuildConfig
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewBuild
+      labels:
+        build: adoption-service
+      name: adoption-service
+    spec:
+      failedBuildsHistoryLimit: 5
+      nodeSelector: null
+      output:
+        to:
+          kind: ImageStreamTag
+          name: adoption-service:latest
+      postCommit: {}
+      resources: {}
+      runPolicy: Serial
+      source:
+        contextDir: adopt-a-pup/adoption-service
+        git:
+          uri: https://github.com/jonahkh/DO328-apps
+        type: Git
+      strategy:
+        sourceStrategy:
+          from:
+            kind: ImageStreamTag
+            name: java:latest
+            namespace: openshift
+        type: Source
+      successfulBuildsHistoryLimit: 5
+      triggers:
+        - github:
+            secret: Ja9KVdKJiYrjebaALriG
+          type: GitHub
+        - generic:
+            secret: d13Yqaktk7r0Ve-DpWeQ
+          type: Generic
+        - type: ConfigChange
+        - imageChange:
+            lastTriggeredImageID: image-registry.openshift-image-registry.svc:5000/openshift/java@sha256:4dc1ae6af9a3efbbd28c1b765faa6fcea3f8eddccd2347ad97713d312f57b511
+          type: ImageChange
+
+  - apiVersion: apps.openshift.io/v1
+    kind: DeploymentConfig
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      labels:
+        app: adoption-service
+        app.kubernetes.io/component: adoption-service
+        app.kubernetes.io/instance: adoption-service
+      name: adoption-service
+    spec:
+      replicas: 1
+      revisionHistoryLimit: 10
+      selector:
+        deploymentconfig: adoption-service
+      strategy:
+        activeDeadlineSeconds: 21600
+        resources: {}
+        rollingParams:
+          intervalSeconds: 1
+          maxSurge: 25%
+          maxUnavailable: 25%
+          timeoutSeconds: 600
+          updatePeriodSeconds: 1
+        type: Rolling
+      template:
+        metadata:
+          annotations:
+            openshift.io/generated-by: OpenShiftNewApp
+          creationTimestamp: null
+          labels:
+            deploymentconfig: adoption-service
+            app: adoption-service
+        spec:
+          containers:
+            - imagePullPolicy: Always
+              name: adoption-service
+              ports:
+                - containerPort: 8080
+                  protocol: TCP
+                - containerPort: 8443
+                  protocol: TCP
+                - containerPort: 8778
+                  protocol: TCP
+              resources: {}
+              terminationMessagePath: /dev/termination-log
+              terminationMessagePolicy: File
+          dnsPolicy: ClusterFirst
+          restartPolicy: Always
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+      test: false
+      triggers:
+        - type: ConfigChange
+        - imageChangeParams:
+            automatic: true
+            containerNames:
+              - adoption-service
+            from:
+              kind: ImageStreamTag
+              name: adoption-service:latest
+          type: ImageChange
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewBuild
+      labels:
+        build: adoption-service
+      name: adoption-service
+    spec:
+      lookupPolicy:
+        local: false
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      labels:
+        app: adoption-service
+        app.kubernetes.io/component: adoption-service
+        app.kubernetes.io/instance: adoption-service
+      name: adoption-service
+    spec:
+      ports:
+        - name: 8080-tcp
+          port: 8080
+          protocol: TCP
+          targetPort: 8080
+        - name: 8443-tcp
+          port: 8443
+          protocol: TCP
+          targetPort: 8443
+        - name: 8778-tcp
+          port: 8778
+          protocol: TCP
+          targetPort: 8778
+      selector:
+        deploymentconfig: adoption-service
+      sessionAffinity: None
+      type: ClusterIP

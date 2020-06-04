@@ -1,0 +1,38 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    build: notification-service
+  name: notification-service
+spec:
+  failedBuildsHistoryLimit: 5
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: notification-service:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    contextDir: adopt-a-pup/notification-service
+    git:
+      uri: https://github.com/jonahkh/DO328-apps
+    type: Git
+  strategy:
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: java:latest
+        namespace: openshift
+    type: Source
+  successfulBuildsHistoryLimit: 5
+  triggers:
+  - github:
+      secret: 5VB4o3T3zM_FxukeaLIP
+    type: GitHub
+  - generic:
+      secret: eFgs1wnpb7uALnq76gr-
+    type: Generic
+  - type: ConfigChange
+  - type: ImageChange
