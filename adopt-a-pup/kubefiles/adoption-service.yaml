@@ -17,6 +17,7 @@ spec:
       containers:
         - name: adoption-service
           image: quay.io/psolarvi/ossm-adoption-service:1.0
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
 ---
