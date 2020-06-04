@@ -1,5 +1,6 @@
 import { ShelterService } from "./ShelterService";
 import { Shelter } from "../Models/Shelter";
+import { delay } from "./Delayer";
 
 
 export default class ShelterFakeService implements ShelterService {
@@ -18,12 +19,11 @@ export default class ShelterFakeService implements ShelterService {
 
     public async create(): Promise<string> {
         console.log("ShelterFakeService: create() was called!");
-        Promise.resolve();
-        return "fake-shelter-id";
+        return delay(() => "fake-shelter-id");
     }
 
     public async getAll(): Promise<Shelter[]> {
-        return [
+        return delay(() => [
             {
                 shelterId: "1234",
                 shelterName: "A Fake Shelter 1",
@@ -42,6 +42,6 @@ export default class ShelterFakeService implements ShelterService {
                 email: "frontdesk@minneapolismutts2.com",
                 phoneNumber: "212-444-8475"
             }
-        ];
+        ]);
     }
 }

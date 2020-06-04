@@ -11,6 +11,7 @@ import {
 } from "@patternfly/react-core";
 import { ShelterService } from "../Services/ShelterService";
 import { Shelter } from "../Models/Shelter";
+import BullseyeSpinner from "./BullseyeSpinner";
 
 
 type ShelterFormProps = {
@@ -21,6 +22,7 @@ export type ShelterFormState = {
     showInvalidFormAlert: boolean;
     showSubmitSucessAlert: boolean;
     showSubmitErrorAlert: boolean;
+    isSubmitting: boolean;
     shelter: Shelter;
 };
 
@@ -32,14 +34,8 @@ export default class ShelterCreateForm extends React.Component<ShelterFormProps,
             showInvalidFormAlert: false,
             showSubmitSucessAlert: false,
             showSubmitErrorAlert: false,
-            shelter: {
-                shelterName: "",
-                state: "",
-                country: "",
-                address: "",
-                email: "",
-                phoneNumber: ""
-            }
+            isSubmitting: false,
+            shelter: this.getEmptyFields()
         };
     }
 
@@ -105,11 +101,15 @@ export default class ShelterCreateForm extends React.Component<ShelterFormProps,
 
     private async handleFormSubmit(event: FormEvent) {
         if (this.isFormValid()) {
+            this.setState({ isSubmitting: true });
             try {
                 await this.props.shelterService.create(this.state.shelter);
                 this.showSuccessAlert();
+                this.resetFormFields();
             } catch (error) {
                 this.showErrorAlert();
+            } finally {
+                this.setState({ isSubmitting: false });
             }
         } else {
             this.setState({ showInvalidFormAlert: true });
@@ -118,7 +118,14 @@ export default class ShelterCreateForm extends React.Component<ShelterFormProps,
     }
 
     private isFormValid() {
-        return this.state.shelter.shelterName;
+        const { shelter } = this.state;
+        const fieldIsEmpty = (field: string) => shelter[field as keyof Shelter]?.trim() === "";
+
+        const hasEmptyFields = Object
+            .keys(shelter)
+            .some(fieldIsEmpty);
+
+        return !hasEmptyFields;
     }
 
     private showSuccessAlert() {
@@ -144,7 +151,36 @@ export default class ShelterCreateForm extends React.Component<ShelterFormProps,
         this.setState({ showInvalidFormAlert: false });
     }
 
+    private getEmptyFields(): Shelter {
+        return {
+            shelterName: "",
+            state: "",
+            country: "",
+            address: "",
+            email: "",
+            phoneNumber: ""
+        };
+    }
+
+    private resetFormFields() {
+        this.setState({
+            shelter: this.getEmptyFields()
+        });
+    }
+
     public render() {
+        return (
+            <React.Fragment>
+                {this.state.isSubmitting ? this.renderLoader() : this.renderForm()}
+            </React.Fragment>
+        );
+    }
+
+    public renderLoader() {
+        return <BullseyeSpinner />;
+    }
+
+    public renderForm() {
         const { shelter, showInvalidFormAlert } = this.state;
         return (
             <Form onSubmit={this.handleFormSubmit.bind(this)}>
