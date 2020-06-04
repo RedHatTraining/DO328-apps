@@ -15,7 +15,7 @@
 
 default_ingress_endpoint="http://istio-ingressgateway-istio-system.apps.ocp4.example.com/"
 
-namespace=${1:-"adopt-a-pup"}
+namespace=${1:-comprehensive-review}
 adoption_endpoint=${2:-${default_ingress_endpoint}}
 animal_endpoint=${3:-${default_ingress_endpoint}}
 shelter_endpoint=${4:-${default_ingress_endpoint}}
@@ -28,4 +28,4 @@ oc process -n ${namespace} -f ./kubefiles/frontend-template.yaml \
   -p REACT_APP_SHELTER_SERVICE_URL=${shelter_endpoint} \
   -p REACT_APP_NEWS_ENABLED=${news_enabled} \
   -p REACT_APP_NEWS_SERVICE_URL=${news_endpoint} \
-  | oc apply -n {namespace} -f -
+  | oc apply -n ${namespace} -f -
