@@ -21,7 +21,6 @@ import { RESTConnectionError } from "../Services/RESTService";
 import {ShelterService} from "../Services/ShelterService";
 import {Shelter} from "../Models/Shelter";
 import LoadingData from "./LoadingData";
-import {Simulate} from "react-dom/test-utils";
 
 type AnimalCreateViewProps = {
     animalService: AnimalService;
@@ -111,7 +110,7 @@ export default class AnimalCreateForm
 
 
     private handleNameChange(animalName: string) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
         const animal = {...this.state.animal, animalName};
@@ -121,7 +120,7 @@ export default class AnimalCreateForm
     }
 
     private handleShelterIdChange(shelterId: string) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
         const animal = {...this.state.animal, shelterId};
@@ -131,7 +130,7 @@ export default class AnimalCreateForm
     }
 
     private handleBreedChange(breed: string) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
         const animal = {...this.state.animal, breed};
@@ -141,7 +140,7 @@ export default class AnimalCreateForm
     }
 
     private handleApproximateSizeChange(approximateSize: string) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
         const animal = {...this.state.animal, approximateSize};
@@ -151,7 +150,7 @@ export default class AnimalCreateForm
     }
 
     private handleResidencyRequiredChange(residencyRequired: string) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
         const animal = {...this.state.animal, residencyRequired};
@@ -161,7 +160,7 @@ export default class AnimalCreateForm
     }
 
     private handleWeightChange(weight: string) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
         const animal = {
@@ -174,7 +173,7 @@ export default class AnimalCreateForm
     }
 
     private handleSquareFootageOfHomeChange(squareFootageOfHome: string) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
         const animal = {
@@ -187,7 +186,7 @@ export default class AnimalCreateForm
     }
 
     private handleChildSafeChange(childSafe: boolean) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
         const animal = {...this.state.animal, childSafe};
@@ -197,7 +196,7 @@ export default class AnimalCreateForm
     }
 
     private handleOtherDogSafeChange(otherDogSafe: boolean) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
         const animal = {...this.state.animal, otherDogSafe};
@@ -207,7 +206,7 @@ export default class AnimalCreateForm
     }
 
     private handleAdoptableChange(adoptable: boolean) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
         const animal = {...this.state.animal, adoptable};
@@ -447,21 +446,13 @@ export default class AnimalCreateForm
                         value={animal.approximateSize}
                         onChange={this.handleApproximateSizeChange.bind(this)}
                         aria-label="Select approximate size">
-                        <FormSelectOption
-                            key={ApproximateSize.S}
-                            value={ApproximateSize.S}
-                            label={ApproximateSize.S}
-                        />
-                        <FormSelectOption
-                            key={ApproximateSize.M}
-                            value={ApproximateSize.M}
-                            label={ApproximateSize.M}
-                        />
-                        <FormSelectOption
-                            key={ApproximateSize.L}
-                            value={ApproximateSize.L}
-                            label={ApproximateSize.L}
-                        />
+                        {Object.keys(ApproximateSize).map((approximateSize) => {
+                            return <FormSelectOption
+                                key={approximateSize}
+                                value={approximateSize}
+                                label={approximateSize}
+                            />
+                        })}
                     </FormSelect>
                 </FormGroup>
                 <FormGroup

@@ -28,9 +28,13 @@ export default class NavDefaultList extends React.Component {
                     <NavItem id="shelters" isActive={pathname.endsWith("/shelters")}>
                         <Link to="/shelters" >Our Shelters</Link>
                     </NavItem>
+                    <NavItem id="notifications" isActive={pathname.endsWith("/notifications")}>
+                        <Link to="/notifications">Notifications</Link>
+                    </NavItem>
                     {enableNews && <NavItem id="news" isActive={pathname.endsWith("/news")}>
                         <Link to="/news" >News</Link>
                     </NavItem>}
+
                     <NavGroup title="Management">
                         <NavItem
                             id="shelters"

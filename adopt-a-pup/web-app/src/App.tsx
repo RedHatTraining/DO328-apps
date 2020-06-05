@@ -27,6 +27,7 @@ import AnimalCreateView from "./Views/AnimalCreateView";
 import Config from "./Config";
 import NewsRESTService from "./Services/NewsRESTService";
 import SheltersCreateView from "./Views/SheltersCreateView";
+import NotificationsView from "./Views/NotificationsView";
 
 
 // Initialize Backend Services
@@ -103,14 +104,15 @@ export default class App extends Component {
                                 shelterService={shelterService}
                                 animalService={animalService}
 
-                            />}>
-                        </Route>
+                            />}/>
                         <Route path={"/shelters/:shelterId"} render={(props) =>
                             <ShelterDetailsView {...props}
                                 shelterService={shelterService}
                                 adoptionService={adoptionService}
-                            />} >
-                        </Route>
+                            />} />
+                        <Route path={"/notifications"} render={(props) =>
+                            <NotificationsView animalService={animalService}/>
+                        }/>
                     </Structure>
                 </Switch>
             </Router>

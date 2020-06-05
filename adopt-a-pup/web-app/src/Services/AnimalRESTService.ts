@@ -2,6 +2,7 @@ import { RESTService } from "./RESTService";
 import { Animal } from "../Models/Animal";
 import { AdoptionApplication } from "../Models/AdoptionApplication";
 import { AnimalService } from "./AnimalService";
+import {AnimalNotificationRequest} from "../Models/AnimalNotificationRequest";
 
 
 export default class AnimalRESTService extends RESTService implements AnimalService {
@@ -29,4 +30,7 @@ export default class AnimalRESTService extends RESTService implements AnimalServ
         await this.post("/animals/applyForAdoption", adoptionApplication);
     }
 
+    public async subscribeNotifications(notificationRequest: AnimalNotificationRequest) {
+        await this.post("/animals/subscribe", notificationRequest);
+    }
 }

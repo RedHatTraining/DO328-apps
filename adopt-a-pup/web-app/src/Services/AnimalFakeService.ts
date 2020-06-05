@@ -1,6 +1,7 @@
 import { AnimalService } from "./AnimalService";
 import { Animal } from "../Models/Animal";
 import { delay } from "./Delayer";
+import {AnimalNotificationRequest} from "../Models/AnimalNotificationRequest";
 
 
 export default class AnimalFakeService implements AnimalService {
@@ -65,6 +66,10 @@ export default class AnimalFakeService implements AnimalService {
                 otherDogSafe: true
             }
         ]));
+    }
+
+    public async subscribeNotifications(animalNotificationRequest: AnimalNotificationRequest): Promise<void> {
+        // Do something?
     }
 
     public async getById(): Promise<Animal> {
