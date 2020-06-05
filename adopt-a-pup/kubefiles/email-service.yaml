@@ -11,8 +11,6 @@ spec:
     metadata:
       labels:
         app: email-service
-      annotations:
-        sidecar.istio.io/inject: "true"
     spec:
       containers:
         - name: email-service
@@ -45,38 +43,15 @@ spec:
   selector:
     app: email-service
 ---
-apiVersion: networking.istio.io/v1alpha3
-kind: Gateway
+kind: Route
+apiVersion: route.openshift.io/v1
 metadata:
-  name: email-service-gw
+  name: email
+  labels:
+    app: email-service
 spec:
-  selector:
-    istio: ingressgateway
-  servers:
-    - port:
-        number: 80
-        name: http
-        protocol: HTTP
-      hosts:
-        - "*"
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: email-service-vs
-spec:
-  hosts:
-    - "*"
-  gateways:
-    - email-service-gw
-  http:
-    - match:
-        - uri:
-            prefix: /email
-      rewrite:
-        uri: /
-      route:
-        - destination:
-            host: email-service
-            port:
-              number: 8080
+  to:
+    kind: Service
+    name: email-service
+  port:
+    targetPort: 8080
