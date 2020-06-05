@@ -19,23 +19,34 @@ The project where you deploy this application should be managed by OSSM
     ```
     oc new-project comprehensive-review
     ```
-    
-    Please be sure that the project is defined as member in the SMMR.
 
-2. Deploy the MongoDB container.
+2. Add the project to the list of SMMR members.    
+    ```
+   oc edit smmr -n istio-system
+   ```
+   
+   The list of members should look like:
+   ```
+   ...
+   spec:
+     members:
+     - comprehensive-review
+   ...
+   ```
+3. Deploy the MongoDB container.
     ```
     sh scripts/deploy-mongo.sh
     ```
    
    See the script [parameters](scripts/deploy-mongo.sh) to customize the data import.
 
-3. Populate the MongoDB database.
+4. Populate the MongoDB database.
     ```
     sh scripts/populate-mongo.sh
     ```
    See the script [parameters](scripts/populate-mongo.sh) to customize the deployment.
 
-4. Deploy the backend services.
+5. Deploy the backend services.
     ```
     oc apply -f kubefiles/adoption-service.yaml
     oc apply -f kubefiles/animal-service.yaml
@@ -43,7 +54,7 @@ The project where you deploy this application should be managed by OSSM
     oc apply -f kubefiles/shelter-service.yaml
     ```
 
-5. Deploy the frontend.
+6. Deploy the frontend.
 
     ```
    sh scripts/deploy-frontend.sh
