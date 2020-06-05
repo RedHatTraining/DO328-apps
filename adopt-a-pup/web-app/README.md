@@ -18,6 +18,7 @@ To build `1.0`, run `./scripts/build_image_v1`.
 
 To build `2.0`, run `./scripts/build_image_v2`.
 
+To push the generated images to quay, run `docker push quay.io/redhattraining/ossm-adopt-a-pup-webapp`.
 
 ## Development: Available NPM Scripts
 
