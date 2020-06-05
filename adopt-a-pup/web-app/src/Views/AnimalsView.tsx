@@ -1,13 +1,14 @@
 import React from "react";
 import { AnimalService } from "../Services/AnimalService";
 import {
-    PageSection, PageSectionVariants, Text, TextContent
+    PageSection, PageSectionVariants, Text, TextContent, Button
 } from "@patternfly/react-core";
 import AdoptableAnimalList from "../Components/AdoptableAnimalList";
 import { AdoptionService } from "../Services/AdoptionService";
 import { Animal } from "../Models/Animal";
 import { RESTConnectionError } from "../Services/RESTService";
 import LoadingData from "../Components/LoadingData";
+import { Link } from "react-router-dom";
 
 
 type AnimalsViewProps = {
@@ -100,6 +101,16 @@ export default class AnimalsView extends React.Component<AnimalsViewProps, Anima
                     >
                         <AdoptableAnimalList animals={this.state.animals} />
                     </LoadingData>
+                </PageSection>
+                <PageSection variant={PageSectionVariants.light}>
+                    <TextContent>
+                        <Text component="h2">
+                            Add new animal
+                        </Text>
+                        <Link to="/manage/animals/create">
+                            <Button>Add</Button>
+                        </Link>
+                    </TextContent>
                 </PageSection>
             </React.Fragment>
         );
