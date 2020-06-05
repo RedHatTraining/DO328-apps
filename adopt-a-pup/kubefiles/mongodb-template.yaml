@@ -3,7 +3,7 @@ kind: Template
 metadata:
   name: mongodb
   annotations:
-    description: "MongoDB"
+    description: "MongoDB template"
 objects:
   - kind: Deployment
     apiVersion: apps/v1

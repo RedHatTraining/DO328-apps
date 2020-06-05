@@ -1,0 +1,108 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: frontend-template
+  annotations:
+    description: "Front end template"
+objects:
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: frontend-service
+    spec:
+      selector:
+        matchLabels:
+          app: frontend-service
+      replicas: 1
+      template:
+        metadata:
+          labels:
+            app: frontend-service
+          annotations:
+            sidecar.istio.io/inject: "true"
+        spec:
+          containers:
+            - name: frontend-service
+              image: quay.io/redhattraining/ossm-adopt-a-pup-webapp:1.0
+              imagePullPolicy: Always
+              ports:
+                - containerPort: 8080
+              env:
+                - name: REACT_APP_ADOPTION_SERVICE_URL
+                  value: ${REACT_APP_ADOPTION_SERVICE_URL}
+                - name: REACT_APP_ANIMAL_SERVICE_URL
+                  value: ${REACT_APP_ANIMAL_SERVICE_URL}
+                - name: REACT_APP_SHELTER_SERVICE_URL
+                  value: ${REACT_APP_SHELTER_SERVICE_URL}
+                - name: REACT_APP_NEWS_ENABLED
+                  value: ${REACT_APP_NEWS_ENABLED}
+                - name: REACT_APP_NEWS_SERVICE_URL
+                  value: ${REACT_APP_NEWS_SERVICE_URL}
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        app: frontend-service
+      name: frontend-service
+    spec:
+      ports:
+        - port: 3000
+          protocol: TCP
+          targetPort: 8080
+      selector:
+        app: frontend-service
+  - apiVersion: networking.istio.io/v1alpha3
+    kind: Gateway
+    metadata:
+      name: frontend-service-gw
+    spec:
+      selector:
+        istio: ingressgateway
+      servers:
+        - port:
+            number: 80
+            name: http
+            protocol: HTTP
+          hosts:
+            - "*"
+  - apiVersion: networking.istio.io/v1alpha3
+    kind: VirtualService
+    metadata:
+      name: frontend-service-vs
+    spec:
+      hosts:
+        - "*"
+      gateways:
+        - frontend-service-gw
+      http:
+        - match:
+            - uri:
+                prefix: /frontend
+          rewrite:
+            uri: /frontend
+          route:
+            - destination:
+                host: frontend-service
+                port:
+                  number: 3000
+parameters:
+  - name: REACT_APP_ADOPTION_SERVICE_URL
+    description: "Adoption service endpoint"
+    required: false
+    value: "http://istio-ingressgateway-istio-system.apps.ocp4.example.com/"
+  - name: REACT_APP_ANIMAL_SERVICE_URL
+    description: "Animal service endpoint"
+    required: false
+    value: "http://istio-ingressgateway-istio-system.apps.ocp4.example.com/"
+  - name: REACT_APP_SHELTER_SERVICE_URL
+    description: "Shelter service endpoint"
+    required: false
+    value: "http://istio-ingressgateway-istio-system.apps.ocp4.example.com/"
+  - name: REACT_APP_NEWS_ENABLED
+    description: "Flag to enable the news section"
+    required: false
+    value: "1"
+  - name: REACT_APP_NEWS_SERVICE_URL
+    description: "News endpoint"
+    required: false
+    value: "http://news-comprehensive-review-news.apps.ocp4.example.com"
