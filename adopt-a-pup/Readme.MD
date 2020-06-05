@@ -62,6 +62,7 @@ The project where you deploy this application should be managed by OSSM
     ```
     oc apply -f kubefiles/adoption-service.yaml
     oc apply -f kubefiles/animal-service.yaml
+    oc apply -f kubefiles/email-service.yaml
     oc apply -f kubefiles/notification-service.yaml 
     oc apply -f kubefiles/shelter-service.yaml
     ```

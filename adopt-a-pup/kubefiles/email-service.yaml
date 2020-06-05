@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: email-service
+spec:
+  selector:
+    matchLabels:
+      app: email-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: email-service
+      annotations:
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+        - name: email-service
+          image: maildev/maildev:latest
+          imagePullPolicy: Always
+          command: ["bin/maildev"]
+          args: ["--web", "8080", "--smtp", "1025", "--verbose"]
+          ports:
+            - containerPort: 1025
+              protocol: TCP
+            - containerPort: 8080
+              protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: email-service
+  name: email-service
+spec:
+  ports:
+    - port: 8080
+      name: web
+      protocol: TCP
+      targetPort: 8080
+    - port: 25
+      name: smtp
+      protocol: TCP
+      targetPort: 1025
+  selector:
+    app: email-service
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: email-service-gw
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: email-service-vs
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - email-service-gw
+  http:
+    - match:
+        - uri:
+            prefix: /email
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            host: email-service
+            port:
+              number: 8080
