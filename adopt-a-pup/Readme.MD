@@ -15,12 +15,23 @@ Note that this application is written for OpenShift Service Mesh.
 The project where you deploy this application should be managed by OSSM
 (i.e. be in the ServiceMeshMemberRoll resource).
 
-1. Create a project.
+1. Create a project for the news service.
+
+    ```
+    oc new-project comprehensive-review-news
+    ```
+
+2. Deploy the news service.
+    ```
+    oc apply -f kubefiles/news-service.yaml
+    ```
+
+3. Create a project for the Adopt a Pup application.
     ```
     oc new-project comprehensive-review
     ```
 
-2. Add the project to the list of SMMR members.    
+4. Add the project to the list of SMMR members.    
     ```
    oc edit smmr -n istio-system
    ```
@@ -33,20 +44,21 @@ The project where you deploy this application should be managed by OSSM
      - comprehensive-review
    ...
    ```
-3. Deploy the MongoDB container.
+
+5. Deploy the MongoDB container.
     ```
     sh scripts/deploy-mongo.sh
     ```
    
    See the script [parameters](scripts/deploy-mongo.sh) to customize the data import.
 
-4. Populate the MongoDB database.
+6. Populate the MongoDB database.
     ```
     sh scripts/populate-mongo.sh
     ```
    See the script [parameters](scripts/populate-mongo.sh) to customize the deployment.
 
-5. Deploy the backend services.
+7. Deploy the backend services.
     ```
     oc apply -f kubefiles/adoption-service.yaml
     oc apply -f kubefiles/animal-service.yaml
@@ -54,9 +66,8 @@ The project where you deploy this application should be managed by OSSM
     oc apply -f kubefiles/shelter-service.yaml
     ```
 
-6. Deploy the frontend.
-
+8. Deploy the frontend.
     ```
-   sh scripts/deploy-frontend.sh
-   ```
+    sh scripts/deploy-frontend.sh
+    ```
    See the script [parameters](scripts/deploy-frontend.sh) to customize the deployment.
