@@ -1,0 +1,28 @@
+#!/usr/bin/env sh
+
+IMAGE=quay.io/redhattraining/ossm-adopt-a-pup-webapp
+APP_VERSION=$1
+IMAGE_TAG=$2
+
+# Use podman when possible
+if [ -x "$(command -v podman)" ]
+then
+    ENGINE="sudo podman"
+    echo "Using podman..."
+else
+    ENGINE="docker"
+    echo "Using docker..."
+fi
+
+# Generate webpapp build
+echo "Building Webapp version $APP_VERSION"
+REACT_APP_VERSION=$APP_VERSION npm run build
+
+# Build image
+$ENGINE build -t $IMAGE .
+
+# Tag image
+$ENGINE tag $IMAGE $IMAGE:$IMAGE_TAG
+
+echo "Tagged image as $IMAGE:$IMAGE_TAG"
+

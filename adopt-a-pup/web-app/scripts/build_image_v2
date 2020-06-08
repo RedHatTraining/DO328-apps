@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+# Builds webapp production build for v2
+# and creates a container image
+
+IMAGE=quay.io/redhattraining/ossm-adopt-a-pup-webapp
+APP_VERSION=v2
+IMAGE_TAG=2.0
+
+WEBAPP_ROOT=$(cd $(dirname $0)/.. && pwd)
+$WEBAPP_ROOT/scripts/build_image $APP_VERSION $IMAGE_TAG
