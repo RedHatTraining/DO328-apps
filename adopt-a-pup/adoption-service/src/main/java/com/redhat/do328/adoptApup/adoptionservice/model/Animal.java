@@ -23,4 +23,5 @@ public class Animal {
     private int squareFootageOfHome;
     private boolean childSafe;
     private boolean otherDogSafe;
+    private String photoUrl;
 }
