@@ -3,6 +3,8 @@ pipeline {
         label 'master'
     }
 
+    dir("adopt-a-pup/web-app")
+
     stages {
 
         stage("Install") {
