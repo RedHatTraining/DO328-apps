@@ -45,5 +45,19 @@ pipeline {
 
         }
 
+        stage('Build & Push') {
+
+            steps {
+                dir('adopt-a-pup/web-app') {
+                    docker.withRegistry('https://quay.io/', 'rht_jenkins_quay') {
+                        sh './scripts/build_image_v1'
+                        sh './scripts/build_image_v2'
+                        sh 'docker push quay.io/redhattraining/ossm-adopt-a-pup-webapp'
+                    }
+                }
+            }
+
+        }
+
     }
 }
