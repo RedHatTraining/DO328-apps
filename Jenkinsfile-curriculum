@@ -3,8 +3,6 @@ pipeline {
         label 'master'
     }
 
-    dir("adopt-a-pup/web-app")
-
     stages {
 
         stage("Install") {
@@ -17,7 +15,9 @@ pipeline {
 
             steps {
                 echo "Branch is ${env.BRANCH_NAME}..."
-                sh 'npm ci'
+                dir("adopt-a-pup/web-app") {
+                    sh 'npm ci'
+                }
             }
         }
 
