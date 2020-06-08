@@ -48,12 +48,11 @@ pipeline {
         stage('Build & Push') {
 
             steps {
-                docker.withRegistry('https://quay.io/', 'rht_jenkins_quay') {
-                        def customImage = docker.build("my-image:${env.BUILD_ID}")
 
-                    /* Push the container to the custom Registry */
-                    // customImage.push()
+                withDockerRegistry([url: 'https://quay.io/', credentialsId: 'rht_jenkins_quay']) {
+                    sh './scripts/build_image_v2'
                 }
+
             }
 
         }
