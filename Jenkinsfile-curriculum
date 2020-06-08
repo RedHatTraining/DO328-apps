@@ -5,13 +5,14 @@ pipeline {
 
 
     environment {
-        HOME = "${WORKSPACE}"
-        NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"
+        HOME = '${WORKSPACE}'
+        NPM_CONFIG_CACHE = '${WORKSPACE}/.npm'
+        CI = 'true'
     }
 
     stages {
 
-        stage("Install") {
+        stage('Install') {
 
             agent {
                 docker {
@@ -20,10 +21,27 @@ pipeline {
             }
 
             steps {
-                dir("adopt-a-pup/web-app") {
+                dir('adopt-a-pup/web-app') {
                     sh 'npm ci'
                 }
             }
+
+        }
+
+        stage('Test') {
+
+            agent {
+                docker {
+                    image 'node:14'
+                }
+            }
+
+            steps {
+                dir('adopt-a-pup/web-app') {
+                    sh 'npm test'
+                }
+            }
+
         }
 
     }
