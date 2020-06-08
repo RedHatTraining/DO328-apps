@@ -12,21 +12,21 @@ pipeline {
 
     stages {
 
-        // stage('Install') {
+        stage('Install') {
 
-        //     agent {
-        //         docker {
-        //             image 'node:14'
-        //         }
-        //     }
+            agent {
+                docker {
+                    image 'node:14'
+                }
+            }
 
-        //     steps {
-        //         dir('adopt-a-pup/web-app') {
-        //             sh 'npm ci'
-        //         }
-        //     }
+            steps {
+                dir('adopt-a-pup/web-app') {
+                    sh 'npm ci'
+                }
+            }
 
-        // }
+        }
 
         // stage('Test') {
 
