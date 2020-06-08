@@ -56,7 +56,7 @@ pipeline {
             steps {
                 dir('adopt-a-pup/web-app') {
                     sh 'REACT_APP_VERSION=v1 npm run build'
-                    stash includes: 'build', name: 'build_v1'
+                    stash includes: './build/**', name: 'build_v1'
                 }
 
                 // withDockerRegistry([url: 'https://quay.io/', credentialsId: 'rht_jenkins_quay']) {
