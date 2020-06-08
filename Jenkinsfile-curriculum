@@ -38,6 +38,7 @@ pipeline {
 
             steps {
                 dir('adopt-a-pup/web-app') {
+                    sh 'npm run lint'
                     sh 'npm test'
                 }
             }
