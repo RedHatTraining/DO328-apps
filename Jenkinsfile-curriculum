@@ -78,12 +78,9 @@ pipeline {
 
                 withDockerRegistry([url: 'https://quay.io/', credentialsId: 'rht_jenkins_quay']) {
                     dir('adopt-a-pup/web-app') {
-
-                        sh "ls -l ./build"
                         sh "docker build -t quay.io/redhattraining/ossm-adopt-a-pup-webapp ."
                         sh "docker tag quay.io/redhattraining/ossm-adopt-a-pup-webapp quay.io/redhattraining/ossm-adopt-a-pup-webapp:v1"
-                        // sh './scripts/build_image_v2'
-                        // //sh 'docker push quay.io/redhattraining/ossm-adopt-a-pup-webapp'
+                        sh 'docker push quay.io/redhattraining/ossm-adopt-a-pup-webapp'
                     }
                 }
 
