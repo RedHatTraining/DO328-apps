@@ -50,7 +50,11 @@ pipeline {
             steps {
 
                 withDockerRegistry([url: 'https://quay.io/', credentialsId: 'rht_jenkins_quay']) {
-                    sh './scripts/build_image_v2'
+                    dir('adopt-a-pup/web-app') {
+                        sh './scripts/build_image_v1'
+                        sh './scripts/build_image_v2'
+                        sh 'docker push quay.io/redhattraining/ossm-adopt-a-pup-webapp'
+                    }
                 }
 
             }
