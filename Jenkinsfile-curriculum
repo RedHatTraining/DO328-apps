@@ -61,7 +61,7 @@ pipeline {
                 sh "touch adopt-a-pup/web-app/build/test.txt"
                 sh "ls -l adopt-a-pup/web-app/build"
 
-                stash includes: 'adopt-a-pup/web-app/build', name: 'build_v1'
+                stash includes: 'adopt-a-pup/web-app/build/*', name: 'build_v1'
 
                 // withDockerRegistry([url: 'https://quay.io/', credentialsId: 'rht_jenkins_quay']) {
                 //     dir('adopt-a-pup/web-app') {
