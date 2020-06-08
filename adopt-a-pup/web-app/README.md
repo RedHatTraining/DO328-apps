@@ -10,7 +10,17 @@ The entry point is at `src/index.tsx`.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Available Image build scripts
+
+You can generate images for `1.0` and `2.0` version of the application.
+
+To build `1.0`, run `./scripts/build_image_v1`.
+
+To build `2.0`, run `./scripts/build_image_v2`.
+
+To push the generated images to quay, run `podman push quay.io/redhattraining/ossm-adopt-a-pup-webapp`.
+
+## Development: Available NPM Scripts
 
 Before anything else, install dependencies:
 

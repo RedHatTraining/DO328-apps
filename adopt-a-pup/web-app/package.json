@@ -37,7 +37,7 @@
     "start": "react-scripts start",
     "start:prod": "node server.js",
     "build": "react-scripts build",
-    "build:container": "npm run build && docker build -t quay.io/redhattraining/ossm-adopt-a-pup-webapp:1.0 .",
+    "build:container": "npm run build && docker build -t quay.io/redhattraining/ossm-adopt-a-pup-webapp .",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext ts,tsx src --fix"
