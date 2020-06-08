@@ -54,13 +54,9 @@ pipeline {
             }
 
             steps {
-                // dir('adopt-a-pup/web-app') {
-                //     sh 'REACT_APP_VERSION=v1 npm run build'
-                // }
-
-                sh "touch adopt-a-pup/web-app/build/test.txt"
-                sh "ls -l adopt-a-pup/web-app/build"
-
+                dir('adopt-a-pup/web-app') {
+                    sh 'REACT_APP_VERSION=v1 npm run build'
+                }
                 stash includes: 'adopt-a-pup/web-app/build/*', name: 'build_v1'
 
                 // withDockerRegistry([url: 'https://quay.io/', credentialsId: 'rht_jenkins_quay']) {
@@ -78,7 +74,6 @@ pipeline {
         stage('Image build') {
 
             steps {
-
                 unstash 'build_v1'
 
                 withDockerRegistry([url: 'https://quay.io/', credentialsId: 'rht_jenkins_quay']) {
