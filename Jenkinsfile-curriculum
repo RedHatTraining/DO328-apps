@@ -79,10 +79,12 @@ pipeline {
 
             steps {
 
+                unstash 'build_v1'
+
                 withDockerRegistry([url: 'https://quay.io/', credentialsId: 'rht_jenkins_quay']) {
                     dir('adopt-a-pup/web-app') {
-                        unstash 'build_v1'
-                        sh "ls -l build"
+
+                        sh "ls -l ./build"
                         sh "docker build -t quay.io/redhattraining/ossm-adopt-a-pup-webapp ."
                         sh "docker tag -t quay.io/redhattraining/ossm-adopt-a-pup-webapp quay.io/redhattraining/ossm-adopt-a-pup-webapp:v1"
                         // sh './scripts/build_image_v2'
