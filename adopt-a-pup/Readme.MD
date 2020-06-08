@@ -31,11 +31,11 @@ The project where you deploy this application should be managed by OSSM
     oc new-project comprehensive-review
     ```
 
-4. Add the project to the list of SMMR members.    
+4. Add the project to the list of SMMR members.
     ```
    oc edit smmr -n istio-system
    ```
-   
+
    The list of members should look like:
    ```
    ...
@@ -49,7 +49,7 @@ The project where you deploy this application should be managed by OSSM
     ```
     sh scripts/deploy-mongo.sh
     ```
-   
+
    See the script [parameters](scripts/deploy-mongo.sh) to customize the data import.
 
 6. Populate the MongoDB database.
@@ -63,7 +63,7 @@ The project where you deploy this application should be managed by OSSM
     oc apply -f kubefiles/adoption-service.yaml
     oc apply -f kubefiles/animal-service.yaml
     oc apply -f kubefiles/email-service.yaml
-    oc apply -f kubefiles/notification-service.yaml 
+    oc apply -f kubefiles/notification-service.yaml
     oc apply -f kubefiles/shelter-service.yaml
     ```
 
