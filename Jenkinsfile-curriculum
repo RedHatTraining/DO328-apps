@@ -20,7 +20,6 @@ pipeline {
             }
 
             steps {
-                echo "Branch is ${env.BRANCH_NAME}..."
                 dir("adopt-a-pup/web-app") {
                     sh 'npm ci'
                 }
