@@ -55,7 +55,6 @@ pipeline {
 
             steps {
                 dir('adopt-a-pup/web-app') {
-                    sh './scripts/build_image_v1'
                     sh 'REACT_APP_VERSION=v1 npm run build'
                     stash includes: 'build', name: 'build_v1'
                 }
