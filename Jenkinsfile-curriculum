@@ -3,6 +3,12 @@ pipeline {
         label 'master'
     }
 
+
+    environment {
+        HOME = "${WORKSPACE}"
+        NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"
+    }
+
     stages {
 
         stage("Install") {
@@ -11,13 +17,6 @@ pipeline {
                 docker {
                     image 'node:14'
                 }
-            }
-
-            environment {
-                // Override HOME to WORKSPACE
-                HOME = "${WORKSPACE}"
-                // or override default cache directory (~/.npm)
-                NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"
             }
 
             steps {
