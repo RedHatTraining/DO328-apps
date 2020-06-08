@@ -47,6 +47,12 @@ pipeline {
 
         stage('Build & Push') {
 
+            agent {
+                docker {
+                    image 'node:14'
+                }
+            }
+
             steps {
 
                 withDockerRegistry([url: 'https://quay.io/', credentialsId: 'rht_jenkins_quay']) {
