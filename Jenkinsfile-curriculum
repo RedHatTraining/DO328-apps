@@ -46,13 +46,14 @@ pipeline {
         }
 
         stage('Build & Push') {
-            
+
             steps {
                 script {
                     docker.withRegistry('https://quay.io/', 'rht_jenkins_quay') {
-                        sh './scripts/build_image_v1'
-                        sh './scripts/build_image_v2'
-                        sh 'docker push quay.io/redhattraining/ossm-adopt-a-pup-webapp'
+                         def customImage = docker.build("my-image:${env.BUILD_ID}")
+
+                        /* Push the container to the custom Registry */
+                        // customImage.push()
                     }
                 }
             }
