@@ -12,21 +12,21 @@ pipeline {
 
     stages {
 
-        stage('Install') {
+        // stage('Install') {
 
-            agent {
-                docker {
-                    image 'node:14'
-                }
-            }
+        //     agent {
+        //         docker {
+        //             image 'node:14'
+        //         }
+        //     }
 
-            steps {
-                dir('adopt-a-pup/web-app') {
-                    sh 'npm ci'
-                }
-            }
+        //     steps {
+        //         dir('adopt-a-pup/web-app') {
+        //             sh 'npm ci'
+        //         }
+        //     }
 
-        }
+        // }
 
         // stage('Test') {
 
@@ -54,9 +54,13 @@ pipeline {
             }
 
             steps {
-                dir('adopt-a-pup/web-app') {
-                    sh 'REACT_APP_VERSION=v1 npm run build'
-                }
+                // dir('adopt-a-pup/web-app') {
+                //     sh 'REACT_APP_VERSION=v1 npm run build'
+                // }
+
+                sh "mkdir adopt-a-pup/web-app/build"
+                sh "touch adopt-a-pup/web-app/build/test.txt"
+                sh "ls adopt-a-pup/web-app/build"
 
                 stash includes: 'adopt-a-pup/web-app/build', name: 'build_v1'
 
