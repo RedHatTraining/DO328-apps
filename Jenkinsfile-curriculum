@@ -13,6 +13,13 @@ pipeline {
                 }
             }
 
+            environment {
+                // Override HOME to WORKSPACE
+                HOME = "${WORKSPACE}"
+                // or override default cache directory (~/.npm)
+                NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"
+            }
+
             steps {
                 echo "Branch is ${env.BRANCH_NAME}..."
                 dir("adopt-a-pup/web-app") {
