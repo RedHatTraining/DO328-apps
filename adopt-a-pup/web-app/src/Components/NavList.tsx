@@ -16,6 +16,7 @@ export default class NavDefaultList extends React.Component {
     public render() {
         const { pathname } = window.location;
         const enableNews = Environment.getEnv("REACT_APP_NEWS_ENABLED");
+        const emailAppUrl = Environment.getEnv("REACT_APP_EMAIL_APP_URL");
         return (
             <Nav theme="dark">
                 <NavList>
@@ -31,6 +32,15 @@ export default class NavDefaultList extends React.Component {
                     {enableNews && <NavItem id="news" isActive={pathname.endsWith("/news")}>
                         <Link to="/news" >News</Link>
                     </NavItem>}
+                    <NavItem id="external-email">
+                        <a
+                            href={emailAppUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Your messages
+                        </a>
+                    </NavItem>
                     <NavGroup title="Management">
                         <NavItem
                             id="shelters"

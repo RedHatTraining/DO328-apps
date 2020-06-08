@@ -12,7 +12,8 @@ ENV REACT_APP_ADOPTION_SERVICE_URL=http://istio-ingressgateway-istio-system.apps
     REACT_APP_ANIMAL_SERVICE_URL=http://istio-ingressgateway-istio-system.apps.ocp4.example.com/ \
     REACT_APP_SHELTER_SERVICE_URL=http://istio-ingressgateway-istio-system.apps.ocp4.example.com/ \
     REACT_APP_NEWS_ENABLED=1 \
-    REACT_APP_NEWS_SERVICE_URL=http://news-comprehensive-review-news.apps.ocp4.example.com
+    REACT_APP_NEWS_SERVICE_URL=http://news-comprehensive-review-news.apps.ocp4.example.com \
+    REACT_APP_EMAIL_APP_URL=http://email-comprehensive-review.apps.ocp4.example.com/
 
 EXPOSE 8080
 
