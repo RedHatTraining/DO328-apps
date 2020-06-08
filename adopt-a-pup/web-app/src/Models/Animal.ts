@@ -10,4 +10,5 @@ export interface Animal {
     squareFootageOfHome: number;
     childSafe: boolean;
     otherDogSafe: boolean;
+    photoUrl: string;
 }

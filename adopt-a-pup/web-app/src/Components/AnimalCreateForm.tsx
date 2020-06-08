@@ -302,7 +302,8 @@ export default class AnimalCreateForm
             adoptable: true,
             squareFootageOfHome: 0,
             childSafe: false,
-            otherDogSafe: false
+            otherDogSafe: false,
+            photoUrl: ""
         };
     }
 

@@ -18,7 +18,8 @@ export default class AdoptionFakeService implements AdoptionService {
                 residencyRequired: "HOUSE",
                 squareFootageOfHome: 800,
                 childSafe: true,
-                otherDogSafe: true
+                otherDogSafe: true,
+                photoUrl: "https://google.com"
             }
         ];
     }
