@@ -86,7 +86,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## Container image generation for production
 
-You can generate images for `1.0` and `2.0` version of the application.
+You can generate production images for `1.0` and `2.0` version of the application.
 
 To build `1.0`, run `./scripts/build_image_v1`.
 
