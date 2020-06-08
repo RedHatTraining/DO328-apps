@@ -57,6 +57,7 @@ pipeline {
                 dir('adopt-a-pup/web-app') {
                     sh './scripts/build_image_v1'
                     sh 'REACT_APP_VERSION=v1 npm run build'
+                    sh "ls -l build"
                 }
 
                 // withDockerRegistry([url: 'https://quay.io/', credentialsId: 'rht_jenkins_quay']) {
