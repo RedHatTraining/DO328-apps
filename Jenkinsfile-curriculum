@@ -28,24 +28,24 @@ pipeline {
 
         }
 
-        stage('Test') {
+        // stage('Test') {
 
-            agent {
-                docker {
-                    image 'node:14'
-                }
-            }
+        //     agent {
+        //         docker {
+        //             image 'node:14'
+        //         }
+        //     }
 
-            steps {
-                dir('adopt-a-pup/web-app') {
-                    sh 'npm run lint'
-                    sh 'npm test'
-                }
-            }
+        //     steps {
+        //         dir('adopt-a-pup/web-app') {
+        //             sh 'npm run lint'
+        //             sh 'npm test'
+        //         }
+        //     }
 
-        }
+        // }
 
-        stage('Build & Push') {
+        stage('NPM build') {
 
             agent {
                 docker {
@@ -56,8 +56,7 @@ pipeline {
             steps {
                 dir('adopt-a-pup/web-app') {
                     sh './scripts/build_image_v1'
-                    sh './scripts/build_image_v2'
-                    //sh 'docker push quay.io/redhattraining/ossm-adopt-a-pup-webapp'
+                    sh 'REACT_APP_VERSION=v1 npm run build'
                 }
 
                 // withDockerRegistry([url: 'https://quay.io/', credentialsId: 'rht_jenkins_quay']) {
@@ -67,6 +66,22 @@ pipeline {
                 //         //sh 'docker push quay.io/redhattraining/ossm-adopt-a-pup-webapp'
                 //     }
                 // }
+
+            }
+
+        }
+
+        stage('Image build') {
+
+            steps {
+
+                withDockerRegistry([url: 'https://quay.io/', credentialsId: 'rht_jenkins_quay']) {
+                    dir('adopt-a-pup/web-app') {
+                        echo "ls -l build"
+                        // sh './scripts/build_image_v2'
+                        // //sh 'docker push quay.io/redhattraining/ossm-adopt-a-pup-webapp'
+                    }
+                }
 
             }
 
