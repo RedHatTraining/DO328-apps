@@ -72,3 +72,17 @@ The project where you deploy this application should be managed by OSSM
     sh scripts/deploy-frontend.sh
     ```
    See the script [parameters](scripts/deploy-frontend.sh) to customize the deployment.
+
+
+## Development
+
+Use the following instructions if you need to do development in one of the application services.
+
+### Frontend web-app
+
+For specific instructions about how to run the frontend web-app in development environments, head to
+the [Frontend web-app README](web-app/README.md)
+
+### Backend services
+
+TODO...
