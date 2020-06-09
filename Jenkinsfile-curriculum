@@ -1,5 +1,5 @@
 node {
-    stage('Checkout') {
+    stage('Load Jenkinsfiles') {
         checkout scm
     }
 

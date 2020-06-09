@@ -6,7 +6,6 @@ pipeline {
         label 'master'
     }
 
-
     environment {
         HOME = '${WORKSPACE}'
         NPM_CONFIG_CACHE = '${WORKSPACE}/.npm'
