@@ -4,7 +4,6 @@ WEBAPP_DIR='adopt-a-pup/web-app'
 
 
 pipeline {
-
     agent {
         label 'master'
     }
