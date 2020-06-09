@@ -82,7 +82,7 @@ public class AdoptionService {
             adoptionApplicationResponse.setMessage("This application has been denied for the following reason(s): " + message);
             adoptionApplicationResponse.setStatus(Status.DENIED);
         } else {
-            final ResponseEntity<ResponseEntity> responseEntityResponseEntity = restTemplate.postForEntity(animalServiceHost + "/animals/" + application.getAnimalId() + "/setAdoptionStatus",
+            final ResponseEntity responseEntityResponseEntity = restTemplate.postForEntity(animalServiceHost + "/animals/" + application.getAnimalId() + "/setAdoptionStatus",
                     new AnimalStatusChangeRequest(false), ResponseEntity.class);
             if (!responseEntityResponseEntity.getStatusCode().is2xxSuccessful()) {
                 throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong with this application, please try again later");
@@ -90,7 +90,6 @@ public class AdoptionService {
             // TODO send notification to user.. do this in parallel behind the scenes
             final ResponseEntity<Shelter> shelterResponse = restTemplate.getForEntity(shelterServiceHost + "/shelters/" + animal.getShelterId() + "/getShelter", Shelter.class);
             final Shelter shelter = shelterResponse.getBody();
-            final String userEmail = application.getEmail();
             final String shelterEmail = shelter.getEmail();
             // TODO send email to shelter
             final String renderedTemplate = renderTemplate(application.getUsername(), animal.getAnimalName(), shelter.getShelterName(), shelterEmail, shelter.getPhoneNumber());
