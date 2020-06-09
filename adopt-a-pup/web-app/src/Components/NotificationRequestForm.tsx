@@ -14,7 +14,6 @@ import {AnimalNotificationRequest} from "../Models/AnimalNotificationRequest";
 import {ApproximateSize} from "../Models/ApproximateSize";
 import BullseyeSpinner from "./BullseyeSpinner";
 import {RESTConnectionError} from "../Services/RESTService";
-import {Animal} from "../Models/Animal";
 
 type NotificationRequestFormProps = {
     animalService: AnimalService;

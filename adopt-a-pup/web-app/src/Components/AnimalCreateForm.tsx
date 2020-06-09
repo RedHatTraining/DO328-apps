@@ -78,6 +78,10 @@ export default class AnimalCreateForm
         try {
             const shelters = await this.props.shelterService.getAll();
             this.setState({shelters});
+            // Set default shelter as first option. If we do not do this the form will not know which one is selected by default
+            if (shelters[0].shelterId) {
+                this.handleShelterIdChange(shelters[0].shelterId)
+            }
         } catch (error) {
             if (error instanceof RESTConnectionError) {
                 this.showConnectionError(error);
@@ -239,12 +243,14 @@ export default class AnimalCreateForm
 
     private isFormValid() {
         const {animal} = this.state;
-        const fieldIsEmpty = (field: string) => animal[field as keyof Animal] === "";
+        const fieldIsEmpty = (field: string) => {
+            const animalField = animal[field as keyof Animal] === "" ;
+            return animalField;
+        }
 
         const hasEmptyFields = Object
             .keys(animal)
             .some(fieldIsEmpty);
-
         return !hasEmptyFields;
     }
 
@@ -303,7 +309,6 @@ export default class AnimalCreateForm
             squareFootageOfHome: 0,
             childSafe: false,
             otherDogSafe: false,
-            photoUrl: ""
         };
     }
 
@@ -369,7 +374,8 @@ export default class AnimalCreateForm
                         label="Shelter"
                         isRequired
                         fieldId="animal-form-shelter-id"
-                        helperText="Please provide the shelter ID"
+
+                        helperText="Please provide the shelter"
                     >
                         <FormSelect
                             value={animal.shelterId}
@@ -382,7 +388,6 @@ export default class AnimalCreateForm
                                     label={shelter.shelterName}
                                 />
                             })}
-
                         </FormSelect>
                     </FormGroup>
                 </LoadingData>
