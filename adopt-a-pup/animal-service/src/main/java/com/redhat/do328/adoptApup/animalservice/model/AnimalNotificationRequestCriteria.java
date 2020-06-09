@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Document(collation = "notifications")
+@Document(collection = "notifications")
 public class AnimalNotificationRequestCriteria {
     private String username;
     private String email;

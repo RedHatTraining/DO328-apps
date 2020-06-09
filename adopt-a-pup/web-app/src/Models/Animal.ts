@@ -1,5 +1,6 @@
 export interface Animal {
     animalId?: string;
+    photoUrl?: string;
     animalName: string;
     shelterId: string;
     breed: string;
@@ -10,5 +11,4 @@ export interface Animal {
     squareFootageOfHome: number;
     childSafe: boolean;
     otherDogSafe: boolean;
-    photoUrl: string;
 }

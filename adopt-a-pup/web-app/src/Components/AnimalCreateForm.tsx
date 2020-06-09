@@ -1,23 +1,23 @@
-import React, { FormEvent } from "react";
-import { Animal } from "../Models/Animal";
-import { AnimalService } from "../Services/AnimalService";
+import React, {FormEvent} from "react";
+import {Animal} from "../Models/Animal";
+import {AnimalService} from "../Services/AnimalService";
 import {
-    Form,
-    FormGroup,
-    TextInput,
-    FormSelect,
-    Checkbox,
-    FormSelectOption,
     ActionGroup,
+    Alert,
+    AlertActionCloseButton,
     Button,
     ButtonType,
-    Alert,
-    AlertActionCloseButton
+    Checkbox,
+    Form,
+    FormGroup,
+    FormSelect,
+    FormSelectOption,
+    TextInput
 } from "@patternfly/react-core";
-import { Residency } from "../Models/Residency";
-import { ApproximateSize } from "../Models/ApproximateSize";
+import {Residency} from "../Models/Residency";
+import {ApproximateSize} from "../Models/ApproximateSize";
 import BullseyeSpinner from "./BullseyeSpinner";
-import { RESTConnectionError } from "../Services/RESTService";
+import {RESTConnectionError} from "../Services/RESTService";
 import {ShelterService} from "../Services/ShelterService";
 import {Shelter} from "../Models/Shelter";
 import LoadingData from "./LoadingData";
@@ -78,6 +78,10 @@ export default class AnimalCreateForm
         try {
             const shelters = await this.props.shelterService.getAll();
             this.setState({shelters});
+            // Set default shelter as first option. If we do not do this the form will not know which one is selected by default
+            if (shelters[0].shelterId) {
+                this.handleShelterIdChange(shelters[0].shelterId)
+            }
         } catch (error) {
             if (error instanceof RESTConnectionError) {
                 this.showConnectionError(error);
@@ -239,12 +243,11 @@ export default class AnimalCreateForm
 
     private isFormValid() {
         const {animal} = this.state;
-        const fieldIsEmpty = (field: string) => animal[field as keyof Animal] === "";
+        const fieldIsEmpty = (field: string) => { return animal[field as keyof Animal] === ""; }
 
         const hasEmptyFields = Object
             .keys(animal)
             .some(fieldIsEmpty);
-
         return !hasEmptyFields;
     }
 
@@ -303,7 +306,6 @@ export default class AnimalCreateForm
             squareFootageOfHome: 0,
             childSafe: false,
             otherDogSafe: false,
-            photoUrl: ""
         };
     }
 
@@ -369,7 +371,8 @@ export default class AnimalCreateForm
                         label="Shelter"
                         isRequired
                         fieldId="animal-form-shelter-id"
-                        helperText="Please provide the shelter ID"
+
+                        helperText="Please provide the shelter"
                     >
                         <FormSelect
                             value={animal.shelterId}
@@ -382,7 +385,6 @@ export default class AnimalCreateForm
                                     label={shelter.shelterName}
                                 />
                             })}
-
                         </FormSelect>
                     </FormGroup>
                 </LoadingData>
