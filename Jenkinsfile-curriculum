@@ -1,1 +1,3 @@
-load 'adopt-a-pup/web-app/Jenkinsfile'
+node {
+    load 'adopt-a-pup/web-app/Jenkinsfile'
+}
