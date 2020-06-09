@@ -1,23 +1,23 @@
-import React, { FormEvent } from "react";
-import { Animal } from "../Models/Animal";
-import { AnimalService } from "../Services/AnimalService";
+import React, {FormEvent} from "react";
+import {Animal} from "../Models/Animal";
+import {AnimalService} from "../Services/AnimalService";
 import {
-    Form,
-    FormGroup,
-    TextInput,
-    FormSelect,
-    Checkbox,
-    FormSelectOption,
     ActionGroup,
+    Alert,
+    AlertActionCloseButton,
     Button,
     ButtonType,
-    Alert,
-    AlertActionCloseButton
+    Checkbox,
+    Form,
+    FormGroup,
+    FormSelect,
+    FormSelectOption,
+    TextInput
 } from "@patternfly/react-core";
-import { Residency } from "../Models/Residency";
-import { ApproximateSize } from "../Models/ApproximateSize";
+import {Residency} from "../Models/Residency";
+import {ApproximateSize} from "../Models/ApproximateSize";
 import BullseyeSpinner from "./BullseyeSpinner";
-import { RESTConnectionError } from "../Services/RESTService";
+import {RESTConnectionError} from "../Services/RESTService";
 import {ShelterService} from "../Services/ShelterService";
 import {Shelter} from "../Models/Shelter";
 import LoadingData from "./LoadingData";
@@ -243,10 +243,7 @@ export default class AnimalCreateForm
 
     private isFormValid() {
         const {animal} = this.state;
-        const fieldIsEmpty = (field: string) => {
-            const animalField = animal[field as keyof Animal] === "" ;
-            return animalField;
-        }
+        const fieldIsEmpty = (field: string) => { return animal[field as keyof Animal] === ""; }
 
         const hasEmptyFields = Object
             .keys(animal)
