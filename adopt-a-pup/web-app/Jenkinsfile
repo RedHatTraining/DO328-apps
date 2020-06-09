@@ -74,6 +74,10 @@ pipeline {
 
         stage('Image build & push') {
 
+            when {
+                branch 'master'
+            }
+
             steps {
                 sh 'rm -rf build'
                 unstash 'build_v1'

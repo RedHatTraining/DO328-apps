@@ -3,5 +3,6 @@ node {
         checkout scm
     }
 
+    // TODO: Determine Jenkinsfile to run based on git diff
     load 'adopt-a-pup/web-app/Jenkinsfile'
 }
