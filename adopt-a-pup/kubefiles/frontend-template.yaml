@@ -38,6 +38,8 @@ objects:
                   value: ${REACT_APP_NEWS_ENABLED}
                 - name: REACT_APP_NEWS_SERVICE_URL
                   value: ${REACT_APP_NEWS_SERVICE_URL}
+                - name: REACT_APP_EMAIL_APP_URL
+                  value: ${REACT_APP_EMAIL_APP_URL}
   - apiVersion: v1
     kind: Service
     metadata:
@@ -106,3 +108,7 @@ parameters:
     description: "News endpoint"
     required: false
     value: "http://news-comprehensive-review-news.apps.ocp4.example.com"
+  - name: REACT_APP_EMAIL_APP_URL
+    description: "Email dashboard URL"
+    required: false
+    value: "http://email-comprehensive-review.apps.ocp4.example.com/"
