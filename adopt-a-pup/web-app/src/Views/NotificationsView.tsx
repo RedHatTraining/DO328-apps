@@ -1,16 +1,13 @@
 import React from "react";
-import ShelterList from "../Components/SheltersList";
-import { ShelterService } from "../Services/ShelterService";
-import { PageSection, PageSectionVariants, Text, TextContent } from "@patternfly/react-core";
+import {PageSection, PageSectionVariants, Text, TextContent} from "@patternfly/react-core";
+import NotificationRequestForm from "../Components/NotificationRequestForm";
+import {AnimalService} from "../Services/AnimalService";
 
-
-type SheltersViewProps = {
-    shelterService: ShelterService;
+type NotificationsViewProps = {
+    animalService: AnimalService;
 }
 
-
-export default class SheltersView extends React.Component<SheltersViewProps> {
-
+export default class NotificationsView extends React.Component<NotificationsViewProps> {
     public render() {
         return (
             <React.Fragment>
@@ -21,10 +18,9 @@ export default class SheltersView extends React.Component<SheltersViewProps> {
                     </TextContent>
                 </PageSection>
                 <PageSection>
-                    <ShelterList shelterService={this.props.shelterService}/>
+                    <NotificationRequestForm animalService={this.props.animalService}/>
                 </PageSection>
             </React.Fragment>
-        );
+        )
     }
-
 }

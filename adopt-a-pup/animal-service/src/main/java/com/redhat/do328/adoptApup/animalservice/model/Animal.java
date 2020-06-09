@@ -1,6 +1,5 @@
 package com.redhat.do328.adoptApup.animalservice.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,4 +25,5 @@ public class Animal {
     private int squareFootageOfHome;
     private boolean childSafe;
     private boolean otherDogSafe;
+    private String photoUrl;
 }

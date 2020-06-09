@@ -18,9 +18,13 @@ import { Residency } from "../Models/Residency";
 import { ApproximateSize } from "../Models/ApproximateSize";
 import BullseyeSpinner from "./BullseyeSpinner";
 import { RESTConnectionError } from "../Services/RESTService";
+import {ShelterService} from "../Services/ShelterService";
+import {Shelter} from "../Models/Shelter";
+import LoadingData from "./LoadingData";
 
 type AnimalCreateViewProps = {
     animalService: AnimalService;
+    shelterService: ShelterService;
 }
 
 type AnimalCreateFormState = {
@@ -33,6 +37,13 @@ type AnimalCreateFormState = {
     }
     isSubmitting: boolean;
     animal: Animal
+    shelters: Shelter[],
+    loading: boolean,
+    error: {
+        isActive: boolean,
+        header: string,
+        message: string
+    }
 }
 
 export default class AnimalCreateForm
@@ -49,62 +60,107 @@ export default class AnimalCreateForm
                 description: ""
             },
             isSubmitting: false,
-            animal: this.getEmptyFields()
+            loading: false,
+            animal: this.getEmptyFields(),
+            shelters: [],
+            error: {
+                isActive: false,
+                header: "",
+                message: ""
+            }
         };
     }
 
+    // TODO refactor into common class
+    public async componentDidMount() {
+        this.setState({loading: true});
+
+        try {
+            const shelters = await this.props.shelterService.getAll();
+            this.setState({shelters});
+        } catch (error) {
+            if (error instanceof RESTConnectionError) {
+                this.showConnectionError(error);
+            }
+        } finally {
+            this.setState({loading: false});
+        }
+    }
+
+
+    private showConnectionError(error: RESTConnectionError) {
+        this.setState({
+            error: {
+                isActive: true,
+                header: error.message,
+                message: error.description,
+            }
+        });
+    }
+
+    private closeErrorAlert = () => {
+        this.setState({
+            error: {
+                isActive: false,
+                message: "",
+                header: ""
+            }
+        });
+    }
+
+
     private handleNameChange(animalName: string) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
-        const animal = { ...this.state.animal, animalName };
+        const animal = {...this.state.animal, animalName};
         this.setState({
             animal
         });
     }
 
     private handleShelterIdChange(shelterId: string) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
-        const animal = { ...this.state.animal, shelterId };
+        const animal = {...this.state.animal, shelterId};
         this.setState({
             animal
         });
     }
 
     private handleBreedChange(breed: string) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
-        const animal = { ...this.state.animal, breed };
+        const animal = {...this.state.animal, breed};
         this.setState({
             animal
         });
     }
 
     private handleApproximateSizeChange(approximateSize: string) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
-        const animal = { ...this.state.animal, approximateSize };
+        const animal = {...this.state.animal, approximateSize};
         this.setState({
             animal
         });
     }
 
     private handleResidencyRequiredChange(residencyRequired: string) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
-        const animal = { ...this.state.animal, residencyRequired };
+        const animal = {...this.state.animal, residencyRequired};
         this.setState({
             animal
         });
     }
 
     private handleWeightChange(weight: string) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
         const animal = {
@@ -117,7 +173,7 @@ export default class AnimalCreateForm
     }
 
     private handleSquareFootageOfHomeChange(squareFootageOfHome: string) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
         const animal = {
@@ -130,30 +186,30 @@ export default class AnimalCreateForm
     }
 
     private handleChildSafeChange(childSafe: boolean) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
-        const animal = { ...this.state.animal, childSafe };
+        const animal = {...this.state.animal, childSafe};
         this.setState({
             animal
         });
     }
 
     private handleOtherDogSafeChange(otherDogSafe: boolean) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
-        const animal = { ...this.state.animal, otherDogSafe };
+        const animal = {...this.state.animal, otherDogSafe};
         this.setState({
             animal
         });
     }
 
     private handleAdoptableChange(adoptable: boolean) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
-        const animal = { ...this.state.animal, adoptable };
+        const animal = {...this.state.animal, adoptable};
         this.setState({
             animal
         });
@@ -161,7 +217,7 @@ export default class AnimalCreateForm
 
     private async handleFormSubmit(event: FormEvent) {
         if (this.isFormValid()) {
-            this.setState({ isSubmitting: true });
+            this.setState({isSubmitting: true});
             try {
                 await this.props.animalService.create(this.state.animal);
                 // const animalId = await this.props.animalService.create(this.state.animal);
@@ -173,16 +229,16 @@ export default class AnimalCreateForm
             } catch (error) {
                 this.showErrorAlert(error);
             } finally {
-                this.setState({ isSubmitting: false });
+                this.setState({isSubmitting: false});
             }
         } else {
-            this.setState({ showInvalidFormAlert: true });
+            this.setState({showInvalidFormAlert: true});
         }
         event.preventDefault();
     }
 
     private isFormValid() {
-        const { animal } = this.state;
+        const {animal} = this.state;
         const fieldIsEmpty = (field: string) => animal[field as keyof Animal] === "";
 
         const hasEmptyFields = Object
@@ -232,7 +288,7 @@ export default class AnimalCreateForm
     }
 
     private handleCloseInvalidFormAlert() {
-        this.setState({ showInvalidFormAlert: false });
+        this.setState({showInvalidFormAlert: false});
     }
 
     private getEmptyFields(): Animal {
@@ -246,7 +302,8 @@ export default class AnimalCreateForm
             adoptable: true,
             squareFootageOfHome: 0,
             childSafe: false,
-            otherDogSafe: false
+            otherDogSafe: false,
+            photoUrl: ""
         };
     }
 
@@ -265,26 +322,27 @@ export default class AnimalCreateForm
     }
 
     public renderLoader() {
-        return <BullseyeSpinner />;
+        return <BullseyeSpinner/>;
     }
 
     public renderForm() {
-        const { animal, showInvalidFormAlert } = this.state;
+        let state = this.state;
+        const {animal, showInvalidFormAlert} = state;
         return (
             <Form onSubmit={this.handleFormSubmit.bind(this)}>
                 {this.renderCreationSuccessAlert()}
                 {this.renderCreationErrorAlert()}
                 {showInvalidFormAlert &&
-                    <Alert
-                        id="myalert"
-                        className="popup"
-                        variant="danger"
-                        title="Invalid form"
-                        action={<AlertActionCloseButton
-                            onClose={this.handleCloseInvalidFormAlert.bind(this)}
-                        />}>
-                        Please complete required fields
-                    </Alert>}
+                <Alert
+                    id="myalert"
+                    className="popup"
+                    variant="danger"
+                    title="Invalid form"
+                    action={<AlertActionCloseButton
+                        onClose={this.handleCloseInvalidFormAlert.bind(this)}
+                    />}>
+                    Please complete required fields
+                </Alert>}
                 <FormGroup
                     label="Name"
                     isRequired
@@ -301,22 +359,33 @@ export default class AnimalCreateForm
                         onChange={this.handleNameChange.bind(this)}
                     />
                 </FormGroup>
-                <FormGroup
-                    label="Shelter ID"
-                    isRequired
-                    fieldId="animal-form-shelter-id"
-                    helperText="Please provide the shelter ID"
-                >
-                    <TextInput
+                <LoadingData
+                    showLoader={state.loading}
+                    showError={state.error.isActive}
+                    errorTitle={state.error.header}
+                    errorDescription={state.error.message}
+                    onErrorClosed={this.closeErrorAlert}>
+                    <FormGroup
+                        label="Shelter"
                         isRequired
-                        type="text"
-                        id="animal-form-shelter-id"
-                        name="animal-form-shelter-id"
-                        aria-describedby="animal-form-shelter-id-helper"
-                        value={animal.shelterId}
-                        onChange={this.handleShelterIdChange.bind(this)}
-                    />
-                </FormGroup>
+                        fieldId="animal-form-shelter-id"
+                        helperText="Please provide the shelter ID"
+                    >
+                        <FormSelect
+                            value={animal.shelterId}
+                            onChange={this.handleShelterIdChange.bind(this)}
+                            aria-label="Select Shelter">
+                            {state.shelters.map(shelter => {
+                                return <FormSelectOption
+                                    key={shelter.shelterId}
+                                    value={shelter.shelterId}
+                                    label={shelter.shelterName}
+                                />
+                            })}
+
+                        </FormSelect>
+                    </FormGroup>
+                </LoadingData>
                 <FormGroup
                     label="Breed"
                     isRequired
@@ -345,7 +414,7 @@ export default class AnimalCreateForm
                         name="animal-form-adoptable"
                         aria-label="Adoptable?"
                         isChecked={animal.adoptable}
-                        onChange={this.handleAdoptableChange.bind(this)} />
+                        onChange={this.handleAdoptableChange.bind(this)}/>
                 </FormGroup>
                 <FormGroup
                     label="Residency"
@@ -378,21 +447,13 @@ export default class AnimalCreateForm
                         value={animal.approximateSize}
                         onChange={this.handleApproximateSizeChange.bind(this)}
                         aria-label="Select approximate size">
-                        <FormSelectOption
-                            key={ApproximateSize.S}
-                            value={ApproximateSize.S}
-                            label={ApproximateSize.S}
-                        />
-                        <FormSelectOption
-                            key={ApproximateSize.M}
-                            value={ApproximateSize.M}
-                            label={ApproximateSize.M}
-                        />
-                        <FormSelectOption
-                            key={ApproximateSize.L}
-                            value={ApproximateSize.L}
-                            label={ApproximateSize.L}
-                        />
+                        {Object.keys(ApproximateSize).map((approximateSize) => {
+                            return <FormSelectOption
+                                key={approximateSize}
+                                value={approximateSize}
+                                label={approximateSize}
+                            />
+                        })}
                     </FormSelect>
                 </FormGroup>
                 <FormGroup
@@ -430,7 +491,7 @@ export default class AnimalCreateForm
                         name="animal-form-kid-safe"
                         aria-label="Safe with Kids?"
                         isChecked={animal.childSafe}
-                        onChange={this.handleChildSafeChange.bind(this)} />
+                        onChange={this.handleChildSafeChange.bind(this)}/>
                 </FormGroup>
                 <FormGroup
                     label="Safe with other animals"
@@ -444,7 +505,7 @@ export default class AnimalCreateForm
                         name="animal-form-animal-safe"
                         aria-label="Safe with other Animals?"
                         isChecked={animal.otherDogSafe}
-                        onChange={this.handleOtherDogSafeChange.bind(this)} />
+                        onChange={this.handleOtherDogSafeChange.bind(this)}/>
                 </FormGroup>
                 <ActionGroup>
                     <Button variant="primary" type={ButtonType.submit}>Create Animal</Button>

@@ -4,10 +4,12 @@ import {
     PageSection, PageSectionVariants, Text, TextContent, Card, CardBody
 } from "@patternfly/react-core";
 import AnimalCreateForm from "../Components/AnimalCreateForm";
+import {ShelterService} from "../Services/ShelterService";
 
 
 type AnimalCreateViewProps = {
     animalService: AnimalService;
+    shelterService: ShelterService;
 }
 
 
@@ -25,7 +27,7 @@ export default class AnimalCreateView extends React.Component<AnimalCreateViewPr
                 <PageSection>
                     <Card>
                         <CardBody>
-                            <AnimalCreateForm animalService={this.props.animalService} />
+                            <AnimalCreateForm animalService={this.props.animalService} shelterService={this.props.shelterService} />
                         </CardBody>
                     </Card>
                 </PageSection>

@@ -103,7 +103,7 @@ public class AnimalService {
             final Email email = new Email(renderedTemplate, NOTIFICATION_REQUEST_SUBJECT);
             notificationRequest.put(criteria.getEmail(), email);
         });
-        final ResponseEntity<ResponseEntity> response = restTemplate.postForEntity(notificationServiceUrl + "/notifications/sendEmails", new EmailNotificationRequest(notificationRequest), ResponseEntity.class);
+        final ResponseEntity response = restTemplate.postForEntity(notificationServiceUrl + "/notifications/sendEmails", new EmailNotificationRequest(notificationRequest), ResponseEntity.class);
         if (HttpStatus.OK.equals(response.getStatusCode())) {
             animalNotificationSubscriptionRepository.delete(criteria);
         } else {

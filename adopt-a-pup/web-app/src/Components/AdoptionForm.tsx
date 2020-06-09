@@ -31,7 +31,7 @@ type AdoptionFormState = {
     kidsUnder16: boolean,
     occupation: string,
     ownOtherAnimals: boolean,
-    showAdoptSucessAlert: boolean,
+    showAdoptSuccessAlert: boolean,
     showAdoptErrorAlert: boolean,
     showInvalidFormAlert: boolean,
     adoptionError: {
@@ -54,7 +54,7 @@ export default class AdoptionForm extends React.Component<AdoptionFormProps, Ado
             kidsUnder16: false,
             ownOtherAnimals: false,
             showAdoptErrorAlert: false,
-            showAdoptSucessAlert: false,
+            showAdoptSuccessAlert: false,
             showInvalidFormAlert: false,
             adoptionError: {
                 title: "",
@@ -126,7 +126,7 @@ export default class AdoptionForm extends React.Component<AdoptionFormProps, Ado
     }
 
     private showSuccessAlert() {
-        this.setState({ showAdoptSucessAlert: true });
+        this.setState({ showAdoptSuccessAlert: true });
         this.hideAlertsAfter(3000);
     }
 
@@ -141,7 +141,7 @@ export default class AdoptionForm extends React.Component<AdoptionFormProps, Ado
         this.setState({
             showAdoptErrorAlert: true,
             adoptionError,
-            showAdoptSucessAlert: false,
+            showAdoptSuccessAlert: false,
             showInvalidFormAlert: false
         });
         this.hideAlertsAfter(3000);
@@ -151,7 +151,7 @@ export default class AdoptionForm extends React.Component<AdoptionFormProps, Ado
         setTimeout(() => {
             this.setState({
                 showAdoptErrorAlert: false,
-                showAdoptSucessAlert: false,
+                showAdoptSuccessAlert: false,
             });
         }, millis);
     }
@@ -312,7 +312,7 @@ export default class AdoptionForm extends React.Component<AdoptionFormProps, Ado
     }
 
     private renderAdoptSuccessAlert(): React.ReactNode | null {
-        if (this.state.showAdoptSucessAlert) {
+        if (this.state.showAdoptSuccessAlert) {
             return <Alert
                 variant="success"
                 className="popup"

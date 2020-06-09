@@ -31,7 +31,7 @@ export default class AdoptableAnimalList extends React.Component<AnimalListProps
 
 
     private renderAnimalCard(animal: Animal) {
-        const pictureSrc = `/frontend/photos/${animal.animalId}.jpeg`;
+        // const pictureSrc = `/frontend/photos/${animal.animalId}.jpeg`;
 
         return (
             <GalleryItem key={animal.animalId}>
@@ -40,7 +40,7 @@ export default class AdoptableAnimalList extends React.Component<AnimalListProps
                         {animal.animalName}
                     </CardHeader>
                     <CardBody>
-                        <img src={pictureSrc} alt={animal.animalName}></img>
+                        <img src={animal.photoUrl} alt={animal.animalName}/>
                         <CardActions>
                             <Link to={`/animals/details/${animal.animalId}`}>
                                 <Button>
@@ -52,7 +52,5 @@ export default class AdoptableAnimalList extends React.Component<AnimalListProps
                 </Card>
             </GalleryItem>
         );
-
     }
-
 }

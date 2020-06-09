@@ -107,7 +107,8 @@ export default class AnimalDetailsView
                     <Grid>
                         <GridItem span={4}>
                             <img
-                                src={`/frontend/photos/${animal.animalId}.jpeg`}
+                                // src={`/frontend/photos/${animal.animalId}.jpeg`}
+                                src={animal.photoUrl}
                                 alt={animal.animalName}
                             />
                         </GridItem>

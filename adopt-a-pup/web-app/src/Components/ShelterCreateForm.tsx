@@ -48,7 +48,7 @@ export default class ShelterCreateForm extends React.Component<ShelterFormProps,
     }
 
     private handleNameChange(shelterName: string) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
         const shelter = { ...this.state.shelter, shelterName };
@@ -58,7 +58,7 @@ export default class ShelterCreateForm extends React.Component<ShelterFormProps,
     }
 
     private handleStateChange(state: string) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
         const shelter = { ...this.state.shelter, state };
@@ -68,7 +68,7 @@ export default class ShelterCreateForm extends React.Component<ShelterFormProps,
     }
 
     private handleCountryChange(country: string) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
         const shelter = { ...this.state.shelter, country };
@@ -78,7 +78,7 @@ export default class ShelterCreateForm extends React.Component<ShelterFormProps,
     }
 
     private handleAddressChange(address: string) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
         const shelter = { ...this.state.shelter, address };
@@ -88,7 +88,7 @@ export default class ShelterCreateForm extends React.Component<ShelterFormProps,
     }
 
     private handleEmailChange(email: string) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
         const shelter = { ...this.state.shelter, email };
@@ -98,7 +98,7 @@ export default class ShelterCreateForm extends React.Component<ShelterFormProps,
     }
 
     private handlePhoneNumberChange(phoneNumber: string) {
-        // Inmutability: instead of modifying the state,
+        // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
         const shelter = { ...this.state.shelter, phoneNumber };
