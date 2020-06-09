@@ -16,9 +16,7 @@ pipeline {
     }
 
     stages {
-
         stage('Install') {
-
             agent {
                 docker {
                     image 'node:14'
@@ -30,11 +28,9 @@ pipeline {
                     sh 'npm ci'
                 }
             }
-
         }
 
         stage('Test') {
-
             agent {
                 docker {
                     image 'node:14'
@@ -47,11 +43,9 @@ pipeline {
                     sh 'npm test'
                 }
             }
-
         }
 
         stage('NPM build') {
-
             agent {
                 docker {
                     image 'node:14'
@@ -69,11 +63,9 @@ pipeline {
                 }
                 stash includes: 'adopt-a-pup/web-app/build/**/*', name: 'build_v2'
             }
-
         }
 
         stage('Image build & push') {
-
             when {
                 branch 'master'
             }
@@ -96,11 +88,8 @@ pipeline {
                 withDockerRegistry([url: 'https://quay.io/', credentialsId: 'rht_jenkins_quay']) {
                     sh "docker push ${CONTAINER_IMAGE}"
                 }
-
             }
-
         }
-
     }
 
     post {
