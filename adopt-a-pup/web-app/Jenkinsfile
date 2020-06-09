@@ -27,7 +27,8 @@ pipeline {
             }
 
             steps {
-                sh "pwd"
+                sh "echo ${WORKSPACE}"
+                sh "echo ${workspace}"
                 sh "ls -l"
                 sh 'npm ci'
             }
