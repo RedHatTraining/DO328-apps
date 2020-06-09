@@ -5,7 +5,7 @@ pipeline {
     agent {
         node {
             label 'master'
-            customWorkspace 'adopt-a-pup/web-app'
+            customWorkspace "${workspace}/adopt-a-pup/web-app"
         }
     }
 
@@ -22,7 +22,6 @@ pipeline {
             agent {
                 docker {
                     image 'node:14'
-                    customWorkspace "${workspace}/adopt-a-pup/web-app"
                 }
             }
 
