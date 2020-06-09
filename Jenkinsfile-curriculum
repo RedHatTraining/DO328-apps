@@ -57,7 +57,7 @@ pipeline {
                 dir('adopt-a-pup/web-app') {
                     sh 'REACT_APP_VERSION=v1 npm run build'
                 }
-                stash includes: 'adopt-a-pup/web-app/build', name: 'build_v1'
+                stash includes: 'adopt-a-pup/web-app/build/**/*', name: 'build_v1'
 
                 // dir('adopt-a-pup/web-app') {
                 //     sh 'REACT_APP_VERSION=v2 npm run build'
