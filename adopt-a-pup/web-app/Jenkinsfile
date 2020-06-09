@@ -3,7 +3,6 @@ CONTAINER_IMAGE='quay.io/redhattraining/ossm-adopt-a-pup-webapp'
 
 pipeline {
     agent {
-        label 'master'
         node {
             label 'master'
             customWorkspace 'adopt-a-pup/web-app'
