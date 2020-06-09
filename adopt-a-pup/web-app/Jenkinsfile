@@ -102,4 +102,27 @@ pipeline {
         }
 
     }
+
+    post {
+        fixed {
+            googlechatnotification(
+                url: "${gchat_webhook}",
+                message: ":-) Branch ${env.BRANCH_NAME} build fixed! ${env.BUILD_URL}",
+                notifyAborted: 'true', notifyFailure: 'true', notifyNotBuilt: 'true',
+                notifySuccess: 'true', notifyUnstable: 'true', notifyBackToNormal: 'true',
+                suppressInfoLoggers: 'true', sameThreadNotification: 'true')
+        }
+
+        failure {
+            googlechatnotification(
+                url: "${gchat_webhook}",
+                message: ":-( Build failed in branch ${env.BRANCH_NAME}, see output here: ${env.BUILD_URL}console",
+                notifyAborted: 'true', notifyFailure: 'true', notifyNotBuilt: 'true', notifySuccess: 'true',
+                notifyUnstable: 'true', notifyBackToNormal: 'true', suppressInfoLoggers: 'true',
+                sameThreadNotification: 'true')
+        }
+        always {
+            sh "rm ${env.WORKSPACE}/adopt-a-pup/web-app/build -fr"
+        }
+    }
 }
