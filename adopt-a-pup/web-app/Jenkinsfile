@@ -6,6 +6,7 @@ pipeline {
     agent {
         node {
             label 'master'
+            customWorkspace "${workspace}/adopt-a-pup/web-app"
         }
     }
 
