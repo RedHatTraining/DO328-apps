@@ -59,10 +59,10 @@ pipeline {
                 }
                 stash includes: 'adopt-a-pup/web-app/build/**/*', name: 'build_v1'
 
-                // dir('adopt-a-pup/web-app') {
-                //     sh 'REACT_APP_VERSION=v2 npm run build'
-                // }
-                // stash includes: 'adopt-a-pup/web-app/build/*', name: 'build_v2'
+                dir('adopt-a-pup/web-app') {
+                    sh 'REACT_APP_VERSION=v2 npm run build'
+                }
+                stash includes: 'adopt-a-pup/web-app/build/**/*', name: 'build_v2'
             }
 
         }
@@ -72,6 +72,10 @@ pipeline {
             steps {
                 unstash 'build_v1'
 
+                sh "docker rmi quay.io/redhattraining/ossm-adopt-a-pup-webapp:v1"
+                sh "docker rmi quay.io/redhattraining/ossm-adopt-a-pup-webapp:1.0"
+                sh "docker rmi quay.io/redhattraining/ossm-adopt-a-pup-webapp:2.0"
+
                 withDockerRegistry([url: 'https://quay.io/', credentialsId: 'rht_jenkins_quay']) {
                     dir('adopt-a-pup/web-app') {
                         sh "docker build -t quay.io/redhattraining/ossm-adopt-a-pup-webapp:1.0 ."
@@ -79,15 +83,16 @@ pipeline {
                     }
                 }
 
-                // unstash 'build_v2'
+                sh "rm -rf build"
 
-                // withDockerRegistry([url: 'https://quay.io/', credentialsId: 'rht_jenkins_quay']) {
-                //     dir('adopt-a-pup/web-app') {
-                //         sh "docker build -t quay.io/redhattraining/ossm-adopt-a-pup-webapp ."
-                //         sh "docker tag quay.io/redhattraining/ossm-adopt-a-pup-webapp quay.io/redhattraining/ossm-adopt-a-pup-webapp:2.0"
-                //         sh 'docker push quay.io/redhattraining/ossm-adopt-a-pup-webapp'
-                //     }
-                // }
+                unstash 'build_v2'
+
+                withDockerRegistry([url: 'https://quay.io/', credentialsId: 'rht_jenkins_quay']) {
+                    dir('adopt-a-pup/web-app') {
+                        sh "docker build -t quay.io/redhattraining/ossm-adopt-a-pup-webapp:2.0 ."
+                        sh 'docker push quay.io/redhattraining/ossm-adopt-a-pup-webapp:2.0'
+                    }
+                }
 
             }
 
