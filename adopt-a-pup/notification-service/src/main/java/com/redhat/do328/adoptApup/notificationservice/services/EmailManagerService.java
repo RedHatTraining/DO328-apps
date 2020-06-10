@@ -5,7 +5,6 @@ import com.redhat.do328.adoptApup.notificationservice.models.EmailNotificationRe
 import com.redhat.do328.adoptApup.notificationservice.models.NotificationStatusResponse;
 import com.redhat.do328.adoptApup.notificationservice.models.Status;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -15,15 +14,12 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class EmailManagerService {
 
-    @Value("${spring.mail.host}")
-    private String smptHost;
-
     @Autowired
     private JavaMailSender emailSender;
 
     public NotificationStatusResponse sendEmails(EmailNotificationRequest emailNotificationRequest) {
         try {
-            emailNotificationRequest.getMessagesByEmail().keySet().stream().forEach(email -> {
+            emailNotificationRequest.getMessagesByEmail().keySet().forEach(email -> {
                 final Email emailDetails = emailNotificationRequest.getMessagesByEmail().get(email);
                 final SimpleMailMessage message = new SimpleMailMessage();
                 message.setTo(email);

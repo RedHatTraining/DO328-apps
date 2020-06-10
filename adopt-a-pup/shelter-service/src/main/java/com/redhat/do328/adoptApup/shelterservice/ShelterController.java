@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/shelters")
-//@CrossOrigin(origins = "*", exposedHeaders = "Access-Control-Allow-Origin")
 public class ShelterController {
 
     @Autowired

@@ -1,7 +1,15 @@
 package com.redhat.do328.adoptApup.adoptionservice.service;
 
 import com.google.common.base.Joiner;
-import com.redhat.do328.adoptApup.adoptionservice.model.*;
+import com.redhat.do328.adoptApup.adoptionservice.model.AdoptionApplication;
+import com.redhat.do328.adoptApup.adoptionservice.model.AdoptionApplicationResponse;
+import com.redhat.do328.adoptApup.adoptionservice.model.Animal;
+import com.redhat.do328.adoptApup.adoptionservice.model.AnimalStatusChangeRequest;
+import com.redhat.do328.adoptApup.adoptionservice.model.Email;
+import com.redhat.do328.adoptApup.adoptionservice.model.EmailNotificationRequest;
+import com.redhat.do328.adoptApup.adoptionservice.model.Residency;
+import com.redhat.do328.adoptApup.adoptionservice.model.Shelter;
+import com.redhat.do328.adoptApup.adoptionservice.model.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -13,7 +21,11 @@ import org.springframework.web.server.ResponseStatusException;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STRawGroupDir;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -89,6 +101,9 @@ public class AdoptionService {
             }
             // TODO send notification to user.. do this in parallel behind the scenes
             final ResponseEntity<Shelter> shelterResponse = restTemplate.getForEntity(shelterServiceHost + "/shelters/" + animal.getShelterId() + "/getShelter", Shelter.class);
+            if (!shelterResponse.getStatusCode().is2xxSuccessful() || null == shelterResponse.getBody()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Shelter not found");
+            }
             final Shelter shelter = shelterResponse.getBody();
             final String shelterEmail = shelter.getEmail();
             // TODO send email to shelter
