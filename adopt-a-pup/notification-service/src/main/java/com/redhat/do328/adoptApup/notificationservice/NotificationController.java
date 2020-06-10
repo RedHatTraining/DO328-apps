@@ -17,7 +17,7 @@ public class NotificationController {
     private EmailManagerService emailManagerService;
 
     @RequestMapping(method = RequestMethod.POST, value = "/sendEmails")
-    public NotificationStatusResponse registerAnimalNotification(@RequestBody EmailNotificationRequest emailNotificationRequest) {
-        return emailManagerService.sendEmails(emailNotificationRequest);
+    public void registerAnimalNotification(@RequestBody EmailNotificationRequest emailNotificationRequest) {
+        emailManagerService.sendEmails(emailNotificationRequest);
     }
 }
