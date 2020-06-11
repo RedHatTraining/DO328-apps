@@ -8,7 +8,7 @@ pipeline {
 
         stage('adopt-a-pup/web-app') {
             // when { changeset 'adopt-a-pup/web-app/**/*' }
-            steps { load 'adopt-a-pup/web-app/Jenkinsfile' }
+            steps { build 'adopt-a-pup/web-app' }
         }
 
     }
