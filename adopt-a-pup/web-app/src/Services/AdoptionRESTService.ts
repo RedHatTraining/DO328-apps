@@ -45,7 +45,7 @@ export default class AdoptionRESTService extends RESTService implements Adoption
 
 export class AdoptionDeniedError extends Error {
 
-    constructor( message: string) {
+    constructor(message: string) {
         super();
         this.name = "Adoption Denied";
         this.message = message;
