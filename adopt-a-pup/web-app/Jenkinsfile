@@ -69,7 +69,9 @@ pipeline {
             // }
 
             steps {
-                input 'Build and deploy image to quay?'
+                timeout(time: 1, unit: “MINUTES”) {
+                    input 'Build and deploy image to quay?'
+                }
             }
         }
 
