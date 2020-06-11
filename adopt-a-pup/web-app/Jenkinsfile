@@ -64,28 +64,30 @@ pipeline {
         }
 
         stage('adopt-a-pup web-app: DEPLOY?') {
-            when {
-                branch 'master'
-            }
+            // when {
+            //     branch 'master'
+            // }
 
             steps {
+                sh "echo 'BEFORE'"
                 script {
                     env.DEPLOY = true
                     try {
-                        timeout(time: 5, unit: 'MINUTES') {
+                        timeout(time: 1, unit: 'MINUTES') {
                             input "Build and push image to quay?"
                         }
                     } catch (err) {
                         env.DEPLOY = false
                     }
                 }
+                sh "echo 'AFTER'"
             }
         }
 
         stage('adopt-a-pup web-app: Build and push image') {
             when {
                 allOf {
-                    branch 'master'
+                    // branch 'master'
                     expression {
                         env.DEPLOY == true
                     }
