@@ -14,54 +14,42 @@ pipeline {
     }
 
     stages {
-        // stage('adopt-a-pup web-app: Install') {
-        //     agent {
-        //         docker {
-        //             image 'node:14'
-        //         }
-        //     }
+        stage('adopt-a-pup web-app: Test') {
+            agent {
+                docker {
+                    image 'node:14'
+                }
+            }
 
-        //     steps {
-        //         dir(WEBAPP_DIR) {
-        //             sh 'npm ci'
-        //         }
-        //     }
-        // }
+            steps {
+                dir(WEBAPP_DIR) {
+                    sh 'npm ci'
+                    sh 'npm run lint'
+                    sh 'npm test'
+                }
+            }
+        }
 
-        // stage('adopt-a-pup web-app: Test') {
-        //     agent {
-        //         docker {
-        //             image 'node:14'
-        //         }
-        //     }
+        stage('adopt-a-pup web-app: NPM build') {
+            agent {
+                docker {
+                    image 'node:14'
+                }
+            }
 
-        //     steps {
-        //         dir(WEBAPP_DIR) {
-        //             sh 'npm run lint'
-        //             sh 'npm test'
-        //         }
-        //     }
-        // }
+            steps {
+                dir(WEBAPP_DIR) {
+                    sh 'npm ci'
+                    sh 'REACT_APP_VERSION=v1 npm run build'
+                }
+                stash includes: 'adopt-a-pup/web-app/build/**/*', name: 'build_v1'
 
-        // stage('adopt-a-pup web-app: NPM build') {
-        //     agent {
-        //         docker {
-        //             image 'node:14'
-        //         }
-        //     }
-
-        //     steps {
-        //         dir(WEBAPP_DIR) {
-        //             sh 'REACT_APP_VERSION=v1 npm run build'
-        //         }
-        //         stash includes: 'adopt-a-pup/web-app/build/**/*', name: 'build_v1'
-
-        //         dir(WEBAPP_DIR) {
-        //             sh 'REACT_APP_VERSION=v2 npm run build'
-        //         }
-        //         stash includes: 'adopt-a-pup/web-app/build/**/*', name: 'build_v2'
-        //     }
-        // }
+                dir(WEBAPP_DIR) {
+                    sh 'REACT_APP_VERSION=v2 npm run build'
+                }
+                stash includes: 'adopt-a-pup/web-app/build/**/*', name: 'build_v2'
+            }
+        }
 
         stage('adopt-a-pup web-app: DEPLOY?') {
             // when {
@@ -85,35 +73,35 @@ pipeline {
 
         stage('adopt-a-pup web-app: Build and push image') {
             when {
-                // allOf {
-                    // branch 'master'
+                allOf {
+                    branch 'master'
                     expression { env.DEPLOY == "TRUE" }
-                // }
+                }
             }
 
             steps {
                 sh "echo ${env.DEPLOY}"
             }
 
-            // steps {
-            //     sh 'rm -rf build'
-            //     unstash 'build_v1'
-            //     dir(WEBAPP_DIR) {
-            //         sh "docker build -t ${CONTAINER_IMAGE} ."
-            //         sh "docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE}:1.0"
-            //     }
+            steps {
+                sh 'rm -rf build'
+                unstash 'build_v1'
+                dir(WEBAPP_DIR) {
+                    sh "docker build -t ${CONTAINER_IMAGE} ."
+                    sh "docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE}:1.0"
+                }
 
-            //     sh 'rm -rf build'
-            //     unstash 'build_v2'
-            //     dir(WEBAPP_DIR) {
-            //         sh "docker build -t ${CONTAINER_IMAGE} ."
-            //         sh "docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE}:2.0"
-            //     }
+                sh 'rm -rf build'
+                unstash 'build_v2'
+                dir(WEBAPP_DIR) {
+                    sh "docker build -t ${CONTAINER_IMAGE} ."
+                    sh "docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE}:2.0"
+                }
 
-            //     withDockerRegistry([url: 'https://quay.io/', credentialsId: 'rht_jenkins_quay']) {
-            //         sh "docker push ${CONTAINER_IMAGE}"
-            //     }
-            // }
+                withDockerRegistry([url: 'https://quay.io/', credentialsId: 'rht_jenkins_quay']) {
+                    sh "docker push ${CONTAINER_IMAGE}"
+                }
+            }
         }
     }
 
