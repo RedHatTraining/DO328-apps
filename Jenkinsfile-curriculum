@@ -9,9 +9,9 @@ node {
 
 @NonCPS
 def runIfChanged(projectDir) {
-  for (changeLogSet in currentBuild.changeSets) {
-    for (entry in changeLogSet.getItems()) { // for each commit in the detected changes
-      for (file in entry.getAffectedFiles()) {
+  for (changeSet in currentBuild.changeSets) {
+    for (changeItems in changeSet.getItems()) { // for each commit in the detected changes
+      for (file in changeItems.getAffectedFiles()) {
         if (file.getPath().startsWith(projectDir)) {
             load "$projectDir/Jenkinsfile"
         }
