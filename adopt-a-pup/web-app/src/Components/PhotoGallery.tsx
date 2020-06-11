@@ -3,7 +3,7 @@ import { Gallery, GalleryItem, Card, CardBody } from "@patternfly/react-core";
 
 interface PhotoGalleryProps {
     photos: string[],
-    selectedPhotoIndex: number,
+    selectedPhotoIndex?: number,
     onPhotoSelect: (url: string, index: number) => void
 }
 
@@ -17,16 +17,13 @@ export default class PhotoGallery extends Component<PhotoGalleryProps> {
         );
     }
 
-
-
-
     private renderPhoto(url: string, index: number) {
         const className = this.props.selectedPhotoIndex === index ? "selected" : "";
 
         return <GalleryItem key={index}>
             <Card onClick={() => this.props.onPhotoSelect(url, index)}>
                 <CardBody className={`clickable ${className}`}>
-                    <img src={url} />
+                    <img src={url} alt={`Example ${index}`} />
                 </CardBody>
             </Card>
         </GalleryItem>;

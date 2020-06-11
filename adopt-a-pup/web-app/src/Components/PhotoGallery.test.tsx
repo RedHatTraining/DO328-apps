@@ -3,7 +3,7 @@ import { shallow, ShallowWrapper } from "enzyme";
 import PhotoGallery from "./PhotoGallery";
 
 
-describe("AnimalForm", () => {
+describe("PhotoGallery", () => {
 
     let component: ShallowWrapper;
     let photos: string[];
