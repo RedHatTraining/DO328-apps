@@ -27,7 +27,10 @@ export default class AnimalCreateView extends React.Component<AnimalCreateViewPr
                 <PageSection>
                     <Card>
                         <CardBody>
-                            <AnimalCreateForm animalService={this.props.animalService} shelterService={this.props.shelterService} />
+                            <AnimalCreateForm
+                                animalService={this.props.animalService}
+                                shelterService={this.props.shelterService}
+                            />
                         </CardBody>
                     </Card>
                 </PageSection>

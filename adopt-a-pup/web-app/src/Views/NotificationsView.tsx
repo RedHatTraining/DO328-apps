@@ -21,6 +21,6 @@ export default class NotificationsView extends React.Component<NotificationsView
                     <NotificationRequestForm animalService={this.props.animalService}/>
                 </PageSection>
             </React.Fragment>
-        )
+        );
     }
 }

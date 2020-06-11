@@ -110,7 +110,7 @@ export default class App extends Component {
                                 shelterService={shelterService}
                                 adoptionService={adoptionService}
                             />} />
-                        <Route path={"/notifications"} render={(props) =>
+                        <Route path={"/notifications"} render={() =>
                             <NotificationsView animalService={animalService}/>
                         }/>
                     </Structure>
