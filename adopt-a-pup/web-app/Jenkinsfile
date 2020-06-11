@@ -7,8 +7,6 @@ pipeline {
         label 'master'
     }
 
-    options { skipDefaultCheckout() }
-
     environment {
         HOME = '${WORKSPACE}'
         NPM_CONFIG_CACHE = '${WORKSPACE}/.npm'

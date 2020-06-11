@@ -4,6 +4,8 @@ pipeline {
         label 'master'
     }
 
+    options { skipDefaultCheckout() }
+
     stages {
 
         stage('adopt-a-pup/web-app') {
