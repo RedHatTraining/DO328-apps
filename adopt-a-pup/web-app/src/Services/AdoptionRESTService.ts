@@ -38,7 +38,6 @@ export default class AdoptionRESTService extends RESTService implements Adoption
         if (response.status === "DENIED") {
             throw new AdoptionDeniedError(response.message);
         }
-
     }
 
 }
