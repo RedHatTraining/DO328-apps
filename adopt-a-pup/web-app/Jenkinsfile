@@ -64,7 +64,9 @@ pipeline {
         }
 
         stage('adopt-a-pup web-app: Confirm image DEPLOY') {
-            input 'Do you approve Image build & push?'
+            steps {
+                input 'Deploy image?'
+            }
         }
 
         stage('adopt-a-pup web-app: Image build & push') {
