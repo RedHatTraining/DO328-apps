@@ -4,19 +4,20 @@ node {
     }
 
     runIfChanged('adopt-a-pup/web-app/')
+    // runIfChanged('other/project/')
 }
 
 
 @NonCPS
 def runIfChanged(projectDir) {
-  for (changeSet in currentBuild.changeSets) {
-    for (changeItems in changeSet.getItems()) { // for each commit in the detected changes
-      for (file in changeItems.getAffectedFiles()) {
-        if (file.getPath().startsWith(projectDir)) {
-            load "$projectDir/Jenkinsfile"
+    for (changeSet in currentBuild.changeSets) {
+        for (changeItems in changeSet.getItems()) {
+            for (file in changeItems.getAffectedFiles()) {
+                if (file.getPath().startsWith(projectDir)) {
+                    load "$projectDir/Jenkinsfile"
+                }
+            }
         }
-      }
     }
-  }
-  return false
+    return false
 }
