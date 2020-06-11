@@ -72,7 +72,7 @@ pipeline {
                 script {
                     env.DEPLOY = "TRUE"
                     try {
-                        timeout(time: 2, unit: 'SECONDS') {
+                        timeout(time: 5, unit: 'SECONDS') {
                             input "Build and push image to quay?"
                         }
                     // By catching the timeout exception, we prevent the pipeline from failing
