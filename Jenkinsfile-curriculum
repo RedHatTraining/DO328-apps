@@ -3,20 +3,17 @@ node {
         checkout scm
     }
 
-    stage('Adopt-a-pup/web-app') {
-        isChanged('adopt-a-pup/web-app/')
-    }
-
+    runIfChanged('adopt-a-pup/web-app/')
 }
 
 
 @NonCPS
-def isChanged(dir) {
+def runIfChanged(dir) {
   for (changeLogSet in currentBuild.changeSets) {
     for (entry in changeLogSet.getItems()) { // for each commit in the detected changes
       for (file in entry.getAffectedFiles()) {
         if (file.getPath().startsWith(dir)) {
-          load 'adopt-a-pup/web-app/Jenkinsfile'
+          load "$dir/Jenkinsfile"
         }
       }
     }
