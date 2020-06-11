@@ -18,7 +18,6 @@ import org.springframework.web.server.ResponseStatusException;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STRawGroupDir;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,8 +65,6 @@ public class AnimalService {
             final ResponseEntity response = restTemplate.postForEntity(notificationServiceUrl + "/notifications/sendEmails", templatesToEmail, ResponseEntity.class);
             if (HttpStatus.OK.equals(response.getStatusCode())) {
                 animalNotificationSubscriptionRepository.deleteAll(matchingNotificationCriteria);
-            } else {
-                // retry
             }
 
         }
@@ -81,15 +78,6 @@ public class AnimalService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "animal not found for animal ID " + animalId);
         }
         return animal.get();
-    }
-
-    public List<String> createAnimalsBulk(List<Animal> animals, String shelterId) {
-        final List<String> animalIds = new ArrayList<>();
-        for (Animal animal : animals) {
-            animal.setShelterId(shelterId);
-            animalIds.add(createAnimal(animal));
-        }
-        return animalIds;
     }
 
     public void createNotificationSubscription(AnimalNotificationRequestCriteria criteria) {
@@ -106,8 +94,6 @@ public class AnimalService {
         final ResponseEntity response = restTemplate.postForEntity(notificationServiceUrl + "/notifications/sendEmails", new EmailNotificationRequest(notificationRequest), ResponseEntity.class);
         if (HttpStatus.OK.equals(response.getStatusCode())) {
             animalNotificationSubscriptionRepository.delete(criteria);
-        } else {
-            // retry
         }
     }
 
