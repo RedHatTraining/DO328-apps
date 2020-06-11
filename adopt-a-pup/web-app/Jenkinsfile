@@ -2,7 +2,6 @@
 CONTAINER_IMAGE='quay.io/redhattraining/ossm-adopt-a-pup-webapp'
 WEBAPP_DIR='adopt-a-pup/web-app'
 
-
 pipeline {
     agent {
         label 'master'

@@ -5,7 +5,6 @@ node {
 
     stage('Adopt-a-pup/web-app') {
         isChanged('adopt-a-pup/web-app/')
-        
     }
 
 }
