@@ -1,6 +1,6 @@
-import React, {FormEvent} from "react";
-import {Animal} from "../Models/Animal";
-import {AnimalService} from "../Services/AnimalService";
+import React, { FormEvent } from "react";
+import { Animal } from "../Models/Animal";
+import { AnimalService } from "../Services/AnimalService";
 import {
     ActionGroup,
     Alert,
@@ -12,15 +12,17 @@ import {
     FormGroup,
     FormSelect,
     FormSelectOption,
-    TextInput
+    TextInput,
+    Modal
 } from "@patternfly/react-core";
-import {Residency} from "../Models/Residency";
-import {ApproximateSize} from "../Models/ApproximateSize";
+import { Residency } from "../Models/Residency";
+import { ApproximateSize } from "../Models/ApproximateSize";
 import BullseyeSpinner from "./BullseyeSpinner";
-import {RESTConnectionError} from "../Services/RESTService";
-import {ShelterService} from "../Services/ShelterService";
-import {Shelter} from "../Models/Shelter";
+import { RESTConnectionError } from "../Services/RESTService";
+import { ShelterService } from "../Services/ShelterService";
+import { Shelter } from "../Models/Shelter";
 import LoadingData from "./LoadingData";
+import PhotoGallery from "./PhotoGallery";
 
 type AnimalCreateViewProps = {
     animalService: AnimalService;
@@ -43,6 +45,11 @@ type AnimalCreateFormState = {
         isActive: boolean,
         header: string,
         message: string
+    },
+    isPhotoPickerModalOpen: boolean;
+    photo?: {
+        url: string;
+        index: number
     }
 }
 
@@ -60,6 +67,7 @@ export default class AnimalCreateForm
                 description: ""
             },
             isSubmitting: false,
+            isPhotoPickerModalOpen: false,
             loading: false,
             animal: this.getEmptyFields(),
             shelters: [],
@@ -73,11 +81,11 @@ export default class AnimalCreateForm
 
     // TODO refactor into common class
     public async componentDidMount() {
-        this.setState({loading: true});
+        this.setState({ loading: true });
 
         try {
             const shelters = await this.props.shelterService.getAll();
-            this.setState({shelters});
+            this.setState({ shelters });
             // Set default shelter as first option.
             //If we do not do this the form will not know which one is selected by default
             if (shelters[0].shelterId) {
@@ -88,7 +96,7 @@ export default class AnimalCreateForm
                 this.showConnectionError(error);
             }
         } finally {
-            this.setState({loading: false});
+            this.setState({ loading: false });
         }
     }
 
@@ -118,7 +126,7 @@ export default class AnimalCreateForm
         // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
-        const animal = {...this.state.animal, animalName};
+        const animal = { ...this.state.animal, animalName };
         this.setState({
             animal
         });
@@ -128,7 +136,7 @@ export default class AnimalCreateForm
         // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
-        const animal = {...this.state.animal, shelterId};
+        const animal = { ...this.state.animal, shelterId };
         this.setState({
             animal
         });
@@ -138,7 +146,7 @@ export default class AnimalCreateForm
         // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
-        const animal = {...this.state.animal, breed};
+        const animal = { ...this.state.animal, breed };
         this.setState({
             animal
         });
@@ -148,7 +156,7 @@ export default class AnimalCreateForm
         // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
-        const animal = {...this.state.animal, approximateSize};
+        const animal = { ...this.state.animal, approximateSize };
         this.setState({
             animal
         });
@@ -158,7 +166,7 @@ export default class AnimalCreateForm
         // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
-        const animal = {...this.state.animal, residencyRequired};
+        const animal = { ...this.state.animal, residencyRequired };
         this.setState({
             animal
         });
@@ -194,7 +202,7 @@ export default class AnimalCreateForm
         // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
-        const animal = {...this.state.animal, childSafe};
+        const animal = { ...this.state.animal, childSafe };
         this.setState({
             animal
         });
@@ -204,7 +212,7 @@ export default class AnimalCreateForm
         // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
-        const animal = {...this.state.animal, otherDogSafe};
+        const animal = { ...this.state.animal, otherDogSafe };
         this.setState({
             animal
         });
@@ -214,7 +222,7 @@ export default class AnimalCreateForm
         // Immutability: instead of modifying the state,
         // we make a copy with the new value, and then
         // set the new state
-        const animal = {...this.state.animal, adoptable};
+        const animal = { ...this.state.animal, adoptable };
         this.setState({
             animal
         });
@@ -222,8 +230,10 @@ export default class AnimalCreateForm
 
     private async handleFormSubmit(event: FormEvent) {
         if (this.isFormValid()) {
-            this.setState({isSubmitting: true});
+            this.setState({ isSubmitting: true });
             try {
+                // TODO add photo url from state to animal
+
                 await this.props.animalService.create(this.state.animal);
                 // const animalId = await this.props.animalService.create(this.state.animal);
                 // TODO photo input and then write file to server
@@ -234,16 +244,16 @@ export default class AnimalCreateForm
             } catch (error) {
                 this.showErrorAlert(error);
             } finally {
-                this.setState({isSubmitting: false});
+                this.setState({ isSubmitting: false });
             }
         } else {
-            this.setState({showInvalidFormAlert: true});
+            this.setState({ showInvalidFormAlert: true });
         }
         event.preventDefault();
     }
 
     private isFormValid() {
-        const {animal} = this.state;
+        const { animal } = this.state;
         const fieldIsEmpty = (field: string) => { return animal[field as keyof Animal] === ""; };
 
         const hasEmptyFields = Object
@@ -292,7 +302,11 @@ export default class AnimalCreateForm
     }
 
     private handleCloseInvalidFormAlert() {
-        this.setState({showInvalidFormAlert: false});
+        this.setState({ showInvalidFormAlert: false });
+    }
+
+    private handleChoosePhotoButton() {
+        this.setState({ isPhotoPickerModalOpen: true });
     }
 
     private getEmptyFields(): Animal {
@@ -325,27 +339,27 @@ export default class AnimalCreateForm
     }
 
     public renderLoader() {
-        return <BullseyeSpinner/>;
+        return <BullseyeSpinner />;
     }
 
     public renderForm() {
         let state = this.state;
-        const {animal, showInvalidFormAlert} = state;
+        const { animal, showInvalidFormAlert } = state;
         return (
             <Form onSubmit={this.handleFormSubmit.bind(this)}>
                 {this.renderCreationSuccessAlert()}
                 {this.renderCreationErrorAlert()}
                 {showInvalidFormAlert &&
-                <Alert
-                    id="myalert"
-                    className="popup"
-                    variant="danger"
-                    title="Invalid form"
-                    action={<AlertActionCloseButton
-                        onClose={this.handleCloseInvalidFormAlert.bind(this)}
-                    />}>
-                    Please complete required fields
-                </Alert>}
+                    <Alert
+                        id="myalert"
+                        className="popup"
+                        variant="danger"
+                        title="Invalid form"
+                        action={<AlertActionCloseButton
+                            onClose={this.handleCloseInvalidFormAlert.bind(this)}
+                        />}>
+                        Please complete required fields
+                    </Alert>}
                 <FormGroup
                     label="Name"
                     isRequired
@@ -417,7 +431,7 @@ export default class AnimalCreateForm
                         name="animal-form-adoptable"
                         aria-label="Adoptable?"
                         isChecked={animal.adoptable}
-                        onChange={this.handleAdoptableChange.bind(this)}/>
+                        onChange={this.handleAdoptableChange.bind(this)} />
                 </FormGroup>
                 <FormGroup
                     label="Residency"
@@ -494,7 +508,7 @@ export default class AnimalCreateForm
                         name="animal-form-kid-safe"
                         aria-label="Safe with Kids?"
                         isChecked={animal.childSafe}
-                        onChange={this.handleChildSafeChange.bind(this)}/>
+                        onChange={this.handleChildSafeChange.bind(this)} />
                 </FormGroup>
                 <FormGroup
                     label="Safe with other animals"
@@ -508,8 +522,16 @@ export default class AnimalCreateForm
                         name="animal-form-animal-safe"
                         aria-label="Safe with other Animals?"
                         isChecked={animal.otherDogSafe}
-                        onChange={this.handleOtherDogSafeChange.bind(this)}/>
+                        onChange={this.handleOtherDogSafeChange.bind(this)} />
                 </FormGroup>
+                <ActionGroup>
+                    <Button
+                        variant="secondary"
+                        onClick={this.handleChoosePhotoButton.bind(this)}>
+                        Choose Photo
+                    </Button>
+                    {this.renderPhotoPickerModal()}
+                </ActionGroup>
                 <ActionGroup>
                     <Button variant="primary" type={ButtonType.submit}>Create Animal</Button>
                 </ActionGroup>
@@ -540,5 +562,39 @@ export default class AnimalCreateForm
             />;
         }
         return null;
+    }
+
+    private renderPhotoPickerModal() {
+        // TODO: load photo list from somewhere else
+        const photos = [
+            "/frontend/photos/a1.jpeg",
+            "/frontend/photos/a89cd4fc-16ce-4b51-8dd1-866d7d793322.jpeg",
+            "/frontend/photos/aac7ea0a-2374-4d4b-8d3a-71e4f896e751.jpeg",
+            "/frontend/photos/e22d494c-c2be-4d32-bceb-ec675fd5540a.jpeg"
+        ];
+
+        return (
+            <Modal
+                title="Select a photo"
+                isOpen={this.state.isPhotoPickerModalOpen}
+                onClose={() => { this.setState({ isPhotoPickerModalOpen: false }); }}
+            >
+                <PhotoGallery
+                    photos={photos}
+                    selectedPhotoIndex={this.state.photo?.index}
+                    onPhotoSelect={(url, index) => {
+                        this.setState({
+                            isPhotoPickerModalOpen: false,
+                            photo: {
+                                url,
+                                index
+                            }
+                        });
+                    }}
+                />
+            </Modal>
+        );
+
+
     }
 }

@@ -2,7 +2,6 @@ import React from "react";
 import { PageSection, PageSectionVariants, Text, TextContent } from "@patternfly/react-core";
 
 
-
 export default class HomeView extends React.Component {
 
     public render() {
