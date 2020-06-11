@@ -4,6 +4,12 @@ import { Animal } from "../Models/Animal";
 import { AdoptionApplication } from "../Models/AdoptionApplication";
 
 
+interface AdoptionResponse {
+    status: "APPROVED" | "DENIED",
+    message: string
+}
+
+
 export default class AdoptionRESTService extends RESTService implements AdoptionService {
 
     constructor(baseUrl: string) {
@@ -24,7 +30,24 @@ export default class AdoptionRESTService extends RESTService implements Adoption
     }
 
     public async applyForAdoption(adoptionApplication: AdoptionApplication): Promise<void> {
-        await this.post("/adoption/applyForAdoption", adoptionApplication);
+        const response = await this.post<AdoptionApplication, AdoptionResponse>(
+            "/adoption/applyForAdoption",
+            adoptionApplication
+        );
+
+        if (response.status === "DENIED") {
+            throw new AdoptionDeniedError(response.message);
+        }
+    }
+
+}
+
+export class AdoptionDeniedError extends Error {
+
+    constructor(message: string) {
+        super();
+        this.name = "Adoption Denied";
+        this.message = message;
     }
 
 }
