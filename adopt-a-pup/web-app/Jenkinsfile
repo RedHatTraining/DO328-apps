@@ -64,9 +64,9 @@ pipeline {
         // }
 
         stage('adopt-a-pup web-app: DEPLOY?') {
-            when {
-                branch 'master'
-            }
+            // when {
+            //     branch 'master'
+            // }
 
             steps {
                 script {
@@ -86,7 +86,7 @@ pipeline {
         stage('adopt-a-pup web-app: Build and push image') {
             when {
                 allOf {
-                    branch 'master'
+                    // branch 'master'
                     expression {
                         env.DEPLOY == true
                     }
