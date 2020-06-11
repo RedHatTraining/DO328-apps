@@ -40,7 +40,8 @@
     "build:container": "npm run build && docker build -t quay.io/redhattraining/ossm-adopt-a-pup-webapp .",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint --ext ts,tsx src --fix"
+    "lint": "eslint --ext ts,tsx src",
+    "lint:fix": "eslint --ext ts,tsx src --fix"
   },
   "eslintConfig": {
     "extends": "react-app"
