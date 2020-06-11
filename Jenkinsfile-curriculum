@@ -6,8 +6,10 @@ node {
     // TODO: Jenkins can't execute pipelines for more than one project in the same run.
     // The CI task will fail if the change set includes changes across several projects
     // Ideas?
-    runIfChanged('adopt-a-pup/web-app/')
-    // runIfChanged('other/project/')
+    // Changesets approach is not working as expected... TODO: Fix
+    // runIfChanged('adopt-a-pup/web-app/')
+    
+    load "adopt-a-pup/web-app/Jenkinsfile"
 }
 
 
