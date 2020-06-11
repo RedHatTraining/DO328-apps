@@ -1,11 +1,14 @@
 pipeline {
-    stage('Load Jenkinsfiles') {
-        checkout scm
-    }
 
-    stage('Adopt-a-pup/web-app') {
-        when { changeset 'adopt-a-pup/web-app/**/*' }
-        load 'adopt-a-pup/web-app/Jenkinsfile'
+    stages {
+        stage('Load Jenkinsfiles') {
+            checkout scm
+        }
+
+        stage('Adopt-a-pup/web-app') {
+            when { changeset 'adopt-a-pup/web-app/**/*' }
+            load 'adopt-a-pup/web-app/Jenkinsfile'
+        }
     }
 
 }
