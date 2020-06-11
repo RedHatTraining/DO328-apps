@@ -63,16 +63,20 @@ pipeline {
             }
         }
 
-        stage('adopt-a-pup web-app: Confirm image DEPLOY') {
+        stage('adopt-a-pup web-app: DEPLOY?') {
+            // when {
+            //     branch 'master'
+            // }
+
             steps {
-                input 'Deploy image?'
+                input 'Build and deploy image to quay?'
             }
         }
 
-        stage('adopt-a-pup web-app: Image build & push') {
-            when {
-                branch 'master'
-            }
+        stage('adopt-a-pup web-app: Build and push image') {
+            // when {
+            //     branch 'master'
+            // }
 
             steps {
                 sh 'rm -rf build'
@@ -89,9 +93,9 @@ pipeline {
                     sh "docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE}:2.0"
                 }
 
-                withDockerRegistry([url: 'https://quay.io/', credentialsId: 'rht_jenkins_quay']) {
-                    sh "docker push ${CONTAINER_IMAGE}"
-                }
+                // withDockerRegistry([url: 'https://quay.io/', credentialsId: 'rht_jenkins_quay']) {
+                //     sh "docker push ${CONTAINER_IMAGE}"
+                // }
             }
         }
     }
