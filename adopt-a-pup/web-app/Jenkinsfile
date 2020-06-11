@@ -80,10 +80,6 @@ pipeline {
             }
 
             steps {
-                sh "echo ${env.DEPLOY}"
-            }
-
-            steps {
                 sh 'rm -rf build'
                 unstash 'build_v1'
                 dir(WEBAPP_DIR) {
