@@ -2,7 +2,6 @@
 CONTAINER_IMAGE='quay.io/redhattraining/ossm-adopt-a-pup-webapp'
 WEBAPP_DIR='adopt-a-pup/web-app'
 
-
 pipeline {
     agent {
         label 'master'
@@ -52,14 +51,14 @@ pipeline {
             }
 
             steps {
-
-                sh 'REACT_APP_VERSION=v1 npm run build'
-
+                dir(WEBAPP_DIR) {
+                    sh 'REACT_APP_VERSION=v1 npm run build'
+                }
                 stash includes: 'adopt-a-pup/web-app/build/**/*', name: 'build_v1'
 
-                
-                sh 'REACT_APP_VERSION=v2 npm run build'
-                
+                dir(WEBAPP_DIR) {
+                    sh 'REACT_APP_VERSION=v2 npm run build'
+                }
                 stash includes: 'adopt-a-pup/web-app/build/**/*', name: 'build_v2'
             }
         }
@@ -72,17 +71,17 @@ pipeline {
             steps {
                 sh 'rm -rf build'
                 unstash 'build_v1'
-                
-                sh "docker build -t ${CONTAINER_IMAGE} ."
-                sh "docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE}:1.0"
-                
+                dir(WEBAPP_DIR) {
+                    sh "docker build -t ${CONTAINER_IMAGE} ."
+                    sh "docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE}:1.0"
+                }
 
                 sh 'rm -rf build'
                 unstash 'build_v2'
-                
-                sh "docker build -t ${CONTAINER_IMAGE} ."
-                sh "docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE}:2.0"
-                
+                dir(WEBAPP_DIR) {
+                    sh "docker build -t ${CONTAINER_IMAGE} ."
+                    sh "docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE}:2.0"
+                }
 
                 withDockerRegistry([url: 'https://quay.io/', credentialsId: 'rht_jenkins_quay']) {
                     sh "docker push ${CONTAINER_IMAGE}"

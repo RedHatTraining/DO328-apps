@@ -1,5 +1,5 @@
 node {
-    stage('Checkout') {
+    stage('Check changes') {
         checkout scm
     }
 
@@ -13,9 +13,7 @@ def runIfChanged(projectDir) {
     for (entry in changeLogSet.getItems()) { // for each commit in the detected changes
       for (file in entry.getAffectedFiles()) {
         if (file.getPath().startsWith(projectDir)) {
-            dir(projectDir) {
-                load "$projectDir/Jenkinsfile"
-            }
+            load "$projectDir/Jenkinsfile"
         }
       }
     }
