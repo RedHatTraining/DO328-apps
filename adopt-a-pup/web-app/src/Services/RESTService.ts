@@ -23,9 +23,9 @@ export abstract class RESTService {
         }
     }
 
-    protected async post<T>(url: string, body: T): Promise<any> {
+    protected async post<T, R>(url: string, body: T): Promise<R> {
         try {
-            const r = await this.axiosInstance.post<T>(url, body, { timeout: this.timeoutMs });
+            const r = await this.axiosInstance.post<R>(url, body, { timeout: this.timeoutMs });
             return r.data;
         } catch (e) {
             throw new RESTConnectionError(e, this.remoteServiceName, e.response?.status);
