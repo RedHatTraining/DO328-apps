@@ -14,20 +14,6 @@ pipeline {
     }
 
     stages {
-        stage('adopt-a-pup web-app: Install') {
-            agent {
-                docker {
-                    image 'node:14'
-                }
-            }
-
-            steps {
-                dir(WEBAPP_DIR) {
-                    sh 'npm ci'
-                }
-            }
-        }
-
         stage('adopt-a-pup web-app: Test') {
             agent {
                 docker {
@@ -37,6 +23,7 @@ pipeline {
 
             steps {
                 dir(WEBAPP_DIR) {
+                    sh 'npm ci'
                     sh 'npm run lint'
                     sh 'npm test'
                 }
@@ -52,6 +39,7 @@ pipeline {
 
             steps {
                 dir(WEBAPP_DIR) {
+                    sh 'npm ci'
                     sh 'REACT_APP_VERSION=v1 npm run build'
                 }
                 stash includes: 'adopt-a-pup/web-app/build/**/*', name: 'build_v1'
@@ -70,14 +58,14 @@ pipeline {
 
             steps {
                 script {
-                    env.DEPLOY = true
+                    env.DEPLOY = "TRUE"
                     try {
-                        timeout(time: 2, unit: 'MINUTES') {
+                        timeout(time: 5, unit: 'MINUTES') {
                             input "Build and push image to quay?"
                         }
                     // By catching the timeout exception, we prevent the pipeline from failing
                     } catch (err) {
-                        env.DEPLOY = false
+                        env.DEPLOY = "FALSE"
                     }
                 }
             }
@@ -87,9 +75,7 @@ pipeline {
             when {
                 allOf {
                     branch 'master'
-                    expression {
-                        env.DEPLOY == true
-                    }
+                    expression { env.DEPLOY == "TRUE" }
                 }
             }
 
@@ -116,23 +102,6 @@ pipeline {
     }
 
     post {
-        fixed {
-            googlechatnotification(
-                url: "${gchat_webhook}",
-                message: ":-) Branch ${env.BRANCH_NAME} build fixed! ${env.BUILD_URL}",
-                notifyAborted: 'true', notifyFailure: 'true', notifyNotBuilt: 'true',
-                notifySuccess: 'true', notifyUnstable: 'true', notifyBackToNormal: 'true',
-                suppressInfoLoggers: 'true', sameThreadNotification: 'true')
-        }
-
-        failure {
-            googlechatnotification(
-                url: "${gchat_webhook}",
-                message: ":-( Build failed in branch ${env.BRANCH_NAME}, see output here: ${env.BUILD_URL}console",
-                notifyAborted: 'true', notifyFailure: 'true', notifyNotBuilt: 'true', notifySuccess: 'true',
-                notifyUnstable: 'true', notifyBackToNormal: 'true', suppressInfoLoggers: 'true',
-                sameThreadNotification: 'true')
-        }
         always {
             sh "rm ${env.WORKSPACE}/adopt-a-pup/web-app/build -fr"
         }
