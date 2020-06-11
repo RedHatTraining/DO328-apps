@@ -70,14 +70,14 @@ pipeline {
 
             steps {
                 script {
-                    env.DEPLOYYY = true
+                    env.DEPLOYYY = "TRUE"
                     try {
                         timeout(time: 2, unit: 'SECONDS') {
                             input "Build and push image to quay?"
                         }
                     // By catching the timeout exception, we prevent the pipeline from failing
                     } catch (err) {
-                        env.DEPLOYYY = false
+                        env.DEPLOYYY = "FALSE"
                     }
                 }
             }
@@ -87,7 +87,7 @@ pipeline {
             when {
                 // allOf {
                     // branch 'master'
-                    expression { env.DEPLOYYY }
+                    expression { env.DEPLOYYY == "TRUE" }
                 // }
             }
 
