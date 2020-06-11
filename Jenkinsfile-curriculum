@@ -4,9 +4,8 @@ node {
     }
 
     stage('Adopt-a-pup/web-app') {
-        if (isChanged('adopt-a-pup/web-app/')) {
-            load 'adopt-a-pup/web-app/Jenkinsfile'
-        }
+        isChanged('adopt-a-pup/web-app/')
+        
     }
 
 }
@@ -18,7 +17,7 @@ def isChanged(dir) {
     for (entry in changeLogSet.getItems()) { // for each commit in the detected changes
       for (file in entry.getAffectedFiles()) {
         if (file.getPath().startsWith(dir)) {
-          return true
+          load 'adopt-a-pup/web-app/Jenkinsfile'
         }
       }
     }
