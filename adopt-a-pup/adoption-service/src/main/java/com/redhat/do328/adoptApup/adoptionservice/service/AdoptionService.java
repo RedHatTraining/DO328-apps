@@ -91,8 +91,7 @@ public class AdoptionService {
         final AdoptionApplicationResponse adoptionApplicationResponse = new AdoptionApplicationResponse();
         if (!denialReasons.isEmpty()) {
             final String message = Joiner.on(", ").join(denialReasons);
-            adoptionApplicationResponse.setMessage("This application has been denied for the following reason(s): " + message);
-            adoptionApplicationResponse.setStatus(Status.DENIED);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This application has been denied for the following reason(s): " + message);
         } else {
             final ResponseEntity responseEntityResponseEntity = restTemplate.postForEntity(animalServiceHost + "/animals/" + application.getAnimalId() + "/setAdoptionStatus",
                     new AnimalStatusChangeRequest(false), ResponseEntity.class);
