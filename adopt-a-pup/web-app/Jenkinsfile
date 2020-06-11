@@ -87,9 +87,7 @@ pipeline {
             when {
                 // allOf {
                     // branch 'master'
-                    expression {
-                        return env.DEPLOYYY
-                    }
+                    expression { env.DEPLOYYY }
                 // }
             }
 
