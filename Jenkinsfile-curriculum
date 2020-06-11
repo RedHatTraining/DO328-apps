@@ -3,8 +3,6 @@ node {
         checkout scm
     }
 
-    // Only one project pipeline can be executed in one run.
-    // CI will fail if the change set contains changes across several projects
     runIfChanged('adopt-a-pup/web-app/')
     // runIfChanged('other/project/')
 }
