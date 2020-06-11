@@ -3,6 +3,9 @@ node {
         checkout scm
     }
 
+    // TODO: Jenkins can't execute pipelines for more than one project in the same run.
+    // The CI task will fail if the change set includes changes across several projects
+    // Ideas?
     runIfChanged('adopt-a-pup/web-app/')
     // runIfChanged('other/project/')
 }
