@@ -84,14 +84,14 @@ pipeline {
         }
 
         stage('adopt-a-pup web-app: Build and push image') {
-            // when {
-            //     allOf {
-            //         // branch 'master'
-            //         expression {
-            //             env.DEPLOY == true
-            //         }
-            //     }
-            // }
+            when {
+                // allOf {
+                    // branch 'master'
+                    expression {
+                        env.DEPLOY == true
+                    }
+                // }
+            }
 
             steps {
                 sh "echo ${env.DEPLOY}"
