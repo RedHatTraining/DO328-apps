@@ -1,0 +1,127 @@
+
+CONTAINER_IMAGE='quay.io/redhattraining/ossm-adopt-a-pup-webapp'
+WEBAPP_DIR='adopt-a-pup/web-app'
+
+pipeline {
+    agent {
+        label 'master'
+    }
+
+    environment {
+        HOME = '${WORKSPACE}'
+        NPM_CONFIG_CACHE = '${WORKSPACE}/.npm'
+        CI = 'true'
+    }
+
+    stages {
+        stage('adopt-a-pup web-app: Install') {
+            agent {
+                docker {
+                    image 'node:14'
+                }
+            }
+
+            steps {
+                dir(WEBAPP_DIR) {
+                    sh 'npm ci'
+                }
+            }
+        }
+
+        stage('adopt-a-pup web-app: Test') {
+            agent {
+                docker {
+                    image 'node:14'
+                }
+            }
+
+            steps {
+                dir(WEBAPP_DIR) {
+                    sh 'npm run lint'
+                    sh 'npm test'
+                }
+            }
+        }
+
+        stage('adopt-a-pup web-app: NPM build') {
+            agent {
+                docker {
+                    image 'node:14'
+                }
+            }
+
+            steps {
+                dir(WEBAPP_DIR) {
+                    sh 'REACT_APP_VERSION=v1 npm run build'
+                }
+                stash includes: 'adopt-a-pup/web-app/build/**/*', name: 'build_v1'
+
+                dir(WEBAPP_DIR) {
+                    sh 'REACT_APP_VERSION=v2 npm run build'
+                }
+                stash includes: 'adopt-a-pup/web-app/build/**/*', name: 'build_v2'
+            }
+        }
+
+        stage('adopt-a-pup web-app: DEPLOY?') {
+            when {
+                branch 'master'
+            }
+
+            steps {
+                timeout(time: 10, unit: 'MINUTES') {
+                    input 'Build and deploy image to quay?'
+                }
+            }
+        }
+
+        stage('adopt-a-pup web-app: Build and push image') {
+            when {
+                branch 'master'
+            }
+
+            steps {
+                sh 'rm -rf build'
+                unstash 'build_v1'
+                dir(WEBAPP_DIR) {
+                    sh "docker build -t ${CONTAINER_IMAGE} ."
+                    sh "docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE}:1.0"
+                }
+
+                sh 'rm -rf build'
+                unstash 'build_v2'
+                dir(WEBAPP_DIR) {
+                    sh "docker build -t ${CONTAINER_IMAGE} ."
+                    sh "docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE}:2.0"
+                }
+
+                withDockerRegistry([url: 'https://quay.io/', credentialsId: 'rht_jenkins_quay']) {
+                    sh "docker push ${CONTAINER_IMAGE}"
+                }
+            }
+        }
+    }
+
+    post {
+        fixed {
+            googlechatnotification(
+                url: "${gchat_webhook}",
+                message: ":-) Branch ${env.BRANCH_NAME} build fixed! ${env.BUILD_URL}",
+                notifyAborted: 'true', notifyFailure: 'true', notifyNotBuilt: 'true',
+                notifySuccess: 'true', notifyUnstable: 'true', notifyBackToNormal: 'true',
+                suppressInfoLoggers: 'true', sameThreadNotification: 'true')
+        }
+
+        failure {
+            googlechatnotification(
+                url: "${gchat_webhook}",
+                message: ":-( Build failed in branch ${env.BRANCH_NAME}, see output here: ${env.BUILD_URL}console",
+                notifyAborted: 'true', notifyFailure: 'true', notifyNotBuilt: 'true', notifySuccess: 'true',
+                notifyUnstable: 'true', notifyBackToNormal: 'true', suppressInfoLoggers: 'true',
+                sameThreadNotification: 'true')
+        }
+        always {
+            sh "rm ${env.WORKSPACE}/adopt-a-pup/web-app/build -fr"
+        }
+    }
+}

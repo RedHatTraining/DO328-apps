@@ -37,7 +37,8 @@ type NotificationRequestFormState = {
     }
 }
 
-export default class NotificationRequestForm extends React.Component<NotificationRequestFormProps, NotificationRequestFormState> {
+export default class NotificationRequestForm
+    extends React.Component<NotificationRequestFormProps, NotificationRequestFormState> {
 
     constructor(props: NotificationRequestFormProps) {
         super(props);
@@ -57,7 +58,7 @@ export default class NotificationRequestForm extends React.Component<Notificatio
                 header: "",
                 message: ""
             }
-        }
+        };
     }
 
     private static getEmptyFields(): AnimalNotificationRequest {
@@ -86,7 +87,7 @@ export default class NotificationRequestForm extends React.Component<Notificatio
             <React.Fragment>
                 {this.state.isSubmitting ? this.renderLoader() : this.renderForm()}
             </React.Fragment>
-        )
+        );
     }
 
     public renderForm() {
@@ -176,14 +177,14 @@ export default class NotificationRequestForm extends React.Component<Notificatio
                         onChange={this.handleApproximateSizeChange.bind(this)}
                         aria-label="Select approximate size">
                         <FormSelectOption label={"None"}
-                                          value={null}
-                                          key={"None"}/>
+                            value={null}
+                            key={"None"}/>
                         {Object.keys(ApproximateSize).map((approximateSize) => {
                             return <FormSelectOption
                                 key={approximateSize}
                                 value={approximateSize}
                                 label={approximateSize}
-                            />
+                            />;
                         })}
                     </FormSelect>
                 </FormGroup>
@@ -191,7 +192,7 @@ export default class NotificationRequestForm extends React.Component<Notificatio
                     <Button variant="primary" type={ButtonType.submit}>Subscribe</Button>
                 </ActionGroup>
             </Form>
-        )
+        );
     }
 
     private handleNameChange(username: string) {

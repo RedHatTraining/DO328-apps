@@ -1,0 +1,28 @@
+node {
+    stage('Check changes') {
+        checkout scm
+    }
+
+    // TODO: Jenkins can't execute pipelines for more than one project in the same run.
+    // The CI task will fail if the change set includes changes across several projects
+    // Ideas?
+    // Changesets approach is not working as expected... TODO: Fix
+    // runIfChanged('adopt-a-pup/web-app/')
+    
+    load "adopt-a-pup/web-app/Jenkinsfile"
+}
+
+
+@NonCPS
+def runIfChanged(projectDir) {
+    for (changeSet in currentBuild.changeSets) {
+        for (changeItems in changeSet.getItems()) {
+            for (file in changeItems.getAffectedFiles()) {
+                if (file.getPath().startsWith(projectDir)) {
+                    load "$projectDir/Jenkinsfile"
+                }
+            }
+        }
+    }
+    return false
+}
