@@ -21,6 +21,7 @@ animal_endpoint=${3:-${default_ingress_endpoint}}
 shelter_endpoint=${4:-${default_ingress_endpoint}}
 news_enabled=${5:-1}
 news_endpoint=${6:-"http://news-comprehensive-review-news.apps.ocp4.example.com"}
+email_endpoint=${7:-"http://email-comprehensive-review.apps.ocp4.example.com/"}
 
 oc process -n ${namespace} -f ./kubefiles/frontend-template.yaml \
   -p REACT_APP_ADOPTION_SERVICE_URL=${adoption_endpoint} \
@@ -28,4 +29,5 @@ oc process -n ${namespace} -f ./kubefiles/frontend-template.yaml \
   -p REACT_APP_SHELTER_SERVICE_URL=${shelter_endpoint} \
   -p REACT_APP_NEWS_ENABLED=${news_enabled} \
   -p REACT_APP_NEWS_SERVICE_URL=${news_endpoint} \
+  -p REACT_APP_EMAIL_APP_URL=${email_endpoint} \
   | oc apply -n ${namespace} -f -

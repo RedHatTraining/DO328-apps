@@ -8,21 +8,21 @@ objects:
   - apiVersion: apps/v1
     kind: Deployment
     metadata:
-      name: frontend-service
+      name: frontend
     spec:
       selector:
         matchLabels:
-          app: frontend-service
+          app: frontend
       replicas: 1
       template:
         metadata:
           labels:
-            app: frontend-service
+            app: frontend
           annotations:
             sidecar.istio.io/inject: "true"
         spec:
           containers:
-            - name: frontend-service
+            - name: frontend
               image: quay.io/redhattraining/ossm-adopt-a-pup-webapp:1.0
               imagePullPolicy: Always
               ports:
@@ -44,38 +44,24 @@ objects:
     kind: Service
     metadata:
       labels:
-        app: frontend-service
-      name: frontend-service
+        app: frontend
+      name: frontend
     spec:
       ports:
         - port: 3000
           protocol: TCP
           targetPort: 8080
       selector:
-        app: frontend-service
-  - apiVersion: networking.istio.io/v1alpha3
-    kind: Gateway
-    metadata:
-      name: frontend-service-gw
-    spec:
-      selector:
-        istio: ingressgateway
-      servers:
-        - port:
-            number: 80
-            name: http
-            protocol: HTTP
-          hosts:
-            - "*"
+        app: frontend
   - apiVersion: networking.istio.io/v1alpha3
     kind: VirtualService
     metadata:
-      name: frontend-service-vs
+      name: frontend
     spec:
       hosts:
         - "*"
       gateways:
-        - frontend-service-gw
+        - adoptapup-gateway
       http:
         - match:
             - uri:
@@ -84,7 +70,7 @@ objects:
             uri: /frontend
           route:
             - destination:
-                host: frontend-service
+                host: frontend
                 port:
                   number: 3000
 parameters:
