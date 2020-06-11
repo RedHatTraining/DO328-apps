@@ -69,15 +69,27 @@ pipeline {
             }
 
             steps {
-                timeout(time: 10, unit: 'MINUTES') {
-                    input 'Build and deploy image to quay?'
+                script {
+                    env.DEPLOY = true
+                    try {
+                        timeout(time: 5, unit: 'MINUTES') {
+                            input "Build and push image to quay?"
+                        }
+                    } catch (err) {
+                        env.DEPLOY = false
+                    }
                 }
             }
         }
 
         stage('adopt-a-pup web-app: Build and push image') {
             when {
-                branch 'master'
+                allOf {
+                    branch 'master'
+                    expression {
+                        env.DEPLOY == true
+                    }
+                }
             }
 
             steps {
