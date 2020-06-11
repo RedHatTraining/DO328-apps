@@ -18,6 +18,8 @@ objects:
         metadata:
           labels:
             app: mongodb
+          annotations:
+            sidecar.istio.io/inject: "true"
         spec:
           containers:
             - name: mongodb
