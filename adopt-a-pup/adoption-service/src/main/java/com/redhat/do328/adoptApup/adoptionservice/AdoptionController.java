@@ -4,7 +4,6 @@ import com.redhat.do328.adoptApup.adoptionservice.model.AdoptionApplication;
 import com.redhat.do328.adoptApup.adoptionservice.model.AdoptionApplicationResponse;
 import com.redhat.do328.adoptApup.adoptionservice.model.Animal;
 import com.redhat.do328.adoptApup.adoptionservice.model.Shelter;
-import com.redhat.do328.adoptApup.adoptionservice.model.Status;
 import com.redhat.do328.adoptApup.adoptionservice.service.AdoptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,10 +30,6 @@ public class AdoptionController {
     @RequestMapping(method = RequestMethod.POST, value = "/applyForAdoption")
     public AdoptionApplicationResponse applyForAdoption(@RequestBody AdoptionApplication application,
                                                         HttpServletResponse response) {
-        final AdoptionApplicationResponse adoptionApplicationResponse = adoptionService.applyForAdoption(application);
-        if (Status.DENIED.equals(adoptionApplicationResponse.getStatus())) {
-            response.setStatus(400);
-        }
-        return adoptionApplicationResponse;
+        return adoptionService.applyForAdoption(application);
     }
 }
