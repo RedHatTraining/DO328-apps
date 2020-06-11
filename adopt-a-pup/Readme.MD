@@ -60,6 +60,7 @@ The project where you deploy this application should be managed by OSSM
 
 7. Deploy the backend services.
     ```
+    oc apply -f kubefiles/service-mesh.yaml
     oc apply -f kubefiles/adoption-service.yaml
     oc apply -f kubefiles/animal-service.yaml
     oc apply -f kubefiles/email-service.yaml
