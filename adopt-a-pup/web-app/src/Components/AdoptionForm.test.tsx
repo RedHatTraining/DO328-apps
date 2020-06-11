@@ -82,7 +82,7 @@ describe("AdoptionForm", () => {
         // Wait until all promises all resolved
         await Promise.resolve();
 
-        expect(component.state("showAdoptSucessAlert")).toBe(true);
+        expect(component.state("showAdoptSuccessAlert")).toBe(true);
     });
 
     test("Does not call AdoptionService.create when empty form is submitted", () => {
