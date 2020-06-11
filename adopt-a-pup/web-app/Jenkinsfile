@@ -14,7 +14,7 @@ pipeline {
     }
 
     stages {
-        stage('Install') {
+        stage('adopt-a-pup web-app: Install') {
             agent {
                 docker {
                     image 'node:14'
@@ -28,7 +28,7 @@ pipeline {
             }
         }
 
-        stage('Test') {
+        stage('adopt-a-pup web-app: Test') {
             agent {
                 docker {
                     image 'node:14'
@@ -43,7 +43,7 @@ pipeline {
             }
         }
 
-        stage('NPM build') {
+        stage('adopt-a-pup web-app: NPM build') {
             agent {
                 docker {
                     image 'node:14'
@@ -63,7 +63,7 @@ pipeline {
             }
         }
 
-        stage('Image build & push') {
+        stage('adopt-a-pup web-app: Image build & push') {
             when {
                 branch 'master'
             }
