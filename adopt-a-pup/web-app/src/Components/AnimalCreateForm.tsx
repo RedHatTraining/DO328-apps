@@ -78,9 +78,10 @@ export default class AnimalCreateForm
         try {
             const shelters = await this.props.shelterService.getAll();
             this.setState({shelters});
-            // Set default shelter as first option. If we do not do this the form will not know which one is selected by default
+            // Set default shelter as first option.
+            //If we do not do this the form will not know which one is selected by default
             if (shelters[0].shelterId) {
-                this.handleShelterIdChange(shelters[0].shelterId)
+                this.handleShelterIdChange(shelters[0].shelterId);
             }
         } catch (error) {
             if (error instanceof RESTConnectionError) {
@@ -243,7 +244,7 @@ export default class AnimalCreateForm
 
     private isFormValid() {
         const {animal} = this.state;
-        const fieldIsEmpty = (field: string) => { return animal[field as keyof Animal] === ""; }
+        const fieldIsEmpty = (field: string) => { return animal[field as keyof Animal] === ""; };
 
         const hasEmptyFields = Object
             .keys(animal)
@@ -383,7 +384,7 @@ export default class AnimalCreateForm
                                     key={shelter.shelterId}
                                     value={shelter.shelterId}
                                     label={shelter.shelterName}
-                                />
+                                />;
                             })}
                         </FormSelect>
                     </FormGroup>
@@ -454,7 +455,7 @@ export default class AnimalCreateForm
                                 key={approximateSize}
                                 value={approximateSize}
                                 label={approximateSize}
-                            />
+                            />;
                         })}
                     </FormSelect>
                 </FormGroup>

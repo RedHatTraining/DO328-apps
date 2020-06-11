@@ -73,7 +73,7 @@ export default class AnimalFakeService implements AnimalService {
     }
 
     public async subscribeNotifications(animalNotificationRequest: AnimalNotificationRequest): Promise<void> {
-        // Do something?
+        console.log("AnimalFakeService.subscribeNotifications", animalNotificationRequest);
     }
 
     public async getById(): Promise<Animal> {

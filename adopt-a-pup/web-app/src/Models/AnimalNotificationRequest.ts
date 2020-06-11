@@ -1,5 +1,3 @@
-import {ApproximateSize} from "./ApproximateSize";
-
 export  interface AnimalNotificationRequest {
     username: string,
     email: string,
