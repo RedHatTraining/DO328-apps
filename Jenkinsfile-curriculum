@@ -1,18 +1,11 @@
-pipeline {
-
-    agent {
-        label 'master'
+node {
+    stage('Load Jenkinsfiles') {
+        checkout scm
     }
 
-    options { skipDefaultCheckout() }
-
-    stages {
-
-        stage('adopt-a-pup/web-app') {
-            // when { changeset 'adopt-a-pup/web-app/**/*' }
-            steps { load 'adopt-a-pup/web-app/Jenkinsfile' }
-        }
-
+    stage('Adopt-a-pup/web-app') {
+        when { changeset 'adopt-a-pup/web-app/**/*' }
+        load 'adopt-a-pup/web-app/Jenkinsfile'
     }
 
 }
