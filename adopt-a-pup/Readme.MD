@@ -74,6 +74,39 @@ The project where you deploy this application should be managed by OSSM
     ```
    See the script [parameters](scripts/deploy-frontend.sh) to customize the deployment.
 
+## Animal Photos
+
+All dog photos are stored in a shared Google Photos folder. To add a new photo for the app:
+
+1. Upload the photo to [the shared Google Photos folder](https://photos.google.com/share/AF1QipN1a1vFP53lRgGUAoHoN67SYofoFe16zgj0DbzorjfPW5GKg6iGuzPjcQBd4nzAaQ?key=bUtEM2U4SlNsVVJtNXBBSnNTV3dfTXFQa2NsV0Rn).
+
+2. Click the `share` button and select the `copy link` option at the bottom. 
+
+3. Paste the photo's link into  [BYTENBIT](https://app.bytenbit.com/). This will extract the actual photo link from the shared image's html response. (The shareable link returns html with the photo embedded so this must be extracted somehow)
+
+Now that you have the image, you can either 1) add it to the preloaded list of adoptable animals or 2) for the list of photos
+that are available to choose from upon creating a new animal.
+
+If you want to add a preloaded animal or modify an existing preloaded animal's image:
+
+1. Open `mongo-data/animals.mongo`
+
+2. a) Add a new JSON object with VALID new Animal fields (ideally, create JSON using postman or swagger to ensure validity).
+      Set the `photoUrl` field to the extracted link from BYTENBIT mentioned above.
+   b) Override one of the existing `photoUrl` fields with the new link.
+   
+### If using locally
+3. Changes must be pushed and the Mongo pods re-created from scratch (scripts must be run to create all animals and to not overwrite any data)
+   a) You can manually insert into Mongo 
+        ```
+        oc rsh <mongo-pod>
+        mongo -u developer -p developer adopt-a-pup
+        db.animals.insert(<animal-json>)
+         OR
+        db.animals.update({animalName: "<animal-name>"}, {$set: {photoUrl: "<URL>"}})
+        ```
+For images that are selectable when creating a new animal, use the same process for getting the link. Then, (For now) add
+the link to the `photos` array in the `renderPhotoPickerModal` function in `AnimalCreateForm.tsx`  
 
 ## Development
 
@@ -86,4 +119,10 @@ the [Frontend web-app README](web-app/README.md)
 
 ### Backend services
 
-TODO...
+The best way to run the backend environment is to deploy the apps in a [local CRC (CodeReady Containers) environment](https://developers.redhat.com/products/codeready-containers/overview)
+
+Otherwise, ensure that you have Mongo running locally. Change the `resources/application.properties` file in the service(s) 
+that will be run and change the `spring.data.mongodb.host=mongodb` property to `spring.data.mongodb.host=localhost`  
+
+Then run `mvn spring-boot:run -f <service location>`. Multiple services will have to be run on different ports. Append 
+`-D server.port=<newPort>` to the end of the `mvn` command to use specific port.
