@@ -15,13 +15,13 @@
 
 default_ingress_endpoint="http://istio-ingressgateway-istio-system.apps.ocp4.example.com/"
 
-namespace=${1:-comprehensive-review}
+namespace=${1:-adoptapup}
 adoption_endpoint=${2:-${default_ingress_endpoint}}
 animal_endpoint=${3:-${default_ingress_endpoint}}
 shelter_endpoint=${4:-${default_ingress_endpoint}}
 news_enabled=${5:-1}
-news_endpoint=${6:-"http://news-comprehensive-review-news.apps.ocp4.example.com"}
-email_endpoint=${7:-"http://email-comprehensive-review.apps.ocp4.example.com/"}
+news_endpoint=${6:-"http://news-adoptapup-news.apps.ocp4.example.com"}
+email_endpoint=${7:-"http://email-adoptapup.apps.ocp4.example.com/"}
 
 oc process -n ${namespace} -f ./kubefiles/frontend-template.yaml \
   -p REACT_APP_ADOPTION_SERVICE_URL=${adoption_endpoint} \

@@ -93,8 +93,8 @@ parameters:
   - name: REACT_APP_NEWS_SERVICE_URL
     description: "News endpoint"
     required: false
-    value: "http://news-comprehensive-review-news.apps.ocp4.example.com"
+    value: "http://news-adoptapup-news.apps.ocp4.example.com"
   - name: REACT_APP_EMAIL_APP_URL
     description: "Email dashboard URL"
     required: false
-    value: "http://email-comprehensive-review.apps.ocp4.example.com/"
+    value: "http://email-adoptapup.apps.ocp4.example.com/"

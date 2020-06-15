@@ -12,7 +12,7 @@
 #     - database: Database to be created. (Optional)
 #     - admin-password: Password to be assigned to the MongoDB admin user. (Optional)
 
-namespace=${1:-comprehensive-review}
+namespace=${1:-adoptapup}
 mongodb_user=${2:-developer}
 mongodb_password=${3:-developer}
 mongodb_database=${4:-adopt-a-pup}
