@@ -38,6 +38,7 @@ type AnimalCreateFormState = {
         description: string
     }
     isSubmitting: boolean;
+    isDogPhotoShown: boolean;
     animal: Animal
     shelters: Shelter[],
     loading: boolean,
@@ -63,6 +64,7 @@ export default class AnimalCreateForm
                 title: "",
                 description: ""
             },
+            isDogPhotoShown: false,
             isSubmitting: false,
             isPhotoPickerModalOpen: false,
             loading: false,
@@ -522,6 +524,8 @@ export default class AnimalCreateForm
                         isChecked={animal.otherDogSafe}
                         onChange={this.handleOtherDogSafeChange.bind(this)} />
                 </FormGroup>
+                <img src={animal.photoUrl} hidden={!this.state.isDogPhotoShown} alt={animal.photoUrl}/>
+
                 <ActionGroup>
                     <Button
                         variant="secondary"
@@ -585,11 +589,11 @@ export default class AnimalCreateForm
                 <PhotoGallery
                     photos={photos}
                     onPhotoSelect={(photoUrl, index) => {
-                        console.log(photoUrl);
                         const animal = { ...this.state.animal, photoUrl }
                         this.setState({
                             animal,
                             isPhotoPickerModalOpen: false,
+                            isDogPhotoShown: true
                         });
                     }}
                 />
