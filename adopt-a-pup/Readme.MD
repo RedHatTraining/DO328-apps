@@ -18,7 +18,7 @@ The project where you deploy this application should be managed by OSSM
 1. Create a project for the news service.
 
     ```
-    oc new-project comprehensive-review-news
+    oc new-project adoptapup-news
     ```
 
 2. Deploy the news service.
@@ -28,7 +28,7 @@ The project where you deploy this application should be managed by OSSM
 
 3. Create a project for the Adopt a Pup application.
     ```
-    oc new-project comprehensive-review
+    oc new-project adoptapup
     ```
 
 4. Add the project to the list of SMMR members.
@@ -41,7 +41,7 @@ The project where you deploy this application should be managed by OSSM
    ...
    spec:
      members:
-     - comprehensive-review
+     - adoptapup
    ...
    ```
 
