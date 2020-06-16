@@ -594,6 +594,5 @@ export default class AnimalCreateForm
             </Modal>
         );
 
-
     }
 }
