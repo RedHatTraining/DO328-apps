@@ -18,3 +18,12 @@
     animation-name: popupFadeIn;
     animation-duration: .3s;
 }
+
+
+.selected {
+    background-color: #ddffdd;
+}
+
+.clickable {
+    cursor: pointer;
+}

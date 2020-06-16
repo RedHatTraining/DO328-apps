@@ -13,8 +13,8 @@ export default class NotificationsView extends React.Component<NotificationsView
             <React.Fragment>
                 <PageSection variant={PageSectionVariants.light}>
                     <TextContent>
-                        <Text component="h1">Shelters</Text>
-                        <Text component="p">Our shelters</Text>
+                        <Text component="h1">Subscribe to Email Notifications</Text>
+                        <Text component="h3">Setup notifications for animals that meet your criteria</Text>
                     </TextContent>
                 </PageSection>
                 <PageSection>

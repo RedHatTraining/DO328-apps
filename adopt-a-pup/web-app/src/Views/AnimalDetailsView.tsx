@@ -135,14 +135,9 @@ export default class AnimalDetailsView
                                     {animal.otherDogSafe ? "Yes" : "No"}
                                 </Text>
                                 <Text component="p">
-                                    <strong>Residency Required: </strong>
+                                    <strong>House Required: </strong>
                                     {animal.residencyRequired ? "Yes" : "No"}
                                 </Text>
-                                <Text component="p">
-                                    <strong>Residency Required: </strong>
-                                    {animal.residencyRequired ? "Yes" : "No"}
-                                </Text>
-
                                 <Text component="p">
                                     <strong>Square Footage of Home: </strong>
                                     {animal.squareFootageOfHome}

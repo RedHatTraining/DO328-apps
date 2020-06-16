@@ -4,16 +4,28 @@ import AnimalCreateForm from "./AnimalCreateForm";
 import AnimalFakeService from "../Services/AnimalFakeService";
 import { Animal } from "../Models/Animal";
 import { AnimalService } from "../Services/AnimalService";
+import { ShelterService } from "../Services/ShelterService";
+import { PhotoService } from "../Services/PhotoService";
+import ShelterFakeService from "../Services/ShelterFakeService";
+import { PhotoStaticListService } from "../Services/PhotoStaticListService";
 
 
 describe("AnimalForm", () => {
 
     let animalService: AnimalService;
+    let shelterService: ShelterService;
+    let photoService: PhotoService;
     let component: ShallowWrapper;
 
     beforeEach(() => {
         animalService = new AnimalFakeService();
-        component = shallow(<AnimalCreateForm animalService={animalService} />);
+        shelterService = new ShelterFakeService();
+        photoService = new PhotoStaticListService();
+        component = shallow(<AnimalCreateForm
+            animalService={animalService}
+            shelterService={shelterService}
+            photoService={photoService}
+        />);
     });
 
     test("Changes state when name is changed", async() => {

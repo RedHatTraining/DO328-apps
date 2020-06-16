@@ -28,12 +28,6 @@ public class AnimalController {
         return animalService.createAnimal(animal);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/{shelter-id}/createBulk")
-    public List<String> createAnimalBulk(@RequestBody List<Animal> animals,
-                                         @PathVariable(value = "shelter-id") String shelterId) {
-        return animalService.createAnimalsBulk(animals, shelterId);
-    }
-
     @RequestMapping(method = RequestMethod.POST, value = "/{animal-id}/setAdoptionStatus")
     public void setAdoptionStatus(@RequestBody AnimalStatusChangeRequest adoptionStatus,
                                   @PathVariable("animal-id") String animalId) {

@@ -5,11 +5,13 @@ import {
 } from "@patternfly/react-core";
 import AnimalCreateForm from "../Components/AnimalCreateForm";
 import {ShelterService} from "../Services/ShelterService";
+import { PhotoService } from "../Services/PhotoService";
 
 
 type AnimalCreateViewProps = {
     animalService: AnimalService;
     shelterService: ShelterService;
+    photoService: PhotoService;
 }
 
 
@@ -30,6 +32,7 @@ export default class AnimalCreateView extends React.Component<AnimalCreateViewPr
                             <AnimalCreateForm
                                 animalService={this.props.animalService}
                                 shelterService={this.props.shelterService}
+                                photoService={this.props.photoService}
                             />
                         </CardBody>
                     </Card>

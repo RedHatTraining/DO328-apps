@@ -28,6 +28,7 @@ import Config from "./Config";
 import NewsRESTService from "./Services/NewsRESTService";
 import SheltersCreateView from "./Views/SheltersCreateView";
 import NotificationsView from "./Views/NotificationsView";
+import { PhotoStaticListService } from "./Services/PhotoStaticListService";
 
 
 // Initialize Backend Services
@@ -35,6 +36,7 @@ let animalService: AnimalService;
 let adoptionService: AdoptionService;
 let shelterService: ShelterService;
 let newsService: NewsService;
+const photoService = new PhotoStaticListService();
 
 if (Config.ADOPTION_SERVICE_URL) {
     adoptionService = new AdoptionRESTService(Config.ADOPTION_SERVICE_URL);
@@ -103,7 +105,7 @@ export default class App extends Component {
                             <AnimalCreateView {...props}
                                 shelterService={shelterService}
                                 animalService={animalService}
-
+                                photoService={photoService}
                             />}/>
                         <Route path={"/shelters/:shelterId"} render={(props) =>
                             <ShelterDetailsView {...props}
