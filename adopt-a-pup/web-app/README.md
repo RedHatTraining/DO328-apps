@@ -100,10 +100,9 @@ This project runs a Jenkins pipeline (see `Jenkinsfile`) for continuous integrat
 
 In master, the pipeline includes a release step that builds the app bundle, builds the container image and [pushes it to quay](https://quay.io/repository/redhattraining/ossm-adopt-a-pup-webapp) automatically. This step requires manual confirmation. The pipeline waits for confirmation for 5 minutes. The deployment is skipped if not confirmed within that interval. However, you can always rerun the pipeline and confirm the deployment later.
 
-To confirm the deployment, go to [Jenkins DO328-apps master pipeline](http://jenkins.prod.nextcle.com/blue/organizations/jenkins/RHT%2FDO328-apps/activity?branch=master).
+To confirm the deployment, use the master branch pipeline view in Jenkins.
 
 The deployed quay image is [quay.io/redhattraining/ossm-adopt-a-pup-webapp](https://quay.io/repository/redhattraining/ossm-adopt-a-pup-webapp).
-
 
 ## Learn More
 
