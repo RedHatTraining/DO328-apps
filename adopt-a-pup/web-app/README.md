@@ -84,15 +84,26 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Container image generation for production
+## Container image generation
 
-You can generate production images for `1.0` and `2.0` version of the application.
+In a dev environment, you can generate production images for `1.0` and `2.0` version of the application.
 
 To build `1.0`, run `./scripts/build_image_v1`.
 
 To build `2.0`, run `./scripts/build_image_v2`.
 
-To push the generated images to quay, run `podman push quay.io/redhattraining/ossm-adopt-a-pup-webapp`.
+If you want to manually push the generated images to quay, run `podman push quay.io/redhattraining/ossm-adopt-a-pup-webapp`.
+
+## Jenkins CI: Automatic container image deployment to Quay.io
+
+This project runs a Jenkins pipeline (see `Jenkinsfile`) for continuous integration and delivery.
+
+In master, the pipeline includes a release step that builds the app bundle, builds the container image and [pushes it to quay](https://quay.io/repository/redhattraining/ossm-adopt-a-pup-webapp) automatically. This step requires manual confirmation. The pipeline waits for confirmation for 5 minutes. The deployment is skipped if not confirmed within that interval. However, you can always rerun the pipeline and confirm the deployment later.
+
+To confirm the deployment, go to [Jenkins DO328-apps master pipeline](http://jenkins.prod.nextcle.com/blue/organizations/jenkins/RHT%2FDO328-apps/activity?branch=master).
+
+The deployed quay image is [quay.io/redhattraining/ossm-adopt-a-pup-webapp](https://quay.io/repository/redhattraining/ossm-adopt-a-pup-webapp).
+
 
 ## Learn More
 
