@@ -11,12 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/animals")
 public class AnimalController {
 
+    private static final Logger logger = LoggerFactory.getLogger(AnimalController.class);
 
     @Autowired
     private AnimalService animalService;
@@ -36,7 +40,12 @@ public class AnimalController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/getAllAdoptable")
     public List<Animal> getAllAdoptableAnimals() {
-        return animalService.getAllAdoptableAnimals();
+
+        List<Animal> adoptableAnimals = animalService.getAllAdoptableAnimals();
+
+        logger.info("Getting " + adoptableAnimals.size() + " adoptable animals through animal-v2...");
+
+        return adoptableAnimals;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{animal-id}/getAnimalById")
