@@ -25,11 +25,13 @@ The application automatically reads any environment variables specified in file 
 
 To specify these variables. Create the `.env` file as follows:
 
-```
+```sh
 REACT_APP_NEWS_ENABLED=1
 REACT_APP_ADOPTION_SERVICE_URL=http://localhost:8080
 REACT_APP_ANIMAL_SERVICE_URL=http://localhost:8081
 REACT_APP_SHELTER_SERVICE_URL=http://localhost:8082
+# This variable is used by the server.js backend
+BACKEND_NEWS_SERVICE_URL=http://localhost:5000
 ```
 
 Note that if urls for the backend services are not provided, the web-app will use fake data instead.
