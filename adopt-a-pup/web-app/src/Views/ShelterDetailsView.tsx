@@ -97,7 +97,6 @@ export default class ShelterDetailsView
                 errorTitle={error.header}
                 errorDescription={error.message}
                 onErrorClosed={this.closeErrorAlert}
-                title="Adoptable Animals"
             >
                 {shelter ? this.renderShelter(shelter) : ""}
             </LoadingData>
