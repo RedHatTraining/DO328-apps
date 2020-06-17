@@ -6,7 +6,7 @@ import { delay } from "./Delayer";
 export default class ShelterFakeService implements ShelterService {
 
     public async getById(id: string): Promise<Shelter> {
-        return {
+        return delay(() => ({
             shelterId: id,
             shelterName: "A Fake Shelter",
             state: "Minnesota",
@@ -14,7 +14,7 @@ export default class ShelterFakeService implements ShelterService {
             address: "200 Good Boy Ave",
             email: "frontdesk@minneapolismutts.com",
             phoneNumber: "212-555-9758"
-        };
+        }));
     }
 
     public async create(): Promise<string> {

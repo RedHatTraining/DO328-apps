@@ -5,6 +5,8 @@ import { Shelter } from "../Models/Shelter";
 import { AdoptionService } from "../Services/AdoptionService";
 import { Animal } from "../Models/Animal";
 import AdoptableAnimalList from "../Components/AdoptableAnimalList";
+import LoadingData from "../Components/LoadingData";
+import { RESTConnectionError } from "../Services/RESTService";
 
 type ShelterDetailsViewProps = {
     shelterService: ShelterService;
@@ -18,7 +20,13 @@ type ShelterDetailsViewProps = {
 
 type ShelterDetailsViewState = {
     shelter?: Shelter,
-    adoptableAnimals: Animal[]
+    adoptableAnimals: Animal[],
+    loading: boolean,
+    error: {
+        isActive: boolean,
+        header: string,
+        message: string
+    }
 }
 
 export default class ShelterDetailsView
@@ -28,26 +36,72 @@ export default class ShelterDetailsView
         super(props);
         this.state = {
             shelter: undefined,
-            adoptableAnimals: []
+            adoptableAnimals: [],
+            loading: false,
+            error: {
+                isActive: false,
+                header: "",
+                message: ""
+            }
         };
     }
 
-
     public async componentDidMount() {
         const { shelterId } = this.props.match.params;
-        const [ shelter, adoptableAnimals ] = await Promise.all([
-            this.props.shelterService.getById(shelterId),
-            this.props.adoptionService.getAdoptableByShelter(shelterId)
-        ]);
+
+        this.setState({ loading: true });
+        try {
+            const [ shelter, adoptableAnimals ] = await Promise.all([
+                this.props.shelterService.getById(shelterId),
+                this.props.adoptionService.getAdoptableByShelter(shelterId)
+            ]);
+            this.setState({
+                shelter,
+                adoptableAnimals
+            });
+        } catch (error) {
+            if (error instanceof RESTConnectionError) {
+                this.showConnectionError(error);
+            }
+        } finally {
+            this.setState({ loading: false });
+        }
+    }
+
+    private showConnectionError(error: RESTConnectionError) {
         this.setState({
-            shelter,
-            adoptableAnimals
+            error: {
+                isActive: true,
+                header: error.message,
+                message: error.description,
+            }
+        });
+    }
+
+    private closeErrorAlert = () => {
+        this.setState({
+            error: {
+                isActive: false,
+                message: "",
+                header: ""
+            }
         });
     }
 
     public render() {
-        const { shelter } = this.state;
-        return shelter ? this.renderShelter(shelter) : this.renderMissingShelter();
+        const { shelter, loading, error } = this.state;
+        return (
+            <LoadingData
+                showLoader={loading}
+                showError={error.isActive}
+                errorTitle={error.header}
+                errorDescription={error.message}
+                onErrorClosed={this.closeErrorAlert}
+                title="Adoptable Animals"
+            >
+                {shelter ? this.renderShelter(shelter) : ""}
+            </LoadingData>
+        );
     }
 
     private renderShelter(shelter: Shelter) {
