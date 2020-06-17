@@ -143,17 +143,4 @@ export default class ShelterDetailsView
         );
     }
 
-    private renderMissingShelter() {
-        return (
-            <PageSection variant={PageSectionVariants.light}>
-                <TextContent>
-                    <Text component="h1">Not Found</Text>
-                    <Text component="p">
-                        This shelter does not exist.
-                    </Text>
-                </TextContent>
-            </PageSection>
-        );
-    }
-
 }
