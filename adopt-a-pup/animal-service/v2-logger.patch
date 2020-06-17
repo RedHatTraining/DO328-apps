@@ -1,0 +1,35 @@
+diff --git a/adopt-a-pup/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/AnimalController.java b/adopt-a-pup/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/AnimalController.java
+index 05e719e..2ed01b2 100644
+--- a/adopt-a-pup/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/AnimalController.java
++++ b/adopt-a-pup/animal-service/src/main/java/com/redhat/do328/adoptApup/animalservice/AnimalController.java
+@@ -11,12 +11,16 @@
+ import org.springframework.web.bind.annotation.RequestMethod;
+ import org.springframework.web.bind.annotation.RestController;
+
++import org.slf4j.Logger;
++import org.slf4j.LoggerFactory;
++
+ import java.util.List;
+
+ @RestController
+ @RequestMapping(value = "/animals")
+ public class AnimalController {
+
++    private static final Logger logger = LoggerFactory.getLogger(AnimalController.class);
+
+     @Autowired
+     private AnimalService animalService;
+@@ -36,7 +40,12 @@ public void setAdoptionStatus(@RequestBody AnimalStatusChangeRequest adoptionSta
+
+     @RequestMapping(method = RequestMethod.GET, value = "/getAllAdoptable")
+     public List<Animal> getAllAdoptableAnimals() {
+-        return animalService.getAllAdoptableAnimals();
++
++        List<Animal> adoptableAnimals = animalService.getAllAdoptableAnimals();
++
++        logger.info("Getting " + adoptableAnimals.size() + " adoptable animals through animal-v2...");
++
++        return adoptableAnimals;
+     }
+
+     @RequestMapping(method = RequestMethod.GET, value = "/{animal-id}/getAnimalById")
