@@ -46,7 +46,7 @@ describe("AdoptionRESTService", () => {
                 ownOtherAnimals: false,
             },
             {
-                timeout: 3000
+                timeout: 10000
             }
         );
     });
