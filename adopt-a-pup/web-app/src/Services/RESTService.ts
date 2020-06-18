@@ -9,7 +9,7 @@ export abstract class RESTService {
     constructor(
         baseURL: string,
         private readonly remoteServiceName: string,
-        private readonly timeoutMs = 3000
+        private readonly timeoutMs = 10000
     ) {
         this.axiosInstance = Axios.create({ baseURL });
     }
