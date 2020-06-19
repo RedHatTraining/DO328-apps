@@ -69,5 +69,5 @@ $ flask run
  ## Running Gossip in a containers environment
  
 In order to run the Gossip Service in a containers environment you need a container image. A prebuilt image is
-available in [quay.io](https://quay.io/repository/psolarvi/python-flask-gossip)
+available in [quay.io](https://quay.io/repository/redhattraining/ossm-python-flask-gossip)
  
