@@ -29,7 +29,7 @@ components:
       - name: MAVEN_OPTS
         value: $(JAVA_OPTS)  
     # memoryLimit: 512M
-    memoryLimit: 1G
+    memoryLimit: 2G
     mountSources: true
     volumes:
       - name: m2
