@@ -12,9 +12,6 @@ projects:
 components:
   -
     type: chePlugin
-    id: redhat/java11/latest
-  -
-    type: chePlugin
     id: redhat/quarkus-java11/latest
   -
     type: dockerimage
