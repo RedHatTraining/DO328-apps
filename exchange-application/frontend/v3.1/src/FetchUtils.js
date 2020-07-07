@@ -2,7 +2,7 @@ async function fetchWithRetry (url, options=null, retries=3, msTimeout=3000) {
     const timerPromise = createTimerPromise(msTimeout)
     try {
         const response = await Promise.race([fetch(url, options), timerPromise]);
-        if (!response.ok && process.env.REACT_APP_CATCH_HTTP_ERRORS) {
+        if (!response.ok && process.env.REACT_APP_RETRY_INVALID_REQUESTS) {
             throw new Error(`Received invalid response with status ${response.status}.`);
         }
         return response;

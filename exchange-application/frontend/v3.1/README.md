@@ -1,6 +1,6 @@
 # Frontend Microservice v3.1
 
-**NOTE**: This version is almost identical to v3.0. It only adds control over the HTTP errors with an environment variable called **REACT_APP_CATCH_HTTP_ERRORS**.
+**NOTE**: This version is almost identical to v3.0. It only adds control over the HTTP errors with an environment variable called **REACT_APP_RETRY_INVALID_REQUESTS**.
 If this variable is provided, the app will not retry requests with invalid HTTP status codes.
 
 
